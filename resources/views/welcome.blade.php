@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ app()->getLocale() }}" ng-app="welcome">
+<html ng-app="welcome">
     <head>
         <title>Noting</title>
 
@@ -15,44 +15,84 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
     </head>
+
     <body class="container">
+        <div class="guide_noting">Noting</div>
+        <div class="guide_intro">开启你的记录</div>
 
-            <div >
-                <header>
-                    <div class="guide_noting">Noting</div>
-                    <div class="guide_intro">开启你的记录</div>
-                </header>
+        <ui-view></ui-view>
 
-                <form>
-                    <div class="inset">
-                        <p>
-                            <label for="email">EMAIL ADDRESS</label>
-                            <input type="text" name="email" id="email">
-                        </p>
-                        <p>
-                            <label for="password">PASSWORD</label>
-                            <input type="password" name="password" id="password">
-                        </p>
-                        <p>
-                            <input type="checkbox" name="remember" id="remember">
-                            <label for="remember">Remember me</label>
-                        </p>
+        <footer class="footer">
+            <div> Copyright © 2017 sweetstreet. All rights reserved. </div>
+        </footer>
 
-                        <p class="p-container">
-                            <input type="submit" name="go" id="go" value="Log in">
-                        </p>
-
-                        <p ><a class="link" href="">forget Password ?</a>
-                        <p ><a class="link" href="">Not a member yet ?</a>
-                    </div>
-
-
-                </form>
-
-                <footer class="footer">
-                    <div> Copyright © 2017 sweetstreet. All rights reserved. </div>
-                </footer>
-            </div>
 
     </body>
+
+
+    <script type="text/ng-template" id="login.tpl">
+        <div ng-controller="SignupController">
+
+            <form ng-submit="UserService.signup()">
+                <div class="inset">
+                    <p>
+                        <label for="email">邮箱</label>
+                        <input type="text" name="email" id="email">
+                    </p>
+                    <p>
+                        <label for="password">密码</label>
+                        <input type="password" name="password" id="password">
+                    </p>
+
+                    <p class="p-container">
+                        <a ui-sref="reset" class="link" >忘记密码 ?</a>
+                        <input type="submit" name="go" id="go" value="登录">
+                    </p>
+
+                    <a ui-sref="register" class="link">没有账号 ?</a>
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="register.tpl">
+        <div>
+            <form ng-submit="UserService.register()">
+                <div class="inset">
+                    <p>
+                        <label for="email">邮箱地址</label>
+                        <input type="text" name="email" id="email">
+                    </p>
+                    <p>
+                        <label for="email">用户名</label>
+                        <input type="text" name="username" id="username">
+                    </p>
+                    <p>
+                        <label for="password">密码</label>
+                        <input type="password" name="password" id="password">
+                    </p>
+
+                    <p class="p-container">
+                        <a ui-sref="login" class="link" >已有账号，去登录</a>
+                        <input type="submit" name="go" id="go" value="注册">
+                    </p>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="reset.tpl">
+        <div ng-controller="SignupController">
+
+            <form ng-submit="UserService.signup()">
+                <div class="inset">
+                    <p>
+                        <label for="email">邮箱</label>
+                        <input type="text" name="email" id="email">
+                    </p>
+
+                    <p class="p-container">
+                        <input type="submit" name="go" id="go" value="确认">
+                    </p>
+
+            </form>
+        </div>
+    </script>
 </html>

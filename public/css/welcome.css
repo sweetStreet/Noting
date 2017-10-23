@@ -150,10 +150,16 @@ label:hover ~ input[type=password] {
 }
 
 .link {
+    padding-top:8px;
     text-decoration:none;
     color: #0d93ff;
 }
 
 .footer{
+    padding-top: 50px;
     text-align: center;
+}
+
+[ui-sref]{
+    cursor: pointer;
 }
