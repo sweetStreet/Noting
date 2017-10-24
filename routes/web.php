@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::any('/api/user',function (){
+
+//    //获得localhost/api/user?username=***的***内容
+//    return Request::get('username');
+//    //get post 都可以打印出来
+//    return Request::all();
+});

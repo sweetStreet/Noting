@@ -42,18 +42,40 @@
         $urlRouterProvider.otherwise('/login');
     }])
 
-        .service('UserService',[
-            function () {
+        .service('UserService',['$http',
+            function ($http) {
                 var me = this;
-                me.signup = function () {
-                    console.log('signup');
+                me.registerData = {};
+                me.register = function () {
+
                 }
+
+                me.login = function(){
+
+                }
+
+                me.reset = function(){
+
+                }
+
+                me.username_exists = function (){
+                    $http.post('api/user/exists',{username:me.registerData.username})
+                        .then(function(){
+                            console.log('r',r);
+                        }),function(){
+                            console.log('e',e);
+                    }
+                }
+
             }
         ])
 
-        .controller('SignupController',['$scope','UserService',
+        .controller('RegisterController',['$scope','UserService',
             function ($scope,UserService) {
             $scope.User = UserService;
+            $scope.$watch(function () {
+                return UserService.registerData;
+            },function (newVal) {  })
         }])
 
 })();

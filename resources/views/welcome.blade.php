@@ -31,9 +31,9 @@
 
 
     <script type="text/ng-template" id="login.tpl">
-        <div ng-controller="SignupController">
+        <div ng-controller="RegisterController">
 
-            <form ng-submit="UserService.signup()">
+            <form ng-submit="UserService.login()">
                 <div class="inset">
                     <p>
                         <label for="email">邮箱</label>
@@ -64,7 +64,7 @@
                     </p>
                     <p>
                         <label for="email">用户名</label>
-                        <input type="text" name="username" id="username">
+                        <input type="text" name="username" id="username" ng-model="User.registerData.username">
                     </p>
                     <p>
                         <label for="password">密码</label>
@@ -79,9 +79,9 @@
     </script>
 
     <script type="text/ng-template" id="reset.tpl">
-        <div ng-controller="SignupController">
+        <div ng-controller="RegisterController">
 
-            <form ng-submit="UserService.signup()">
+            <form ng-submit="UserService.reset()">
                 <div class="inset">
                     <p>
                         <label for="email">邮箱</label>
