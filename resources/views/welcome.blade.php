@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="welcome">
+<html ng-app="welcome" ng-controller="welcomeCrtl">
     <head>
         <title>Noting</title>
 
@@ -20,9 +20,10 @@
         <div class="guide_noting">Noting</div>
         <div class="guide_intro">开启你的记录</div>
 
-        <ui-view></ui-view>
+        <div ui-view></div>
 
         <footer class="footer">
+            <p>[:myTxt:]</p>
             <div> Copyright © 2017 sweetstreet. All rights reserved. </div>
         </footer>
 
@@ -31,9 +32,8 @@
 
 
     <script type="text/ng-template" id="login.tpl">
-        <div ng-controller="RegisterController">
-
-            <form ng-submit="UserService.login()">
+        <div >
+            <form ng-submit="login()">
                 <div class="inset">
                     <p>
                         <label for="email">邮箱</label>
@@ -56,7 +56,7 @@
 
     <script type="text/ng-template" id="register.tpl">
         <div>
-            <form ng-submit="UserService.register()">
+            <form>
                 <div class="inset">
                     <p>
                         <label for="email">邮箱地址</label>
@@ -79,9 +79,9 @@
     </script>
 
     <script type="text/ng-template" id="reset.tpl">
-        <div ng-controller="RegisterController">
+        <div>
 
-            <form ng-submit="UserService.reset()">
+            <form">
                 <div class="inset">
                     <p>
                         <label for="email">邮箱</label>
