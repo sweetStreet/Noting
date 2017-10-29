@@ -10,20 +10,16 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//首页
 Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::any('/api/user',function (){
-//
-//
-////    //获得localhost/api/user?username=***的***内容
-////    return Request::get('username');
-////    //get post 都可以打印出来
-////    return Request::all();
-//});
-
-Route::any('/api/user/login','UserController@login');
+//用户模块
+//注册页面
+Route::post('/api/user/login','UserController@login');
 Route::any('/api/user/register', 'UserController@register');
 Route::any('/api/user','UserController@index');
+
+//笔记本界面
+Route::any('/api/notebook','NotebookController@index');

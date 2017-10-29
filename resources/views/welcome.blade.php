@@ -11,9 +11,6 @@
         <script src="/js/welcome.js"></script>
         <link rel="stylesheet" type="text/css" href="/css/welcome.css"
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
     </head>
 
     <body class="container">
@@ -33,20 +30,20 @@
 
     <script type="text/ng-template" id="login.tpl">
         <div >
-            <form ng-submit="login()">
+            <form>
                 <div class="inset">
                     <p>
                         <label for="email">邮箱</label>
-                        <input type="text" name="email" id="email">
+                        <input ng-model="user.email" type="email" name="email" id="email" required>
                     </p>
                     <p>
                         <label for="password">密码</label>
-                        <input type="password" name="password" id="password">
+                        <input ng-model="user.password" type="password" name="password" id="password" required>
                     </p>
 
                     <p class="p-container">
                         <a ui-sref="reset" class="link" >忘记密码 ?</a>
-                        <input type="submit" name="go" id="go" value="登录">
+                        <input type="submit" name="go" id="go" value="登录" ng-click="login(user)">
                     </p>
 
                     <a ui-sref="register" class="link">没有账号 ?</a>
@@ -60,20 +57,20 @@
                 <div class="inset">
                     <p>
                         <label for="email">邮箱地址</label>
-                        <input type="text" name="email" id="email">
+                        <input type="email" name="email" id="email" ng-model="user.email" required>
                     </p>
                     <p>
-                        <label for="email">用户名</label>
-                        <input type="text" name="username" id="username" ng-model="User.registerData.username">
+                        <label for="username">用户名</label>
+                        <input type="text" name="username" id="username" ng-model="user.username" required>
                     </p>
                     <p>
                         <label for="password">密码</label>
-                        <input type="password" name="password" id="password">
+                        <input type="password" name="password" id="password" ng-model="user.password" required>
                     </p>
 
                     <p class="p-container">
                         <a ui-sref="login" class="link" >已有账号，去登录</a>
-                        <input type="submit" name="go" id="go" value="注册">
+                        <input type="submit" name="go" id="go" value="注册" ng-click="register(user)">
                     </p>
         </div>
     </script>
@@ -81,7 +78,7 @@
     <script type="text/ng-template" id="reset.tpl">
         <div>
 
-            <form">
+            <form>
                 <div class="inset">
                     <p>
                         <label for="email">邮箱</label>

@@ -1,6 +1,6 @@
 (function () {
     'user strict';
-    var app = angular.module('welcome',["ui.router"]);
+    var app = angular.module('welcome',['ui.router']);
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
             function($interpolateProvider,$stateProvider,$urlRouterProvider) {
                 //原本默认的是两个大括号{{内容}}，但是angular和laravel会冲突
@@ -41,26 +41,59 @@
                 $urlRouterProvider.otherwise('/login');
 
             }
-        ])
+        ]);
 
-        app.controller('welcomeCrtl',function($scope,$http){
+
+        app.controller('welcomeCrtl',function($scope,$http,$state){
             $scope.myTxt = "你还没有提交";
-            $scope.login = function () {
-                $scope.myTxt = "你点击了提交";
-                $http.post('api/user/login')
-                                .then(function(){
-                                    console.log('r');
+            $scope.login = function (user) {
+                $http.post('/api/user/login',{email:user.email,password:user.password})
+                                .then(function(response){
+                                    // $scope.myTxt = response.data;
+                                    if(response.data.status)
+                                        $state.go('notebook');
+                                    console.log("success");
                                 }),function(){
                                     console.log('e');
-                            }
+                                }
             }
-            $scope.register = function () {
 
+            $scope.register = function (user) {
+                $scope.myTxt = 'clicked';
+                $http.post('/api/user/register',{email:user.email,username:user.username,password:user.password})
+                    .then(function(response){
+                        $location.path('/resources/views/welcome/blade.php');
+                        // $scope.myTxt = response.data;
+                        console.log('success');
+                    }),function(){
+                        console.log('error');
+                }
             }
             $scope.reset = function () {
 
             }
-        })
+        });
+
+    // app.animation('.fad', function () {
+    //     return {
+    //         enter: function(element, done) {
+    //             element.css({
+    //                 opacity: 0
+    //             });
+    //             element.animate({
+    //                 opacity: 1
+    //             }, 1000, done);
+    //         },
+    //         leave: function (element, done) {
+    //             element.css({
+    //                 opacity: 1
+    //             });
+    //             element.animate({
+    //                 opacity: 0
+    //             }, 1000, done);
+    //         }
+    //     };
+    // });
 
         // .service('UserService',['$http',
         //     function ($http) {
