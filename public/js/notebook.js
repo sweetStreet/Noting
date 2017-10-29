@@ -36,35 +36,7 @@
     ]);
 
 
-    app.controller('welcomeCrtl',function($scope,$http,$state){
-        $scope.myTxt = "你还没有提交";
-        $scope.login = function (user) {
-            $http.post('/api/user/login',{email:user.email,password:user.password})
-                .then(function(response){
-                    // $scope.myTxt = response.data;
-                    if(response.data.status)
-                        $state.go('notebook');
-                    console.log("success");
-                }),function(){
-                console.log('e');
-            }
-        }
 
-        $scope.register = function (user) {
-            $scope.myTxt = 'clicked';
-            $http.post('/api/user/register',{email:user.email,username:user.username,password:user.password})
-                .then(function(response){
-                    $location.path('/resources/views/welcome/blade.php');
-                    // $scope.myTxt = response.data;
-                    console.log('success');
-                }),function(){
-                console.log('error');
-            }
-        }
-        $scope.reset = function () {
-
-        }
-    });
 
     // app.animation('.fad', function () {
     //     return {

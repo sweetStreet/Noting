@@ -51,7 +51,8 @@
                                 .then(function(response){
                                     // $scope.myTxt = response.data;
                                     if(response.data.status)
-                                        $state.go('notebook');
+                                        //$state.go('notebook');
+                                    window.location.href="/api/notebook";
                                     console.log("success");
                                 }),function(){
                                     console.log('e');
@@ -62,7 +63,7 @@
                 $scope.myTxt = 'clicked';
                 $http.post('/api/user/register',{email:user.email,username:user.username,password:user.password})
                     .then(function(response){
-                        $location.path('/resources/views/welcome/blade.php');
+                        //$location.path('/resources/views/welcome/blade.php');
                         // $scope.myTxt = response.data;
                         console.log('success');
                     }),function(){
