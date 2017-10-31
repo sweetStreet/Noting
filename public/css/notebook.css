@@ -1,0 +1,10 @@
+.container{
+    background-image: url("/images/desk2.jpg");
+
+    background-repeat : repeat;
+}
+
+.notebook-item{
+    width: 250px;
+    height: 2000px;
+}

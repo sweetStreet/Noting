@@ -23,3 +23,6 @@ Route::any('/api/user','UserController@index');
 
 //笔记本界面
 Route::any('/api/notebook','NotebookController@index');
+
+//笔记编辑界面
+Route::any('/api/article','ArticleController@index');

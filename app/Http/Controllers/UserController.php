@@ -63,7 +63,7 @@ class UserController extends Controller
             if(Hash::check($password,$user->first()->password)){//密码正确
                 //return redirect('/api/notebook');
 //                return redirect()->action('NotebookController@index');
-                return ['status' => 1, 'msg' => 'success'];
+                return ['status' => 1, 'msg' => '/api/notebook'];
             }else{
                 return ['status' => 0, 'msg' => '密码错误'];
             }

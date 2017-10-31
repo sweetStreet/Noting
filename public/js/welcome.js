@@ -44,16 +44,17 @@
         ]);
 
 
-        app.controller('welcomeCrtl',function($scope,$http,$state){
+        app.controller('welcomeCrtl',function($scope,$http){
+
             $scope.myTxt = "你还没有提交";
             $scope.login = function (user) {
                 $http.post('/api/user/login',{email:user.email,password:user.password})
                                 .then(function(response){
-                                    // $scope.myTxt = response.data;
-                                    if(response.data.status)
-                                        //$state.go('notebook');
-                                    window.location.href="/api/notebook";
-                                    console.log("success");
+                                    if(response.data.status) {//登录成功
+                                        window.location.href = response.data.msg;
+                                    }else{
+
+                                    }
                                 }),function(){
                                     console.log('e');
                                 }
