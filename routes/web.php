@@ -16,13 +16,29 @@ Route::get('/', function () {
 });
 
 //用户模块
-//注册页面
+//登录
 Route::post('/api/user/login','UserController@login');
+//注册
 Route::any('/api/user/register', 'UserController@register');
+//默认登录界面
 Route::any('/api/user','UserController@index');
 
-//笔记本界面
+//笔记本模块
 Route::any('/api/notebook','NotebookController@index');
 
-//笔记编辑界面
+//笔记编辑模块
 Route::any('/api/article','ArticleController@index');
+
+//管理员模块
+//默认登录界面
+Route::any('/api/admin','AdminController@index');
+//管理员登录
+Route::post('/api/admin/login','AdminController@login');
+//管理员主界面
+Route::any('/api/admin/main','AdminController@main');
+//用户列表
+Route::any('/api/admin/adminUserList','AdminController@userList');
+//增加用户
+Route::any('/api/admin/addUser','AdminController@addUser');
+//删除用户
+Route::any('/api/admin/adminDeleteUser','AdminController@deleteUser');
