@@ -31,14 +31,16 @@ Route::any('/api/article','ArticleController@index');
 
 //管理员模块
 //默认登录界面
-Route::any('/api/admin','AdminController@index');
+Route::any('/api/admin','AdminController@login');
 //管理员登录
 Route::post('/api/admin/login','AdminController@login');
 //管理员主界面
-Route::any('/api/admin/main','AdminController@main');
+Route::any('/api/admin/index','AdminController@index');
 //用户列表
 Route::any('/api/admin/adminUserList','AdminController@userList');
 //增加用户
 Route::any('/api/admin/addUser','AdminController@addUser');
 //删除用户
 Route::any('/api/admin/adminDeleteUser','AdminController@deleteUser');
+//后台服务器信息
+Route::any('/api/admin/adminWelcome','AdminController@welcome');

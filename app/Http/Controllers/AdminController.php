@@ -17,10 +17,6 @@ class AdminController
 
     public function index()
     {
-        return view('adminLogin');
-    }
-
-    public function main(){
         return view('admin');
     }
 
@@ -32,6 +28,9 @@ class AdminController
         return view('adminAddUser');
     }
 
+    public function welcome(){
+        return view('adminWelcome');
+    }
 
     public function login(){
         $username = Request::get('username');
