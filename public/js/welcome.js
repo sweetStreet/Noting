@@ -53,7 +53,7 @@
                                     if(response.data.status) {//登录成功
                                         window.location.href = response.data.msg;
                                     }else{
-
+                                        $scope.myTxt = response.data.msg;
                                     }
                                 }),function(){
                                     console.log('e');
