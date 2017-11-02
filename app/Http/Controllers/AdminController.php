@@ -32,6 +32,10 @@ class AdminController
         return view('adminWelcome');
     }
 
+    public function changePassword(){
+        return view('adminChangePassword');
+    }
+
     public function login(){
         $username = Request::get('username');
         $password = Request::get('password');

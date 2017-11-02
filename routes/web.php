@@ -44,3 +44,5 @@ Route::any('/api/admin/addUser','AdminController@addUser');
 Route::any('/api/admin/adminDeleteUser','AdminController@deleteUser');
 //后台服务器信息
 Route::any('/api/admin/adminWelcome','AdminController@welcome');
+//修改密码
+Route::any('/api/admin/adminChangePassword','AdminController@changePassword');
