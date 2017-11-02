@@ -17,9 +17,7 @@
 <body>
     <div class="container">
         <div class="notebook-set">
-            <div class="notebook-item">
-                <div class="name">笔记本</div>
-            </div>
+
 
         </div>
     </div>

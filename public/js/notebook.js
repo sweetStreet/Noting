@@ -35,41 +35,9 @@
         }
     ]);
 
-    // .service('UserService',['$http',
-    //     function ($http) {
-    //         var me = this;
-    //         me.registerData = {};
-    //         me.register = function () {
-    //             $http.post('/api/user/register');
-    //         }
-    //
-    //         me.login = function(){
-    //             console.log("hey");
-    //             $http.post('/api/user/login');
-    //         }
-    //
-    //         me.reset = function(){
-    //
-    //         }
-    //
-    //         me.username_exists = function (){
-    //             $http.post('api/user/exists',{username:me.registerData.username})
-    //                 .then(function(){
-    //                     console.log('r',r);
-    //                 }),function(){
-    //                     console.log('e',e);
-    //             }
-    //         }
-    //
-    //     }
-    // ])
-    //
-    // .controller('RegisterController',['$scope','UserService',
-    //     function ($scope,UserService) {
-    //     $scope.User = UserService;
-    //     $scope.$watch(function () {
-    //         return UserService.registerData;
-    //     },function (newVal) {  })
-    // }])
+    app.controller('notebookCrtl',function($scope,$http){
+
+    });
+
 
 })();

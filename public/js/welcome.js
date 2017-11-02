@@ -1,5 +1,6 @@
 (function () {
     'user strict';
+    
     var app = angular.module('welcome',['ui.router']);
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
             function($interpolateProvider,$stateProvider,$urlRouterProvider) {

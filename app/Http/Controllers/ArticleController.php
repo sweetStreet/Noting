@@ -13,7 +13,7 @@ class ArticleController
 {
     public function index()
     {
-        return view('admin');
+        return view('article');
     }
 
 }
