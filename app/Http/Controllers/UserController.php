@@ -61,6 +61,7 @@ class UserController extends Controller
         $user = DB::table('users')->where('email',$email)->get();
         if(!$user->isEmpty()){//邮箱存在
             if(Hash::check($password,$user->first()->password)){//密码正确
+                Request::session()->put('uid',$user);
                 return ['status' => 1, 'msg' => '/api/notebook'];
             }else{
                 return ['status' => 0, 'msg' => '密码错误'];

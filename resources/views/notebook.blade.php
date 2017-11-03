@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="notebook" ng-controller="notebookCrtl">
+<html ng-app="notebook" ng-controller="notebookCrtl" ng-init="init()">
 <head>
     <title>notebook</title>
 
@@ -25,16 +25,12 @@
     <div class="container">
         <div class="notebook-item">
             <div class="search-notebook">
-                <select id="notebook-select">
-                    <option value="cheese" class="has-children">Cheese</option>
-                    <option value="tomatoes" class="has-children">Tomatoes</option>
-                    <option value="mozarella" class="has-children">Mozzarella</option>
-                    <option value="mushrooms" class="has-children">Mushrooms</option>
-                    <option value="pepperoni" class="has-children">Pepperoni</option>
-                    <option value="onions" class="has-children">Onions</option>
+                <select class="notebook-select">
+
                 </select>
                 </div>
             </div>
+
         </div>
 
 

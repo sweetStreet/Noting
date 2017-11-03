@@ -77,42 +77,18 @@
             }
         });
 
-        // .service('UserService',['$http',
-        //     function ($http) {
-        //         var me = this;
-        //         me.registerData = {};
-        //         me.register = function () {
-        //             $http.post('/api/user/register');
-        //         }
-        //
-        //         me.login = function(){
-        //             console.log("hey");
-        //             $http.post('/api/user/login');
-        //         }
-        //
-        //         me.reset = function(){
-        //
-        //         }
-        //
-        //         me.username_exists = function (){
-        //             $http.post('api/user/exists',{username:me.registerData.username})
-        //                 .then(function(){
-        //                     console.log('r',r);
-        //                 }),function(){
-        //                     console.log('e',e);
-        //             }
-        //         }
-        //
-        //     }
-        // ])
-        //
-        // .controller('RegisterController',['$scope','UserService',
-        //     function ($scope,UserService) {
-        //     $scope.User = UserService;
-        //     $scope.$watch(function () {
-        //         return UserService.registerData;
-        //     },function (newVal) {  })
-        // }])
+    app.service('Session', function () {
+        this.create = function (sessionId, userId, userRole) {
+            this.id = sessionId;
+            this.userId = userId;
+            this.userRole = userRole;
+        };
+        this.destroy = function () {
+            this.id = null;
+            this.userId = null;
+            this.userRole = null;
+        };
+    })
 
 })();
 

@@ -16,21 +16,25 @@ Route::get('/', function () {
 });
 
 //用户模块
+//默认界面
+Route::any('/api/user','UserController@index');
 //登录
 Route::post('/api/user/login','UserController@login');
 //注册
 Route::any('/api/user/register', 'UserController@register');
-//默认登录界面
-Route::any('/api/user','UserController@index');
+
 
 //笔记本模块
+//默认界面
 Route::any('/api/notebook','NotebookController@index');
+//获得某一用户的所有笔记本
+Route::get('/api/notebook/getAll','NotebookController@getAllByUserId');
 
 //笔记编辑模块
 Route::any('/api/article','ArticleController@index');
 
 //管理员模块
-//默认登录界面
+//默认界面
 Route::any('/api/admin','AdminController@login');
 //管理员登录
 Route::post('/api/admin/login','AdminController@login');
