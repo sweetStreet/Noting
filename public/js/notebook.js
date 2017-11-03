@@ -1,5 +1,6 @@
 (function () {
     'user strict';
+
     var app = angular.module('notebook',['ui.router']);
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
         function($interpolateProvider,$stateProvider,$urlRouterProvider) {
@@ -36,8 +37,30 @@
     ]);
 
     app.controller('notebookCrtl',function($scope,$http){
-
     });
 
 
 })();
+
+$(document).ready(function() {
+    var lastSelected = $('#notebook-select option:selected').val();
+    $('#notebook-select').multiselect({
+        templates: {
+            ul: '<ul class="multiselect-container dropdown-menu with-inputType-none"></ul>',
+            divider: '<li class="multiselect-item divider"></li>',
+            filter: '<li class="multiselect-item filter"><div class="input-group"><input class="form-control multiselect-search" type="text"></div></li>'
+        },
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,//不区分大小写
+        filterBehavior: 'value',//根据value或者text过滤
+        onChange: function(element, checked) {
+            if (confirm('Do you wish to change the selection?')) {
+                lastSelected = element.val();
+            }
+            else {
+                $("#notebook-select").multiselect('select', lastSelected);
+                $("#notebook-select").multiselect('deselect', element.val());
+            }
+        }
+    });
+});
