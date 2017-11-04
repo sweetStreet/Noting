@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="notebook" ng-controller="notebookCrtl" ng-init="init()">
+<html ng-app="myapp" ng-controller="notebookCrtl" ng-init="init()">
 <head>
     <title>notebook</title>
 
@@ -7,12 +7,6 @@
     <script src="/node_modules/jquery/dist/jquery.js"></script>
     <script src="/node_modules/angular/angular.js"></script>
     <script src="/node_modules/angular-ui-router/release/angular-ui-router.js"></script>
-
-    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-
-    <script type="text/javascript" src="/node_modules/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
-    <link rel="stylesheet" href="/node_modules/bootstrap-multiselect/dist/css/bootstrap-multiselect.css" type="text/css"/>
 
     <link rel="stylesheet" href="https://npmcdn.com/sweetalert2@4.0.15/dist/sweetalert2.min.css">
     <script src="https://npmcdn.com/sweetalert2@4.0.15/dist/sweetalert2.min.js"></script>
@@ -25,9 +19,7 @@
     <div class="container">
         <div class="notebook-item">
             <div class="search-notebook">
-                <select class="notebook-select">
 
-                </select>
                 </div>
             </div>
 

@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Request;
 use Hash;
 use DB;
-use Illuminate\Http\RedirectResponse;
+use Session;
 
 class UserController extends Controller
 {
+
     public function index()
     {
         return view('welcome');
@@ -32,7 +33,6 @@ class UserController extends Controller
         }
 
         //检查用户名是否存在
-
         $user_exisis = DB::table('users')-> where('email',$email)->exists();
 
         if($user_exisis){
@@ -57,11 +57,16 @@ class UserController extends Controller
     public function login(){
         $email = Request::get('email');
         $password = Request::get('password');
-
-        $user = DB::table('users')->where('email',$email)->get();
-        if(!$user->isEmpty()){//邮箱存在
-            if(Hash::check($password,$user->first()->password)){//密码正确
-                Request::session()->put('uid',$user);
+        $user = DB::table('users')->where('email',$email)->first();
+        if($user){//邮箱存在
+            if(Hash::check($password,$user->password)){//密码正确
+                //将username和userid保存到session
+//                Session::put('USERID', $user->id);
+//                Session::put('USERNAME', $user->name);
+//                session(['username' => $user->name]);
+//                session(['userid' => $user->id]);
+//                session()->put('USERNAME',$user->name);
+//                session()->put('USERID',$user->id);
                 return ['status' => 1, 'msg' => '/api/notebook'];
             }else{
                 return ['status' => 0, 'msg' => '密码错误'];
@@ -71,4 +76,10 @@ class UserController extends Controller
         }
     }
 
+    public function logout(){
+//        if(session('USERID','null')){//如果有userid
+//            session()->flush();//清空session
+//        }
+        return ['status' => 1];
+    }
 }

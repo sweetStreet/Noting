@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="welcome" ng-controller="welcomeCrtl">
+<html ng-app="myapp" ng-controller="welcomeCrtl">
     <head>
         <title>Noting</title>
         <link rel="stylesheet" href="/node_modules/normalize-css/normalize.css">
@@ -23,8 +23,6 @@
             <p>[:myTxt:]</p>
             <div> Copyright © 2017 sweetstreet. All rights reserved. </div>
         </footer>
-
-
     </body>
 
 

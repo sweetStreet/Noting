@@ -1,12 +1,13 @@
 (function () {
     'user strict';
     
-    var app = angular.module('welcome',['ui.router']);
+    var app = angular.module('myapp',['ui.router']);
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
-            function($interpolateProvider,$stateProvider,$urlRouterProvider) {
+            function($interpolateProvider,$stateProvider,$urlRouterProvider,$httpProvider) {
                 //原本默认的是两个大括号{{内容}}，但是angular和laravel会冲突
                 $interpolateProvider.startSymbol("[:");
                 $interpolateProvider.endSymbol(":]");
+
 
                 //定义了路由规则
                 $stateProvider
@@ -76,19 +77,6 @@
 
             }
         });
-
-    app.service('Session', function () {
-        this.create = function (sessionId, userId, userRole) {
-            this.id = sessionId;
-            this.userId = userId;
-            this.userRole = userRole;
-        };
-        this.destroy = function () {
-            this.id = null;
-            this.userId = null;
-            this.userRole = null;
-        };
-    })
 
 })();
 
