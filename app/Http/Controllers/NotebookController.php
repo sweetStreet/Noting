@@ -21,10 +21,10 @@ class NotebookController
     }
 
     public function getAllByUserId(){
-        $userid=1;
+        $userid = Request::get('userid');
         $notebooks = DB::table('notebooks')->where('uid',$userid)->get();
         if(!$notebooks->isEmpty()){//笔记本存在
-            return ['status' => 1, 'notebookList' => $notebooks];
+            return ['status' => 1, 'notebooks' => $notebooks];
         }else{
             return ['status' => 0, 'msg' => '还未创建笔记本'];
         }

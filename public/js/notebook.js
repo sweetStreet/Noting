@@ -1,7 +1,7 @@
 (function () {
     'user strict';
 
-    var app = angular.module('myapp',['ui.router']);
+    var app = angular.module('notebook',['ui.router','ngCookies']);
 
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
         function($interpolateProvider,$stateProvider,$urlRouterProvider) {
@@ -37,7 +37,28 @@
         }
     ]);
 
-    app.controller('notebookCrtl',function($scope,$http){
+    app.controller('notebookCrtl',function($scope,$http,$cookieStore){
+
+        $scope.init = function(){
+            userid = $cookieStore.get('userid');
+            console.log(userid);
+
+            $http.get('/api/notebook/getAll',{
+                params: {
+                    "userid":userid
+                }
+            })
+                .then(function(response){
+                    if(response.data.status) {//有笔记本
+                        $scope.notebooks = response.data.notebooks;
+                        console.log(response.data.notebooks);
+                    }else{
+                        console.log('没有数据');
+                    }
+                }),function(){
+                console.log('e');
+                }
+        };
 
 
     });

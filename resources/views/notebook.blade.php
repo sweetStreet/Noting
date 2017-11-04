@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="myapp" ng-controller="notebookCrtl" ng-init="init()">
+<html ng-app="notebook" ng-controller="notebookCrtl" ng-init="init()">
 <head>
     <title>notebook</title>
 
@@ -14,12 +14,13 @@
 
     <script src="/js/notebook.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/notebook.css">
+    <script src="/node_modules/angular-cookies/angular-cookies.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="notebook-item">
-            <div class="search-notebook">
-
+            <div ng-repeat="notebook in notebooks" class="search-notebook">
+                <td>[:notebook.title:]</td>
                 </div>
             </div>
 

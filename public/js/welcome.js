@@ -1,13 +1,12 @@
 (function () {
     'user strict';
     
-    var app = angular.module('myapp',['ui.router']);
+    var app = angular.module('welcome',['ui.router','ngCookies']);
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
-            function($interpolateProvider,$stateProvider,$urlRouterProvider,$httpProvider) {
+            function($interpolateProvider,$stateProvider,$urlRouterProvider) {
                 //原本默认的是两个大括号{{内容}}，但是angular和laravel会冲突
                 $interpolateProvider.startSymbol("[:");
                 $interpolateProvider.endSymbol(":]");
-
 
                 //定义了路由规则
                 $stateProvider
@@ -46,13 +45,14 @@
         ]);
 
 
-        app.controller('welcomeCrtl',function($scope,$http){
+        app.controller('welcomeCrtl',function($scope,$http,$cookieStore){
 
             $scope.myTxt = "你还没有提交";
             $scope.login = function (user) {
                 $http.post('/api/user/login',{email:user.email,password:user.password})
                                 .then(function(response){
                                     if(response.data.status) {//登录成功
+                                        $cookieStore.put('userid',response.data.userid);
                                         window.location.href = response.data.msg;
                                     }else{
                                         $scope.myTxt = response.data.msg;
@@ -74,6 +74,10 @@
                 }
             }
             $scope.reset = function () {
+                $cookieStore.userid = "";
+            }
+
+            $scope.logout = function () {
 
             }
         });
