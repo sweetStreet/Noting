@@ -12,12 +12,6 @@
     <script src="https://npmcdn.com/sweetalert2@4.0.15/dist/sweetalert2.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular-animate.min.js"></script>
 
-    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-
-    <script type="text/javascript" src="/node_modules/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
-    <link rel="stylesheet" href="/node_modules/bootstrap-multiselect/dist/css/bootstrap-multiselect.css" type="text/css"/>
-
     <script src="/js/notebook.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/notebook.css">
     <script src="/node_modules/angular-cookies/angular-cookies.js"></script>
@@ -30,10 +24,15 @@
             </div>
 
 
-                <select id="notebook-select">
-                    <option  class="has-children">bug</option>
-                    <option  class="has-children">bug</option>
-                <select class="notebook-select">
+            <select ngc-select-search class="common-select" ng-model="aa.b" ng-options="notebook.id as notebook.title for notebook in notebooks" name="notebook">
+                <option value="">请选择</option>
+            </select>
+
+            <label>选择一本笔记本:
+                <select ng-model="colorChosen" ng-options="notebook.id as notebook.title for notebook in notebooks">
+
+                </select>
+            </label>
         </div>
 
         </div>
