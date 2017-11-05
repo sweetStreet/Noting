@@ -2,12 +2,12 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Eloquent;
+use Eloquent;
 
 class User extends Eloquent
 {
     const TABLE_NAME="users";
     protected $table = self::TABLE_NAME;
-    public $timestamps = false;
+    public $timestamps = true;
     protected $softDelete = true;
 }

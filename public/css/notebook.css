@@ -1,0 +1,45 @@
+#container{
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+#notebook_nav {
+    width:22%;
+    float:left;
+    background-color:#eeeeee;
+}
+
+#editor{
+    width:75%;
+    float:right;
+}
+
+#notebook-item{
+    padding:2px;
+}
+
+#addNotebook{
+    color:green;
+    background-color: transparent;
+    border:none;
+    outline:none;
+    display: block;
+}
+
+#article{
+    height:400px;
+    overflow:auto
+}
+
+.article_item{
+    background-color: white;
+}
+
+.article_createTime{
+
+}
+
+.article_content{
+
+}

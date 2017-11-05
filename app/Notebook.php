@@ -2,12 +2,12 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Eloquent;
 
-class Notebook extends Model
+class Notebook extends Eloquent
 {
     const TABLE_NAME="notebooks";
     protected $table = self::TABLE_NAME;
-    public $timestamps = false;
+    public $timestamps = true;
     protected $softDelete = true;
 }

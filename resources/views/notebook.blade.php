@@ -21,13 +21,16 @@
 
     <script src="/node_modules/angular-cookies/angular-cookies.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="/css/nav/default.css" />
+    <!--左侧导航栏-->
     <link rel="stylesheet" type="text/css" href="/css/nav/component.css" />
     <script src="/js/nav/modernizr.custom.js"></script>
     <script src="/js/nav/classie.js"></script>
+
+    <!--font awesome-->
+<!--    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css"/>
 </head>
 <body class="cbp-spmenu-push">
-
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
                 <h3>Menu</h3>
                 <a href="http://www.htmleaf.com/" target="_blank">Celery seakale</a>
@@ -38,14 +41,17 @@
                 <a href="http://www.htmleaf.com/" target="_blank">Rutabaga</a>
             </nav>
 
-    <div id="container">
-        <section class="buttonset">
+            <!--打开侧边栏-->
             <!-- Class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
-            <button id="showLeftPush">Show/Hide Left Push Menu</button>
-        </section>
+            <button id="showLeftPush"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
+
+    <div id="container">
+        <div id = "notebook_nav">
+            <!--快速选择笔记本和笔记-->
+            <button id="addNotebook"><i class="fa fa-plus-square fa-2x" aria-hidden="true"></i>新增笔记本</button>
 
 
-                <div class="notebook-item">
+            <div id="notebook-item">
                     <multiselect ng-model="notebookSelected" options="notebooks" id-prop="id"
                                  display-prop="title" show-search="true" selection-limit="1"
                                  placeholder="选择一本笔记本" classes-btn="'btn-primary btn-block'"
@@ -54,28 +60,46 @@
 
                     <div>选中的内容 [: notebookSelected[0].title :]</div>
 
-                    <div>
-                    <table>
-                        <tr ng-repeat="notebook in notebooks">
-                            <td>[: notebook.id :]</td>
-                            <td>[: notebook.title :]</td>
-                        </tr>
-                    </table>
-                    </div>
+<!--                    <div>-->
+<!--                    <table>-->
+<!--                        <tr ng-repeat="notebook in notebooks">-->
+<!--                            <td>[: notebook.id :]</td>-->
+<!--                            <td>[: notebook.title :]</td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                    </div>-->
+            </div>
+
+            <div id="search_article">
+                <form id="search-form">
+                    <input type="text"><button><i class="fa fa-search" aria-hidden="true"></i></button>
+                </form>
+            </div>
+
+        <div id="article">
+            <div ng-repeat="notebook in notebooks | filter:query | orderBy:order">
+                <div class="article_item">
+                    <p class="article_createTime">[: notebook.id :]</p>
+                    <p class="article_content">[: notebook.title :]</p>
+                    <p class="article_createTime">[: notebook.id :]</p>
+                    <p class="article_content">[: notebook.title :]</p>
+                    <p class="article_createTime">[: notebook.id :]</p>
+                    <p class="article_content">[: notebook.title :]</p>
                 </div>
+            </div>
+        </div>
 
-
-                <div class = "editor">
-                    <div id="div1" class="toolbar">
-                    </div>
-                    <div style="padding: 5px 0; color: #ccc"></div>
-                    <div id="div2" class="text">
-                        <p>第一个 demo（菜单和编辑器区域分开）</p>
-                    </div>
-
-                    <button id="btn1">获取html</button>
-                    <button id="btn2">获取text</button>
-                </div>
+        </div>
+        <div id = "editor">
+            <div id="div1" class="toolbar">
+            </div>
+            <div style="padding: 5px 0; color: #ccc"></div>
+            <div id="div2" class="text">
+                <p>第一个 demo（菜单和编辑器区域分开）</p>
+            </div>
+            <button id="btn1">获取html</button>
+            <button id="btn2">获取text</button>
+        </div>
 
     </div>
 
@@ -125,13 +149,12 @@
                 var showLeftPush = document.getElementById( 'showLeftPush' ),
                     body = document.body;
                     menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
-                   
+
 
                 showLeftPush.onclick = function() {
                     classie.toggle( this, 'active' );
                     classie.toggle( body, 'cbp-spmenu-push-toright' );
                     classie.toggle( menuLeft, 'cbp-spmenu-open' );
-                    disableOther( 'showLeftPush' );
                 };
 
             </script>

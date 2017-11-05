@@ -19,7 +19,8 @@ class CretaeTableArticles extends Migration
             $table->integer('notebookTitle');
             $table->string('title',128);
             $table->text('content');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
