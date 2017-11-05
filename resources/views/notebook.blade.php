@@ -13,12 +13,6 @@
 
     <script type="text/javascript" src="/node_modules/angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect.js"></script>
 
-    <script src="/js/navcustom.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/nav/navstyle.css">
-    <link rel="stylesheet" type="text/css" href="/css/nav/default.css">
-    <link rel="stylesheet" type="text/css" href="/css/nav/normalize.css">
-    <link rel="stylesheet" type="text/css" href="/css/nav/reset.css">
-
     <script src="/js/notebook.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/notebook.css">
 
@@ -26,57 +20,31 @@
     <link rel="stylesheet" type="text/css" href="/css/article.css">
 
     <script src="/node_modules/angular-cookies/angular-cookies.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/nav/default.css" />
+    <link rel="stylesheet" type="text/css" href="/css/nav/component.css" />
+    <script src="/js/nav/modernizr.custom.js"></script>
+    <script src="/js/nav/classie.js"></script>
 </head>
-<body>
+<body class="cbp-spmenu-push">
+
+            <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+                <h3>Menu</h3>
+                <a href="http://www.htmleaf.com/" target="_blank">Celery seakale</a>
+                <a href="http://www.htmleaf.com/" target="_blank">Dulse daikon</a>
+                <a href="http://www.htmleaf.com/" target="_blank">Zucchini garlic</a>
+                <a href="http://www.htmleaf.com/" target="_blank">Catsear azuki bean</a>
+                <a href="http://www.htmleaf.com/" target="_blank">Dandelion bunya</a>
+                <a href="http://www.htmleaf.com/" target="_blank">Rutabaga</a>
+            </nav>
+
     <div id="container">
-        <div id="canvas">
-            <div id="nav">
-                <h2 id="title"><i class="fa fa-sitemap"></i> MENU</h2>
-                <ul id="toggle">
-                    <li>
-                        <div class="active border">
-                            <span class="menu-icons fa fa-home"></span>   <a href="#">HOME</a>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <span class="menu-icons  fa fa-user"></span>   <a href="#">ABOUT US</a>
-                            <span class="the-btn fa fa-plus"></span>
-                        </div>
-                        <ul>
-                            <li>
-                                <a href="#">OUR TEAM</a>
-                            </li>
-                            <li>
-                                <a href="#">OUR SERVICES</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <div>
-                            <span class="menu-icons  fa fa-briefcase"></span>
-                            <a href="#">PORTFOLIO</a><span class="the-btn fa fa-plus"></span>
-                        </div>
-                        <ul>
-                            <li>
-                                <a href="#">WEB DESIGN</a>
-                            </li>
+        <section class="buttonset">
+            <!-- Class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
+            <button id="showLeftPush">Show/Hide Left Push Menu</button>
+        </section>
 
-                            <li>
-                                <a href="#">GRAPHIC DESIGN</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <div>
-                            <span class="menu-icons  fa fa-envelope"></span>
-                            <a href="#">CONTACT</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
 
-            <div class="htmleaf-container">
                 <div class="notebook-item">
                     <multiselect ng-model="notebookSelected" options="notebooks" id-prop="id"
                                  display-prop="title" show-search="true" selection-limit="1"
@@ -108,8 +76,7 @@
                     <button id="btn1">获取html</button>
                     <button id="btn2">获取text</button>
                 </div>
-            </div>
-        </div>
+
     </div>
 
 
@@ -154,5 +121,19 @@
         }, false)
     </script>
 
+            <script>
+                var showLeftPush = document.getElementById( 'showLeftPush' ),
+                    body = document.body;
+                    menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+                   
+
+                showLeftPush.onclick = function() {
+                    classie.toggle( this, 'active' );
+                    classie.toggle( body, 'cbp-spmenu-push-toright' );
+                    classie.toggle( menuLeft, 'cbp-spmenu-open' );
+                    disableOther( 'showLeftPush' );
+                };
+
+            </script>
 </body>
 </html>
