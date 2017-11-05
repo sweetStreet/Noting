@@ -76,7 +76,6 @@
 
     <script type="text/ng-template" id="reset.tpl">
         <div>
-
             <form>
                 <div class="inset">
                     <p>
