@@ -78,13 +78,12 @@
             </div>
 
         <div id="article">
-            <div ng-repeat="notebook in notebooks | filter:query | orderBy:order">
+            <div ng-repeat="article in articles">
                 <div class="article_item">
-                    <p class="article_createTime">[: notebook.id :]</p>
-                    <p class="article_content">[: notebook.title :]</p>
+                    <p class="article_createTime">[: article.created_at :]</p>
+                    <p class="article_content">[: article :]</p>
                     <p>需要显示的文本：[:html:]</p>
                     <p>Html格式化文本： <span ng-bind-html="html|htmlContent"></span></p>
-
                 </div>
             </div>
         </div>
@@ -95,7 +94,7 @@
             </div>
             <div style="padding: 5px 0; color: #ccc"></div>
             <div id="div2" class="text">
-                <p>第一个 demo（菜单和编辑器区域分开）</p>
+                <p>第一个 demo（菜单和编辑器区域分开)</p>
             </div>
             <button id="btn1" ng-click="saveArticle()">保存</button>
         </div>

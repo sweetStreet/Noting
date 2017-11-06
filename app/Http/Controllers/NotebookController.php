@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Article;
 use Illuminate\Http\RedirectResponse;
 use DB;
 use Request;
@@ -29,5 +30,6 @@ class NotebookController
             return ['status' => 0, 'msg' => '还未创建笔记本'];
         }
     }
+
 
 }

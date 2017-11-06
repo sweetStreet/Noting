@@ -39,6 +39,11 @@
     Route::any('/api/article', 'ArticleController@index');
     //图片上传
     Route::any('/api/article/img/upload', 'ArticleController@imgUpload');
+    //保存文章
+    Route::post('/api/article/saveArticle','ArticleController@saveArticle');
+    //查看文章
+    Route::any('/api/article/getArticlesByNotebookID','ArticleController@getArticlesByNotebookID');
+
 
 //管理员模块
 //默认界面

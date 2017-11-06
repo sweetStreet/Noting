@@ -15,9 +15,9 @@ class CretaeTableArticles extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('userid');
-            $table->integer('notebookTitle');
-            $table->string('title',128);
+            $table->integer('user_id');
+            $table->integer('notebook_id');
+            $table->string('keywords',128)->nullable();
             $table->text('content');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

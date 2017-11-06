@@ -61,9 +61,46 @@
         };
 
         $scope.saveArticle = function(){
-            alert(editor.txt.html());
-            $content = editor.txt.html();
+            // alert(editor.txt.html());
+            content = editor.txt.html();
+            userid = $cookieStore.get('userid');
+            notebookid= $scope.notebookSelected[0].id;
+            $http.post('/api/article/saveArticle',{user_id:userid,notebook_id:notebookid,content:content})
+                .then(function(response){
+                    if(response.data.status) {//创建成功
+                        //刷新文章列表
+                        console.log('success');
+                    }else{
+                        //创建失败
+                        console.log('error');
+                    }
+                }),function(){
+                console.log('e');
+            }
         }
+
+        $scope.notebookSelected = [];
+        $scope.$watch('notebookSelected',function (newVal) {
+            if (newVal.length == 0) {
+            } else {
+                userid = $cookieStore.get('userid');
+                notebookid = newVal[0].id;
+                $http.put('/api/article/getArticlesByNotebookID', {user_id: userid, notebook_id: notebookid})
+                    .then(function (response) {
+                        if (response.data.status) {//获得文章列表
+                            if(response.data.data){
+                                $scope.articles = response.data.data.data;
+                            }
+                            console.log('success');
+                        } else {
+                            console.log('error');
+                        }
+                    }), function () {
+                    console.log('e');
+                }
+            }
+        })
+
 
     });
 
@@ -72,34 +109,5 @@
             return $sce.trustAsHtml(input);
         }
     }]);
-    // app.directive('select', [function() {
-    //     return function (scope, element, attributes) {
-    //         var lastSelected = $('notebook-select option:selected').val();
-    //         // Below setup the dropdown:
-    //
-    //         element.multiselect({
-    //             templates: {
-    //                 ul: '<ul class="multiselect-container dropdown-menu with-inputType-none"></ul>',
-    //                 divider: '<li class="multiselect-item divider"></li>',
-    //                 filter: '<li class="multiselect-item filter"><div class="input-group"><input class="form-control multiselect-search" type="text"></div></li>'
-    //             },
-    //             placeholder: "请选择",
-    //             enableFiltering: true,
-    //             enableCaseInsensitiveFiltering: true,//不区分大小写
-    //             filterBehavior: 'value',//根据value或者text过滤
-    //             onChange: function(element, checked) {
-    //                 if (confirm('Do you wish to change the selection?')) {
-    //                     lastSelected = element.val();
-    //                 }
-    //                 else {
-    //                     element.multiselect('select', lastSelected);
-    //                     element.multiselect('deselect', element.val());
-    //                 }
-    //             }
-    //         })
-    //     }
-    // }]);
-
-
 
 })();
