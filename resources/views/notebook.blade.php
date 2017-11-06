@@ -1,6 +1,7 @@
 <!doctype html>
 <html ng-app="notebook" ng-controller="notebookCrtl" ng-init="init()">
 <head>
+    <meta name="csrf-token" content="[:csrf_token():]">
     <title>notebook</title>
 
     <link rel="stylesheet" href="/node_modules/normalize-css/normalize.css">
@@ -16,9 +17,6 @@
     <script src="/js/notebook.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/notebook.css">
 
-    <script src="/js/article.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/article.css">
-
     <script src="/node_modules/angular-cookies/angular-cookies.js"></script>
 
     <!--左侧导航栏-->
@@ -29,6 +27,9 @@
     <!--font awesome-->
 <!--    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css"/>
+
+    <link rel="stylesheet" type="text/css" href="/css/article.css">
+
 </head>
 <body class="cbp-spmenu-push">
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
@@ -81,10 +82,9 @@
                 <div class="article_item">
                     <p class="article_createTime">[: notebook.id :]</p>
                     <p class="article_content">[: notebook.title :]</p>
-                    <p class="article_createTime">[: notebook.id :]</p>
-                    <p class="article_content">[: notebook.title :]</p>
-                    <p class="article_createTime">[: notebook.id :]</p>
-                    <p class="article_content">[: notebook.title :]</p>
+                    <p>需要显示的文本：[:html:]</p>
+                    <p>Html格式化文本： <span ng-bind-html="html|htmlContent"></span></p>
+
                 </div>
             </div>
         </div>
@@ -97,66 +97,27 @@
             <div id="div2" class="text">
                 <p>第一个 demo（菜单和编辑器区域分开）</p>
             </div>
-            <button id="btn1">获取html</button>
-            <button id="btn2">获取text</button>
+            <button id="btn1" ng-click="saveArticle()">保存</button>
         </div>
 
     </div>
 
 
-
     <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
     <script type="text/javascript" src="/node_modules/wangeditor/release/wangEditor.js"></script>
-    <script type="text/javascript">
-        var E = window.wangEditor
-        var editor = new E('#div1', '#div2')
-        editor.customConfig.uploadImgServer = '/upload'  // 上传图片到服务器
-        editor.customConfig.linkImgCallback = function (url) {
-            console.log(url) // url 即插入图片的地址
-        }
-        //TODO 配置debug模式 记得结束之后删除
-        editor.customConfig.debug = true
+            <script type="text/javascript" src="/js/article.js"></script>
 
-        editor.customConfig.onchange = function (html) {
-            // html 即变化之后的内容
-            console.log(html)
-        }
-        // 自定义 onchange 触发的延迟时间，默认为 200 ms
-        editor.customConfig.onchangeTimeout = 1000 // 单位 ms
+    <script>
+        var showLeftPush = document.getElementById( 'showLeftPush' ),
+            body = document.body;
+        menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 
-        editor.customConfig.linkCheck = function (text, link) {
-            console.log(text) // 插入的文字
-            console.log(link) // 插入的链接
-
-            return true // 返回 true 表示校验成功
-            // return '验证失败' // 返回字符串，即校验失败的提示信息
-        }
-
-        editor.create()
-
-        document.getElementById('btn1').addEventListener('click', function () {
-            // 读取 html
-            alert(editor.txt.html())
-        }, false)
-
-        document.getElementById('btn2').addEventListener('click', function () {
-            // 读取 text
-            alert(editor.txt.text())
-        }, false)
-    </script>
-
-            <script>
-                var showLeftPush = document.getElementById( 'showLeftPush' ),
-                    body = document.body;
-                    menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
-
-
-                showLeftPush.onclick = function() {
+            showLeftPush.onclick = function() {
                     classie.toggle( this, 'active' );
                     classie.toggle( body, 'cbp-spmenu-push-toright' );
                     classie.toggle( menuLeft, 'cbp-spmenu-open' );
-                };
+            };
 
-            </script>
+    </script>
 </body>
 </html>

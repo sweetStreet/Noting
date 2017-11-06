@@ -67,6 +67,7 @@ class UserController extends Controller
 //                session(['userid' => $user->id]);
 //                session()->put('USERNAME',$user->name);
 //                session()->put('USERID',$user->id);
+
                 return ['status' => 1, 'msg' => '/api/notebook','userid'=>$user->id];
             }else{
                 return ['status' => 0, 'msg' => '密码错误'];

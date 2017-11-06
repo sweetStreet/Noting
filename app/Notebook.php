@@ -8,6 +8,6 @@ class Notebook extends Eloquent
 {
     const TABLE_NAME="notebooks";
     protected $table = self::TABLE_NAME;
-    public $timestamps = true;
+    public $timestamps = false;
     protected $softDelete = true;
 }

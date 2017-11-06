@@ -33,7 +33,6 @@
 
             //没有满足上面的所有规则
             $urlRouterProvider.otherwise('/notebook');
-
         }
     ]);
 
@@ -42,6 +41,7 @@
         $scope.init = function(){
             userid = $cookieStore.get('userid');
             console.log(userid);
+            $scope.html = '<span style="color: red">这是格式化的HTML文本</span>';
             $scope.notebooks = [];
             $http.get('/api/notebook/getAll',{
                 params: {
@@ -59,8 +59,19 @@
                 console.log('e');
                 }
         };
+
+        $scope.saveArticle = function(){
+            alert(editor.txt.html());
+            $content = editor.txt.html();
+        }
+
     });
 
+    app.filter('htmlContent',['$sce', function($sce) {
+        return function(input) {
+            return $sce.trustAsHtml(input);
+        }
+    }]);
     // app.directive('select', [function() {
     //     return function (scope, element, attributes) {
     //         var lastSelected = $('notebook-select option:selected').val();

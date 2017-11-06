@@ -14,6 +14,6 @@ class Article extends Eloquent
 {
     const TABLE_NAME="articles";
     protected $table = self::TABLE_NAME;
-    public $timestamps = true;
+    public $timestamps = false;
     protected $softDelete = true;
 }

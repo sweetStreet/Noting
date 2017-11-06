@@ -8,6 +8,6 @@ class User extends Eloquent
 {
     const TABLE_NAME="users";
     protected $table = self::TABLE_NAME;
-    public $timestamps = true;
+    public $timestamps = false;
     protected $softDelete = true;
 }
