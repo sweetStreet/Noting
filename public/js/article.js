@@ -1,5 +1,5 @@
-var E = window.wangEditor
-var editor = new E('#div1', '#div2');
+var E = window.wangEditor;
+var editor = new E('#div1','#div2');
 editor.customConfig.uploadImgServer = '/upload'  // 上传图片到服务器
 editor.customConfig.linkImgCallback = function (url) {
     console.log(url) // url 即插入图片的地址
@@ -72,7 +72,26 @@ editor.customConfig.uploadImgHooks = {
 }
 
 
-editor.create()
+editor.create();
+
+window.wangEditor.fullscreen = {
+    // editor create之后调用
+    init: function(editorSelector){
+        $(editorSelector + " .w-e-toolbar").append('<div class="w-e-menu"><a class="_wangEditor_btn_fullscreen" href="###" onclick="window.wangEditor.fullscreen.toggleFullscreen(\'' + editorSelector + '\')">全屏</a></div>');
+    },
+    toggleFullscreen: function(editorSelector){
+        $(editorSelector).toggleClass('fullscreen-editor');
+        if($(editorSelector + ' ._wangEditor_btn_fullscreen').text() == '全屏'){
+            $(editorSelector + ' ._wangEditor_btn_fullscreen').text('退出全屏');
+        }else{
+            $(editorSelector + ' ._wangEditor_btn_fullscreen').text('全屏');
+        }
+    }
+};
+
+E.fullscreen.init('#div1');
+
+
 
 //        document.getElementById('btn1').addEventListener('click', function () {
 //            // 读取 html

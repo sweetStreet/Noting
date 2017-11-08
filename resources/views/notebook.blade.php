@@ -29,7 +29,8 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css"/>
     <!--article css-->
     <link rel="stylesheet" type="text/css" href="/css/article.css">
-
+    <!--全屏-->
+    <link rel="stylesheet" type="text/css" href="/css/wangEditor-fullscreen-plugin.css"/>
 </head>
 <body class="cbp-spmenu-push">
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">

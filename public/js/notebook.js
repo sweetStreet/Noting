@@ -100,8 +100,6 @@
                 }
             }
         })
-
-
     });
 
     app.filter('htmlContent',['$sce', function($sce) {
