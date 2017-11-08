@@ -10,6 +10,65 @@
     background-color:#eeeeee;
 }
 
+#header{
+    background: linear-gradient(#1f2124, #27292c);
+    height:3%;
+    padding-bottom: 1%;
+}
+
+i{
+    color: #FFFFFF;
+}
+
+#showLeftPush{
+    background-color: #333333;
+    border:none;
+}
+
+.header_button{
+    border:#222;
+    background-color: #333333;
+    margin-left:10px;
+    width:4%;
+    outline:none;
+}
+.header_button:hover {
+    background-color: transparent;
+}
+.header_button:active {
+    background-color: #333333;
+}
+
+#search_article{
+    float:right;
+    margin-right: 2%;
+    margin-top:1%;
+}
+
+#btn_search_article{
+    border:#222;
+    background-color: #333333;
+    outline:none;
+}
+#btn_search_article:hover{
+    background-color: transparent;
+}
+#btn_search_article:active {
+    background-color: #333333;
+}
+
+#input_search_article{
+    outline: none;
+    border:none;
+    background-color: #000;
+}
+#input_search_article:focus{
+    background-color: white;
+}
+#input_search_article:active{
+    background-color: white;
+}
+
 #editor{
     width:75%;
     float:right;
@@ -20,7 +79,6 @@
 }
 
 #addNotebook{
-    color:green;
     background-color: transparent;
     border:none;
     outline:none;
@@ -28,9 +86,18 @@
 }
 
 #article{
-    height:400px;
+    height:500px;
     overflow:auto
 }
+#article:active{
+    background: #feee7d;
+    background-color: #feee7d;
+}
+#article:after{
+    background: #feee7d;
+    background-color: #feee7d;
+}
+
 
 .article_item{
     background-color: white;

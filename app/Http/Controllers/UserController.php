@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Session;
 use Request;
 use Hash;
 use DB;
-use Session;
 
 class UserController extends Controller
 {
@@ -62,7 +62,7 @@ class UserController extends Controller
             if(Hash::check($password,$user->password)){//密码正确
                 //将username和userid保存到session
 //                Session::put('USERID', $user->id);
-//                Session::put('USERNAME', $user->name);
+//                Session::put('EMAIL',$email);
 //                session(['username' => $user->name]);
 //                session(['userid' => $user->id]);
 //                session()->put('USERNAME',$user->name);

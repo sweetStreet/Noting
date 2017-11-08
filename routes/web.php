@@ -62,16 +62,3 @@
     Route::any('/api/admin/adminWelcome', 'AdminController@welcome');
 //修改密码
     Route::any('/api/admin/adminChangePassword', 'AdminController@changePassword');
-
-
-//    Route::group(['middleware'=>['web']],function (){
-        Route::any('test1', function () {
-//            echo(session()->put('USERID',1));
-            echo('hi');
-        });
-
-        Route::any('test2',function (){
-//            echo(session('USERID','null'));
-        });
-
-//    });

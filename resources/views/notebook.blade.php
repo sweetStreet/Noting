@@ -27,7 +27,7 @@
     <!--font awesome-->
 <!--    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css"/>
-
+    <!--article css-->
     <link rel="stylesheet" type="text/css" href="/css/article.css">
 
 </head>
@@ -42,14 +42,28 @@
                 <a href="http://www.htmleaf.com/" target="_blank">Rutabaga</a>
             </nav>
 
-            <!--打开侧边栏-->
-            <!-- Class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
-            <button id="showLeftPush"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
+            <header id="header">
+                <!--打开侧边栏-->
+                <!-- Class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
+                <button id="showLeftPush"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
+
+                <button id="btn_add_article" class="header_button"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                <button id="btn_delete_article" class="header_button"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                <button id="btn_save_article"class="header_button" ng-click="saveArticle()"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
+                <button id="btn_tag" class="header_button"><i class="fa fa-bookmark" aria-hidden="true"></i></button>
+
+                <div id="search_article" >
+                    <form id="search-form">
+                        <input id="input_search_article" type="text" value="搜索笔记"
+                               onfocus="if (value =='搜索笔记'){value =''}"onblur="if (value ==''){value='搜索笔记'}"/>><button id="btn_search_article"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+            </header>
 
     <div id="container">
         <div id = "notebook_nav">
             <!--快速选择笔记本和笔记-->
-            <button id="addNotebook"><i class="fa fa-plus-square fa-2x" aria-hidden="true"></i>新增笔记本</button>
+            <button id="addNotebook"><i class="fa fa-plus-square fa-2x" aria-hidden="true"></i></button>
 
 
             <div id="notebook-item">
@@ -71,24 +85,18 @@
 <!--                    </div>-->
             </div>
 
-            <div id="search_article">
-                <form id="search-form">
-                    <input type="text"><button><i class="fa fa-search" aria-hidden="true"></i></button>
-                </form>
-            </div>
+
 
         <div id="article">
             <div ng-repeat="article in articles">
                 <div class="article_item">
                     <p class="article_createTime">[: article.created_at :]</p>
-                    <p class="article_content">[: article :]</p>
-                    <p>需要显示的文本：[:html:]</p>
-                    <p>Html格式化文本： <span ng-bind-html="html|htmlContent"></span></p>
+                    <p class="article_content"><span ng-bind-html="article.content|htmlContent"></span></p>
                 </div>
             </div>
         </div>
-
         </div>
+
         <div id = "editor">
             <div id="div1" class="toolbar">
             </div>
@@ -96,8 +104,11 @@
             <div id="div2" class="text">
                 <p>第一个 demo（菜单和编辑器区域分开)</p>
             </div>
-            <button id="btn1" ng-click="saveArticle()">保存</button>
+
         </div>
+
+
+
 
     </div>
 

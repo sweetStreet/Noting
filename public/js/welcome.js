@@ -54,7 +54,6 @@
                                     if(response.data.status) {//登录成功
                                         $cookieStore.put('userid',response.data.userid);
                                         window.location.href = response.data.msg;
-                                        console.log();
                                     }else{
                                         $scope.myTxt = response.data.msg;
                                     }
@@ -62,6 +61,8 @@
                                     console.log('e');
                                 }
             }
+
+
 
             $scope.register = function (user) {
                 $scope.myTxt = 'clicked';
