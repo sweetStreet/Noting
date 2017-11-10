@@ -38,6 +38,7 @@
 
     app.controller('notebookCrtl',function($scope,$http,$cookieStore){
 
+        //页面初始化
         $scope.init = function(){
             userid = $cookieStore.get('userid');
             console.log(userid);
@@ -60,6 +61,7 @@
                 }
         };
 
+        //保存文章
         $scope.saveArticle = function(){
             // alert(editor.txt.html());
             content = editor.txt.html();
@@ -79,12 +81,29 @@
             }
         }
 
+        //将左侧列表选中的文章显示在右侧编辑器上
         $scope.showInEditor = function(article){
-            console.log("clicked");
-
             editor.txt.html(article.content);
         }
 
+        //新增文章
+        $scope.addArticle = function () {
+            editor.txt.html('<p><br></p>');
+            $http.post('/api/article/addArticle',{user_id:userid,notebook_id:notebookid,content:content})
+                .then(function(response){
+                    if(response.data.status) {//创建成功
+                        //刷新文章列表
+                        console.log('success');
+                    }else{
+                        //创建失败
+                        console.log('error');
+                    }
+                }),function(){
+                console.log('e');
+            }
+        }
+
+        //获得属于某个笔记本的所有文章
         $scope.notebookSelected = [];
         $scope.$watch('notebookSelected',function (newVal) {
             if (newVal.length == 0) {
@@ -106,31 +125,7 @@
                 }
             }
         })
-
-        // $scope.$watch('articleSelected',function (newVal,oldVal) {
-        //     if(newVal!=oldVal){
-        //         userid = $cookieStore.get('userid');
-        //         notebookid = $scope.notebookSelected.id;
-        //         articleid = newVal[0].id;
-        //         console.log(notebookid);
-        //         console.log(articleid);
-        //         $http.get('/api/article/getArticle', {params:{user_id: userid, notebook_id: notebookid,article_id:articleid}})
-        //             .then(function (response) {
-        //                 if (response.data.status) {//获得文章列表
-        //                     if(response.data.data){
-        //                         $scope.articles = response.data.data.data;
-        //                     }
-        //                     console.log('success');
-        //                 } else {
-        //                     console.log('error');
-        //                 }
-        //             }), function () {
-        //             console.log('e');
-        //         }
-        //     }
-        // })
     });
-
 
     app.filter('htmlContent',['$sce', function($sce) {
         return function(input) {

@@ -17,7 +17,6 @@ editor.customConfig.onchangeTimeout = 1000 // 单位 ms
 editor.customConfig.linkCheck = function (text, link) {
     console.log(text) // 插入的文字ds
     console.log(link) // 插入的链接
-
     return true // 返回 true 表示校验成功
     // return '验证失败' // 返回字符串，即校验失败的提示信息
 }

@@ -39,8 +39,10 @@
     Route::any('/api/article', 'ArticleController@index');
     //图片上传
     Route::any('/api/article/img/upload', 'ArticleController@imgUpload');
+    //新增文章
+    Route::post('/api/article/addArticle','ArticleController@insertArticle');
     //保存文章
-    Route::post('/api/article/saveArticle','ArticleController@saveArticle');
+    Route::post('/api/article/saveArticle','ArticleController@updateArticle');
     //查看文章
     Route::any('/api/article/getArticlesByNotebookID','ArticleController@getArticlesByNotebookID');
 

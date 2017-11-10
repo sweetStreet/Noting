@@ -48,7 +48,7 @@
                 <!-- Class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
                 <button id="showLeftPush"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
 
-                <button id="btn_add_article" class="header_button"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                <button id="btn_add_article" class="header_button" ng-click="addArticle()"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
                 <button id="btn_delete_article" class="header_button"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 <button id="btn_save_article"class="header_button" ng-click="saveArticle()"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
                 <button id="btn_tag" class="header_button"><i class="fa fa-bookmark" aria-hidden="true"></i></button>

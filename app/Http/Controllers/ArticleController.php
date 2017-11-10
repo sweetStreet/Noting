@@ -30,7 +30,7 @@ class ArticleController
     }
 
 
-    public function saveArticle(){
+    public function insertArticle(){
         $user_id = Request::get('user_id');
         $notebook_id = Request::get('notebook_id');
         $content = Request::get('content');
@@ -44,6 +44,23 @@ class ArticleController
         }else{
             return ['status'=>1, 'msg'=>'创建失败'];
         }
+    }
+
+    public function updateArticle(){
+        $user_id = Request::get('user_id');
+        $notebook_id = Request::get('notebook_id');
+        $content = Request::get('content');
+        $article = new Article();
+        $article->user_id = $user_id;
+        $article->notebook_id = $notebook_id;
+        $article->content = $content;
+        $result = $article->save();
+        if($result){
+            return ['status'=>1, 'msg'=>'创建成功'];
+        }else{
+            return ['status'=>1, 'msg'=>'创建失败'];
+        }
+
     }
 
     public function getArticlesByUserID(){
