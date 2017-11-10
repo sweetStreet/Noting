@@ -79,13 +79,19 @@
             }
         }
 
+        $scope.showInEditor = function(article){
+            console.log("clicked");
+
+            editor.txt.html(article.content);
+        }
+
         $scope.notebookSelected = [];
         $scope.$watch('notebookSelected',function (newVal) {
             if (newVal.length == 0) {
             } else {
                 userid = $cookieStore.get('userid');
                 notebookid = newVal[0].id;
-                $http.put('/api/article/getArticlesByNotebookID', {user_id: userid, notebook_id: notebookid})
+                $http.get('/api/article/getArticlesByNotebookID', {params:{user_id: userid, notebook_id: notebookid}})
                     .then(function (response) {
                         if (response.data.status) {//获得文章列表
                             if(response.data.data){
@@ -100,7 +106,31 @@
                 }
             }
         })
+
+        // $scope.$watch('articleSelected',function (newVal,oldVal) {
+        //     if(newVal!=oldVal){
+        //         userid = $cookieStore.get('userid');
+        //         notebookid = $scope.notebookSelected.id;
+        //         articleid = newVal[0].id;
+        //         console.log(notebookid);
+        //         console.log(articleid);
+        //         $http.get('/api/article/getArticle', {params:{user_id: userid, notebook_id: notebookid,article_id:articleid}})
+        //             .then(function (response) {
+        //                 if (response.data.status) {//获得文章列表
+        //                     if(response.data.data){
+        //                         $scope.articles = response.data.data.data;
+        //                     }
+        //                     console.log('success');
+        //                 } else {
+        //                     console.log('error');
+        //                 }
+        //             }), function () {
+        //             console.log('e');
+        //         }
+        //     }
+        // })
     });
+
 
     app.filter('htmlContent',['$sce', function($sce) {
         return function(input) {

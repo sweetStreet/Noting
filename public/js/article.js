@@ -12,7 +12,7 @@ editor.customConfig.onchange = function (html) {
     console.log(html)
 }
 // 自定义 onchange 触发的延迟时间，默认为 200 ms
-editor.customConfig.onchangeTimeout = 10000 // 单位 ms
+editor.customConfig.onchangeTimeout = 1000 // 单位 ms
 
 editor.customConfig.linkCheck = function (text, link) {
     console.log(text) // 插入的文字ds
@@ -21,7 +21,6 @@ editor.customConfig.linkCheck = function (text, link) {
     return true // 返回 true 表示校验成功
     // return '验证失败' // 返回字符串，即校验失败的提示信息
 }
-
 
 editor.customConfig.uploadImgServer = '/api/article/img/upload';
 editor.customConfig.uploadFileName = 'myFileName';

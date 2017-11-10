@@ -70,7 +70,7 @@
             <div id="notebook-item">
                     <multiselect ng-model="notebookSelected" options="notebooks" id-prop="id"
                                  display-prop="title" show-search="true" selection-limit="1"
-                                 placeholder="选择一本笔记本" classes-btn="'btn-primary btn-block'"
+                                 placeholder="选择一本笔记本""
                     >
                     </multiselect>
 
@@ -87,9 +87,8 @@
             </div>
 
 
-
-        <div id="article">
-            <div ng-repeat="article in articles">
+        <div id="article" >
+            <div ng-repeat="article in articles" ng-click="showInEditor(article)">
                 <div class="article_item">
                     <p class="article_createTime">[: article.created_at :]</p>
                     <p class="article_content"><span ng-bind-html="article.content|htmlContent"></span></p>
@@ -107,9 +106,6 @@
             </div>
 
         </div>
-
-
-
 
     </div>
 
