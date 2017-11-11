@@ -108,7 +108,6 @@
             <div id="div2" class="text" ng-model="editorContent" contenteditable="true"> <!--可使用 min-height 实现编辑区域自动增加高度-->
                 <p><b>以下是编辑器的内容：</b></p>
             </div>
-            <p ng-bind="editorContent"></p>
 
 
     </div>

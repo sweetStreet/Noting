@@ -131,8 +131,26 @@
     app.directive('contenteditable', function() {
         return {
             restrict: 'A' ,
-            require: 'ngModel',
-            link: function(scope, element, attrs, ctrl) {
+            require: '?ngModel',
+            link: function(scope, element, attrs, ngModel) {
+                if(!ngModel){
+                    return;
+                }
+                ngModel.$render = function(){
+                    element.html(ngModel.$viewValue||'');
+                }
+                element.on('blur keyup change',function(){
+                    scope.$apply(readViewText);
+                });
+
+                function  readViewText() {
+                    var html = element.html();
+                    if (attrs.stripBr && html === '<br>') {
+                        html = '';
+                    }
+                    ngModel.$setViewValue(html);
+                }
+
                 // 创建编辑器
                 var editor = new wangEditor('#div1','#div2');
 
@@ -144,12 +162,7 @@
                 editor.customConfig.debug = true;
 
                 editor.customConfig.onchange = function (html) {
-                    // html 即变化之后的内容
-                    scope.$apply(function () {
-                        var html = editor.txt.html();
-                        ctrl.$setViewValue(html);
-                        ctrl.$render();
-                    });
+                    console.log(scope.editorContent);
                 }
 // 自定义 onchange 触发的延迟时间，默认为 200 ms
                 editor.customConfig.linkCheck = function (text, link) {
