@@ -5,7 +5,7 @@
 }
 
 #notebook_nav {
-    width:22%;
+    width:20%;
     float:left;
     background-color:#eeeeee;
 }
@@ -70,8 +70,16 @@ i{
 }
 
 #editor{
-    width:75%;
+    width:80%;
     float:right;
+}
+.toolbar {
+    border: 1px solid #ccc;
+}
+.text {
+    border: 1px solid #ccc;
+    outline:none;
+    height: 560px;
 }
 
 #notebook-item{

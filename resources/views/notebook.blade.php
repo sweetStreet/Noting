@@ -24,11 +24,12 @@
     <script src="/js/nav/modernizr.custom.js"></script>
     <script src="/js/nav/classie.js"></script>
 
+    <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+    <script type="text/javascript" src="/node_modules/wangeditor/release/wangEditor.js"></script>
+    <link rel="stylesheet" type="text/css" href="/node_modules/wangeditor/release/wangEditor.css">
     <!--font awesome-->
 <!--    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css"/>
-    <!--article css-->
-    <link rel="stylesheet" type="text/css" href="/css/article.css">
     <!--全屏-->
     <link rel="stylesheet" type="text/css" href="/css/wangEditor-fullscreen-plugin.css"/>
 </head>
@@ -98,21 +99,20 @@
         </div>
 
         <div id = "editor">
+<!--            <div id="editor-trigger" ng-model="editorContent" contenteditable="true">-->
+<!--            </div>-->
+<!--            <hr>-->
+<!--            <p ng-bind="editorContent"></p>-->
             <div id="div1" class="toolbar">
             </div>
-            <div style="padding: 5px 0; color: #ccc"></div>
-            <div id="div2" class="text">
-                <p>第一个 demo（菜单和编辑器区域分开)</p>
+            <div id="div2" class="text" ng-model="editorContent" contenteditable="true"> <!--可使用 min-height 实现编辑区域自动增加高度-->
+                <p><b>以下是编辑器的内容：</b></p>
             </div>
+            <p ng-bind="editorContent"></p>
 
-        </div>
 
     </div>
 
-
-    <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
-    <script type="text/javascript" src="/node_modules/wangeditor/release/wangEditor.js"></script>
-            <script type="text/javascript" src="/js/article.js"></script>
 
     <script>
         var showLeftPush = document.getElementById( 'showLeftPush' ),
