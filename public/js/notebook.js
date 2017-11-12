@@ -1,7 +1,7 @@
 (function () {
     'user strict';
 
-    var app = angular.module('notebook',['ui.router','ngCookies','btorfs.multiselect']);
+    var app = angular.module('notebook',['ui.router','ngCookies','btorfs.multiselect','ngCookies']);
 
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
         function($interpolateProvider,$stateProvider,$urlRouterProvider) {
@@ -61,39 +61,70 @@
                 }
         };
 
-        //保存文章
-        $scope.saveArticle = function(){
-            // alert(editor.txt.html());
-            content = editor.txt.html();
-            userid = $cookieStore.get('userid');
-            notebookid= $scope.notebookSelected[0].id;
-            $http.post('/api/article/saveArticle',{user_id:userid,notebook_id:notebookid,content:content})
-                .then(function(response){
-                    if(response.data.status) {//创建成功
-                        //刷新文章列表
-                        console.log('success');
-                    }else{
-                        //创建失败
-                        console.log('error');
-                    }
-                }),function(){
-                console.log('e');
-            }
-        }
+        // //保存文章
+        // $scope.saveArticle = function(){
+        //     // alert(editor.txt.html());
+        //     content = editorContent;
+        //     userid = $cookieStore.get('userid');
+        //     notebookid= $scope.notebookSelected[0].id;
+        //     $http.post('/api/article/saveArticle',{user_id:userid,notebook_id:notebookid,content:content})
+        //         .then(function(response){
+        //             if(response.data.status) {//创建成功
+        //                 //刷新文章列表
+        //                 console.log('success');
+        //             }else{
+        //                 //创建失败
+        //                 console.log('error');
+        //             }
+        //         }),function(){
+        //         console.log('e');
+        //     }
+        // }
 
         //将左侧列表选中的文章显示在右侧编辑器上
         $scope.showInEditor = function(article){
             $scope.editorContent = article.content;
+            $cookieStore.put('articleid',article.id);
             console.log($scope.editorContent);
+        }
+
+        //刷新文章列表
+        $scope.updateList = function(){
+            userid = $cookieStore.get('userid');
+            notebookid = $cookieStore.get('notebookid');
+            if(notebookid == ''){
+                //提示请选择笔记本
+            }else {
+                $http.get('/api/article/getArticlesByNotebookID', {
+                    params: {
+                        user_id: userid,
+                        notebook_id: notebookid
+                    }
+                })
+                    .then(function (response) {
+                        if (response.data.status) {//获得文章列表
+                            if (response.data.data) {
+                                $scope.articles = response.data.data.data;
+                            }
+                            console.log('success');
+                        } else {
+                            console.log('error');
+                        }
+                    }), function () {
+                    console.log('e');
+                }
+            }
         }
 
         //新增文章
         $scope.addArticle = function () {
-            editor.txt.html('<p><br></p>');
-            $http.post('/api/article/addArticle',{user_id:userid,notebook_id:notebookid,content:content})
+            editorContent = '<p><br></p>';
+            $http.post('/api/article/addArticle',{user_id:userid,notebook_id:notebookid,content:editorContent})
                 .then(function(response){
                     if(response.data.status) {//创建成功
                         //刷新文章列表
+                        $scope.updateList();
+                        $cookieStore.put('articleid',$scope.articles[0].id);
                         console.log('success');
                     }else{
                         //创建失败
@@ -102,15 +133,36 @@
                 }),function(){
                 console.log('e');
             }
+        }
+
+        //删除文章
+        $scope.deleteArticle=function(){
+            console.log('delete pressed');
+            $articleid = $cookieStore.get('articleid')
+            $http.get('/api/article/deleteArticle', {params:{article_id:$articleid}})
+                .then(function (response) {
+                    if (response.data.status) {
+                        //刷新文章列表
+                        $scope.updateList();
+                        console.log('success');
+                    } else {
+                        console.log('error');
+                    }
+                }), function () {
+                console.log('e');
+            }
+
         }
 
         //获得属于某个笔记本的所有文章
         $scope.notebookSelected = [];
         $scope.$watch('notebookSelected',function (newVal) {
             if (newVal.length == 0) {
+                $cookieStore.put('notebookid','');
             } else {
                 userid = $cookieStore.get('userid');
                 notebookid = newVal[0].id;
+                $cookieStore.put('notebookid',notebookid);
                 $http.get('/api/article/getArticlesByNotebookID', {params:{user_id: userid, notebook_id: notebookid}})
                     .then(function (response) {
                         if (response.data.status) {//获得文章列表
@@ -128,7 +180,7 @@
         })
     });
 
-    app.directive('contenteditable', function() {
+    app.directive('contenteditable', function($http,$cookieStore) {
         return {
             restrict: 'A' ,
             require: '?ngModel',
@@ -139,8 +191,23 @@
                 ngModel.$render = function(){
                     element.html(ngModel.$viewValue||'');
                 }
-                element.on('blur keyup change',function(){
+                element.on('blur change',function(){
                     scope.$apply(readViewText);
+
+                    //更新文章内容
+                    $http.post('/api/article/saveArticle',{article_id:$cookieStore.get('articleid'),user_id:userid,notebook_id:$cookieStore.get('notebookid'),content:scope.editorContent})
+                        .then(function(response){
+                            if(response.data.status) {//创建成功
+                                //刷新文章列表
+                                scope.updateList();
+                                console.log('update Success');
+                            }else{
+                                //创建失败
+                                console.log('error');
+                            }
+                        }),function(){
+                        console.log('e');
+                    }
                 });
 
                 function  readViewText() {
@@ -158,10 +225,12 @@
                 editor.customConfig.linkImgCallback = function (url) {
                     console.log(url) // url 即插入图片的地址
                 }
+
 //TODO 配置debug模式 记得结束之后删除
                 editor.customConfig.debug = true;
 
                 editor.customConfig.onchange = function (html) {
+                    console.log("change方法");
                     console.log(scope.editorContent);
                 }
 // 自定义 onchange 触发的延迟时间，默认为 200 ms
@@ -175,7 +244,7 @@
                 editor.customConfig.uploadImgServer = '/api/article/img/upload';
                 editor.customConfig.uploadFileName = 'myFileName';
 // // 将图片大小限制为 5M
-// editor.customConfig.uploadImgMaxSize = 5 * 1024 * 1024
+                editor.customConfig.uploadImgMaxSize = 5 * 1024 * 1024
 // // 限制一次最多上传 15 张图片
 // editor.customConfig.uploadImgMaxLength = 15
                 editor.customConfig.uploadImgHooks = {
@@ -192,6 +261,7 @@
                     success: function (xhr, editor, result) {
                         // 图片上传并返回结果，图片插入成功之后触发
                         // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+                        editor.txt.html(xhr);
                     },
                     fail: function (xhr, editor, result) {
                         // 图片上传并返回结果，但图片插入错误时触发
@@ -213,26 +283,28 @@
                         // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
 
                         // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
-                        var data = result.data
-                        insertImg(data)
+                        var data = result.data;
+                        console.log('uploadURL'+data)
+                        scope.editorContent=data;
+                        insertImg(data);
                         // result 必须是一个 JSON 格式字符串！！！否则报错
                     }
                 }
                 editor.create();
-                editor.fullscreen = {
-                    // editor create之后调用
-                    init: function(editorSelector){
-                        $(editorSelector + " .w-e-toolbar").append('<div class="w-e-menu"><a class="_wangEditor_btn_fullscreen" href="###" onclick="editor.fullscreen.toggleFullscreen(\'' + editorSelector + '\')">全屏</a></div>');
-                    },
-                    toggleFullscreen: function(editorSelector){
-                        $(editorSelector).toggleClass('fullscreen-editor');
-                        if($(editorSelector + ' ._wangEditor_btn_fullscreen').text() == '全屏'){
-                            $(editorSelector + ' ._wangEditor_btn_fullscreen').text('退出全屏');
-                        }else{
-                            $(editorSelector + ' ._wangEditor_btn_fullscreen').text('全屏');
-                        }
-                    }
-                };
+                // editor.fullscreen = {
+                //     // editor create之后调用
+                //     init: function(editorSelector){
+                //         $(editorSelector + " .w-e-toolbar").append('<div class="w-e-menu"><a class="_wangEditor_btn_fullscreen" href="###" onclick="editor.fullscreen.toggleFullscreen(\'' + editorSelector + '\')">全屏</a></div>');
+                //     },
+                //     toggleFullscreen: function(editorSelector){
+                //         $(editorSelector).toggleClass('fullscreen-editor');
+                //         if($(editorSelector + ' ._wangEditor_btn_fullscreen').text() == '全屏'){
+                //             $(editorSelector + ' ._wangEditor_btn_fullscreen').text('退出全屏');
+                //         }else{
+                //             $(editorSelector + ' ._wangEditor_btn_fullscreen').text('全屏');
+                //         }
+                //     }
+                // };
             }
         };
     });

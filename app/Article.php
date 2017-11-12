@@ -9,11 +9,12 @@
 namespace App;
 
 use Eloquent;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Article extends Eloquent
 {
-    const TABLE_NAME="articles";
-    protected $table = self::TABLE_NAME;
+    use SoftDeletes;
     public $timestamps = false;
-    protected $softDelete = true;
+    public $table='articles';
+    protected $dates = ['deleted_at'];
 }

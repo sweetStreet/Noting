@@ -1,7 +1,6 @@
 <!doctype html>
 <html ng-app="notebook" ng-controller="notebookCrtl" ng-init="init()">
 <head>
-    <meta name="csrf-token" content="[:csrf_token():]">
     <title>notebook</title>
 
     <link rel="stylesheet" href="/node_modules/normalize-css/normalize.css">
@@ -30,8 +29,6 @@
     <!--font awesome-->
 <!--    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css"/>
-    <!--全屏-->
-    <link rel="stylesheet" type="text/css" href="/css/wangEditor-fullscreen-plugin.css"/>
 </head>
 <body class="cbp-spmenu-push">
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
@@ -50,7 +47,7 @@
                 <button id="showLeftPush"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
 
                 <button id="btn_add_article" class="header_button" ng-click="addArticle()"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
-                <button id="btn_delete_article" class="header_button"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                <button id="btn_delete_article" class="header_button" ng-click="deleteArticle()"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 <button id="btn_save_article"class="header_button" ng-click="saveArticle()"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
                 <button id="btn_tag" class="header_button"><i class="fa fa-bookmark" aria-hidden="true"></i></button>
 

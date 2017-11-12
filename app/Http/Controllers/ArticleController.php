@@ -25,7 +25,7 @@ class ArticleController
         if(Request::hasfile('myFileName')) {
             $path = Request::file('myFileName')->store('md5(time())');
             //保存到storage目录下
-            return ['error' => 0, 'data' => asset('storage/' . $path)];
+            return ['error' => 0, 'data' => asset('/storage/' . $path)];
         }
     }
 
@@ -47,14 +47,11 @@ class ArticleController
     }
 
     public function updateArticle(){
+        $id = Request::get('article_id');
         $user_id = Request::get('user_id');
         $notebook_id = Request::get('notebook_id');
         $content = Request::get('content');
-        $article = new Article();
-        $article->user_id = $user_id;
-        $article->notebook_id = $notebook_id;
-        $article->content = $content;
-        $result = $article->save();
+        $result = DB::update('update articles set content=? where id=? and user_id=? and notebook_id=?',[$content,$id,$user_id,$notebook_id]);
         if($result){
             return ['status'=>1, 'msg'=>'创建成功'];
         }else{
@@ -66,24 +63,37 @@ class ArticleController
     public function getArticlesByUserID(){
         $user_id = Request::get('user_id');
 
-
     }
 
 
-    public function getArticlesByNotebookID(){
+    public function getArticlesByNotebookID()
+    {
         $user_id = Request::get('user_id');
         $notebook_id = Request::get('notebook_id');
         //每次默认取5篇文章
         $articles = DB::table('articles')->where([
             ['user_id', '=', $user_id],
-            ['notebook_id', '=', $notebook_id]
-        ])->orderBy('created_at','desc')
+            ['notebook_id', '=', $notebook_id],
+            ['deleted_at','=',null]
+        ])->orderBy('created_at', 'asc')
             ->paginate(5);
 
-        if($articles){
-            return ['status'=>1, 'data'=>$articles];
-        }else{
-            return ['status'=>0, 'msg'=>'查询失败'];
+        if ($articles) {
+            return ['status' => 1, 'data' => $articles];
+        } else {
+            return ['status' => 0, 'msg' => '查询失败'];
         }
     }
+
+        public function deleteArticle(){
+            $id=Request::get('article_id');
+            $article = Article::find($id);
+            $article->delete();
+            if($article->trashed()){
+                return ['status'=>1];
+            }else{
+                return ['status'=>0];
+            }
+        }
+
 }

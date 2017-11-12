@@ -45,7 +45,8 @@
     Route::post('/api/article/saveArticle','ArticleController@updateArticle');
     //查看文章
     Route::any('/api/article/getArticlesByNotebookID','ArticleController@getArticlesByNotebookID');
-
+    //删除文章
+    Route::any('/api/article/deleteArticle','ArticleController@deleteArticle');
 
 //管理员模块
 //默认界面
