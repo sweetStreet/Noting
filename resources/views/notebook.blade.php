@@ -20,9 +20,8 @@
     <script src="/js/nav/modernizr.custom.js"></script>
     <script src="/js/nav/classie.js"></script>
 
-    <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
-    <script type="text/javascript" src="/node_modules/wangeditor/release/wangEditor.js"></script>
-    <link rel="stylesheet" type="text/css" href="/node_modules/wangeditor/release/wangEditor.css">
+
+<!--    <link rel="stylesheet" type="text/css" href="/node_modules/wangeditor/release/wangEditor.css">-->
     <!--font awesome-->
 <!--    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css"/>
@@ -38,26 +37,43 @@
 </head>
 <body class="cbp-spmenu-push">
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
-                <h3>Menu</h3>
-                <a href="http://www.htmleaf.com/" target="_blank">个人中心</a>
-                <a href="http://www.htmleaf.com/" target="_blank">Dulse daikon</a>
-                <a href="http://www.htmleaf.com/" target="_blank">Zucchini garlic</a>
-                <a href="http://www.htmleaf.com/" target="_blank">Catsear azuki bean</a>
-                <a href="http://www.htmleaf.com/" target="_blank">Dandelion bunya</a>
-                <a href="http://www.htmleaf.com/" target="_blank">Rutabaga</a>
+
+                <a href="/api/user"><i class="fa fa-user-o fa-3x" aria-hidden="true"></i>我的主页</a>
+                <div id = "notebook_nav">
+                    <!--快速选择笔记本和笔记-->
+                    <button id="addNotebook"><i class="fa fa-plus-square fa-2x" aria-hidden="true"></i></button>
+
+                    <div id="notebook-item">
+                        <multiselect ng-model="notebookSelected" options="notebooks" id-prop="id"
+                                     display-prop="title" show-search="true" selection-limit="1"
+                                     placeholder="选择一本笔记本""
+                        >
+                        </multiselect>
+
+                        <div>选中的内容 [: notebookSelected[0].title :]</div>
+                    </div>
+                </div
+
+                <div id="article" >
+                    <div ng-repeat="article in articles" ng-click="showInEditor(article)">
+                        <div class="article_item" name="article_item" ng-to-yellow>
+                            <p class="article_createTime">[: article.created_at :]</p>
+                            <p class="article_content"><span ng-bind-html="article.content|htmlContent"></span></p>
+                        </div>
+                    </div>
+                </div>
             </nav>
 
             <header id="header">
                 <!--打开侧边栏-->
-                <!-- Class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
+                <!-- class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
                 <button id="showLeftPush"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
-
                 <button id="btn_add_article" class="header_button" ng-click="addArticle()"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
                 <button id="btn_delete_article" class="header_button" ng-click="deleteArticle()"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 <button id="btn_save_article"class="header_button" ng-click="saveArticle()"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
                 <button id="btn_tag" class="header_button"><i class="fa fa-bookmark" aria-hidden="true"></i></button>
                 <button id="btn_share" class="header_button"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
-                <button id="btn_export" class="header_button" ng-click="export()"><i class="fa fa-download" aria-hidden="true"></i></button>
+                <button id="btn_export" class="header_button" pdf-save-button="idOneGraph" pdf-name="hello.pdf" "><i class="fa fa-download" aria-hidden="true"></i></button>
 
                 <div id="search_article" >
                     <form id="search-form">
@@ -67,60 +83,16 @@
                 </div>
             </header>
 
-    <div id="container">
-        <button pdf-save-button="idOneGraph" pdf-name="hello.pdf" class="btn">Hello World</button>
-
-
-
-
-
-        <div id = "notebook_nav">
-            <!--快速选择笔记本和笔记-->
-            <button id="addNotebook"><i class="fa fa-plus-square fa-2x" aria-hidden="true"></i></button>
-
-            <div id="notebook-item">
-                    <multiselect ng-model="notebookSelected" options="notebooks" id-prop="id"
-                                 display-prop="title" show-search="true" selection-limit="1"
-                                 placeholder="选择一本笔记本""
-                    >
-                    </multiselect>
-
-                    <div>选中的内容 [: notebookSelected[0].title :]</div>
-
-<!--                    <div>-->
-<!--                    <table>-->
-<!--                        <tr ng-repeat="notebook in notebooks">-->
-<!--                            <td>[: notebook.id :]</td>-->
-<!--                            <td>[: notebook.title :]</td>-->
-<!--                        </tr>-->
-<!--                    </table>-->
-<!--                    </div>-->
-            </div>
-
-
-        <div id="article" >
-            <div ng-repeat="article in articles" ng-click="showInEditor(article)">
-                <div class="article_item">
-                    <p class="article_createTime">[: article.created_at :]</p>
-                    <p class="article_content"><span ng-bind-html="article.content|htmlContent"></span></p>
-                </div>
-            </div>
+    <div id="editor">
+        <div id="div1" class="toolbar">
         </div>
+        <div pdf-save-content="idOneGraph" id="div2" class="text">
+            <p>请输入内容</p>
         </div>
-        <div pdf-save-content="idOneGraph" >
-        <div id = "editor">
-<!--            <div id="editor-trigger" ng-model="editorContent" contenteditable="true">-->
-<!--            </div>-->
-<!--            <hr>-->
-<!--            <p ng-bind="editorContent"></p>-->
-            <div id="div1" class="toolbar">
-            </div>
-            <div id="div2" class="text" ng-model="editorContent" contenteditable="true"> <!--可使用 min-height 实现编辑区域自动增加高度-->
-                <p><b>以下是编辑器的内容：</b></p>
-            </div>
-        </div>
-        </div>
+    </div>
 
+            <script type="text/javascript" src="/node_modules/wangeditor/release/wangEditor.js"></script>
+            <script type="text/javascript" src="/js/article.js"></script>
 
             <script>
         var showLeftPush = document.getElementById( 'showLeftPush' ),

@@ -10,22 +10,20 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-    //登录
-    Route::post('api/user/login', 'UserController@login');
-    //登出
-    Route::any('api/user/logout', 'UserController@logout');
-
-    //首页
-    Route::get('/', function () {
-        return view('welcome');
-    });
+//首页
+Route::get('/', function () {
+    return view('welcome');
+});
 
 //用户模块
 //默认界面
     Route::any('api/user', 'UserController@index');
 //注册
     Route::any('api/user/register', 'UserController@register');
+//登录
+    Route::post('api/user/login', 'UserController@login');
+//登出
+    Route::any('api/user/logout', 'UserController@logout');
 
 
 

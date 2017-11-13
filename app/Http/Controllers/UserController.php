@@ -12,7 +12,7 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('welcome');
+        return view('profile');
     }
 
     //表名

@@ -43,7 +43,6 @@
             console.log(userid);
             $scope.html = '<span style="color: red">这是格式化的HTML文本</span>';
             $scope.notebooks = [];
-            $scope.editorContent='';
             $http.get('/api/notebook/getAll',{
                 params: {
                     "userid":userid
@@ -61,31 +60,31 @@
                 }
         };
 
-        // //保存文章
-        // $scope.saveArticle = function(){
-        //     // alert(editor.txt.html());
-        //     content = editorContent;
-        //     userid = $cookieStore.get('userid');
-        //     notebookid= $scope.notebookSelected[0].id;
-        //     $http.post('/api/article/saveArticle',{user_id:userid,notebook_id:notebookid,content:content})
-        //         .then(function(response){
-        //             if(response.data.status) {//创建成功
-        //                 //刷新文章列表
-        //                 console.log('success');
-        //             }else{
-        //                 //创建失败
-        //                 console.log('error');
-        //             }
-        //         }),function(){
-        //         console.log('e');
-        //     }
-        // }
+        //保存文章
+        $scope.saveArticle = function(){
+            articleid = $cookieStore.get('articleid');
+            content = editor.txt.html();
+            userid = $cookieStore.get('userid');
+            notebookid= $scope.notebookSelected[0].id;
+            $http.post('/api/article/saveArticle',{article_id:articleid,user_id:userid,notebook_id:notebookid,content:content})
+                .then(function(response){
+                    if(response.data.status) {//创建成功
+                        //刷新文章列表
+                        $scope.updateList();
+                        console.log('success');
+                    }else{
+                        //创建失败
+                        console.log('error');
+                    }
+                }),function(){
+                console.log('e');
+            }
+        }
 
         //将左侧列表选中的文章显示在右侧编辑器上
         $scope.showInEditor = function(article){
-            $scope.editorContent = article.content;
+            editor.txt.html(article.content);
             $cookieStore.put('articleid',article.id);
-            console.log($scope.editorContent);
         }
 
         //刷新文章列表
@@ -119,6 +118,7 @@
         //新增文章
         $scope.addArticle = function () {
             editorContent = '<p><br></p>';
+            editor.txt.html(editorContent);
             $http.post('/api/article/addArticle',{user_id:userid,notebook_id:notebookid,content:editorContent})
                 .then(function(response){
                     if(response.data.status) {//创建成功
@@ -137,7 +137,7 @@
 
         //删除文章
         $scope.deleteArticle=function(){
-            console.log('delete pressed');
+            editor.txt.html('<p><br></p>');
             $articleid = $cookieStore.get('articleid')
             $http.get('/api/article/deleteArticle', {params:{article_id:$articleid}})
                 .then(function (response) {
@@ -154,23 +154,6 @@
 
         }
 
-        // $scope.export = function () {
-        //     html2canvas($scope.editorContent, {
-        //         onrendered: function(canvas) {
-        //             //通过html2canvas将html渲染成canvas，然后获取图片数据
-        //             var imgData = canvas.toDataURL('image/jpeg');
-        //
-        //             //初始化pdf，设置相应格式
-        //             var doc = new jsPDF("p", "mm", "a4");
-        //
-        //             //这里设置的是a4纸张尺寸
-        //             doc.addImage(imgData, 'JPEG', 0, 0,210,297);
-        //
-        //             //输出保存命名为content的pdf
-        //             doc.save('content.pdf');
-        //         }
-        //     });
-        // }
 
         //获得属于某个笔记本的所有文章
         $scope.notebookSelected = [];
@@ -198,131 +181,19 @@
         })
     });
 
-    app.directive('contenteditable', function($http,$cookieStore) {
+    app.directive('ngToYellow', function() {
         return {
-            restrict: 'A' ,
-            require: '?ngModel',
-            link: function(scope, element, attrs, ngModel) {
-                if(!ngModel){
-                    return;
-                }
-                ngModel.$render = function(){
-                    element.html(ngModel.$viewValue||'');
-                }
-                element.on('blur change',function(){
-                    scope.$apply(readViewText);
-
-                    //更新文章内容
-                    $http.post('/api/article/saveArticle',{article_id:$cookieStore.get('articleid'),user_id:userid,notebook_id:$cookieStore.get('notebookid'),content:scope.editorContent})
-                        .then(function(response){
-                            if(response.data.status) {//创建成功
-                                //刷新文章列表
-                                scope.updateList();
-                                console.log('update Success');
-                            }else{
-                                //创建失败
-                                console.log('error');
-                            }
-                        }),function(){
-                        console.log('e');
-                    }
+            restrict: 'AE',
+            replace: true,
+            link: function(scope, elem, attrs) {
+                elem.bind('click', function() {
+                    elem.css("background-color", "yellow");
+                    elem.css("color", "white");
+                    elem.css("border", "5px solid red");
                 });
-
-                function  readViewText() {
-                    var html = element.html();
-                    if (attrs.stripBr && html === '<br>') {
-                        html = '';
-                    }
-                    ngModel.$setViewValue(html);
-                }
-
-                // 创建编辑器
-                var editor = new wangEditor('#div1','#div2');
-
-                editor.customConfig.uploadImgServer = '/upload'  // 上传图片到服务器
-                editor.customConfig.linkImgCallback = function (url) {
-                    console.log(url) // url 即插入图片的地址
-                }
-
-//TODO 配置debug模式 记得结束之后删除
-                editor.customConfig.debug = true;
-
-                editor.customConfig.onchange = function (html) {
-                    console.log("change方法");
-                    console.log(scope.editorContent);
-                }
-// 自定义 onchange 触发的延迟时间，默认为 200 ms
-                editor.customConfig.linkCheck = function (text, link) {
-                    console.log(text) // 插入的文字ds
-                    console.log(link) // 插入的链接
-                    return true // 返回 true 表示校验成功
-                    // return '验证失败' // 返回字符串，即校验失败的提示信息
-                }
-
-                editor.customConfig.uploadImgServer = '/api/article/img/upload';
-                editor.customConfig.uploadFileName = 'myFileName';
-// // 将图片大小限制为 5M
-                editor.customConfig.uploadImgMaxSize = 5 * 1024 * 1024
-// // 限制一次最多上传 15 张图片
-// editor.customConfig.uploadImgMaxLength = 15
-                editor.customConfig.uploadImgHooks = {
-                    before: function (xhr, editor, files) {
-                        // 图片上传之前触发
-                        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，files 是选择的图片文件
-
-                        // 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
-                        // return {
-                        //     prevent: true,
-                        //     msg: '放弃上传'
-                        // }
-                    },
-                    success: function (xhr, editor, result) {
-                        // 图片上传并返回结果，图片插入成功之后触发
-                        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
-                        editor.txt.html(xhr);
-                    },
-                    fail: function (xhr, editor, result) {
-                        // 图片上传并返回结果，但图片插入错误时触发
-                        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
-                    },
-                    error: function (xhr, editor) {
-                        // 图片上传出错时触发
-                        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
-                    },
-                    timeout: function (xhr, editor) {
-                        // 图片上传超时时触发
-                        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
-                    },
-
-                    // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
-                    // （但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
-                    customInsert: function (insertImg, result, editor) {
-                        // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
-                        // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
-
-                        // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
-                        var data = result.data;
-                        console.log('uploadURL'+data)
-                        scope.editorContent=data;
-                        insertImg(data);
-                        // result 必须是一个 JSON 格式字符串！！！否则报错
-                    }
-                }
-                editor.create();
-                // editor.fullscreen = {
-                //     // editor create之后调用
-                //     init: function(editorSelector){
-                //         $(editorSelector + " .w-e-toolbar").append('<div class="w-e-menu"><a class="_wangEditor_btn_fullscreen" href="###" onclick="editor.fullscreen.toggleFullscreen(\'' + editorSelector + '\')">全屏</a></div>');
-                //     },
-                //     toggleFullscreen: function(editorSelector){
-                //         $(editorSelector).toggleClass('fullscreen-editor');
-                //         if($(editorSelector + ' ._wangEditor_btn_fullscreen').text() == '全屏'){
-                //             $(editorSelector + ' ._wangEditor_btn_fullscreen').text('退出全屏');
-                //         }else{
-                //             $(editorSelector + ' ._wangEditor_btn_fullscreen').text('全屏');
-                //         }
-                //     }
-                // };
+                elem.bind('mouseover', function() {
+                    elem.css('background-color', 'white');
+                });
             }
         };
     });

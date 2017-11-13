@@ -5,9 +5,9 @@
 }
 
 .cbp-spmenu h3 {
-	color: #afdefa;
-	font-size: 1.9em;
-	padding: 20px;
+	color: #F2EBC9;
+	font-size: 1em;
+	padding:7%;
 	margin: 0;
 	font-weight: 300;
 	background: #282830;
@@ -24,10 +24,10 @@
 	background: #282830;
 }
 
-.cbp-spmenu a:active {
-	background: #afdefa;
-	color: #282830;
-}
+/*.cbp-spmenu a:active {*/
+	/*background: #afdefa;*/
+	/*color: #282830;*/
+/*}*/
 
 /* Orientation-dependent styles for the content of the menu */
 

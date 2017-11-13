@@ -5,8 +5,6 @@
 }
 
 #notebook_nav {
-    width:20%;
-    float:left;
     background-color:#eeeeee;
 }
 
@@ -17,7 +15,7 @@
 }
 
 i{
-    color: #FFFFFF;
+    color: #F8F2E2;
 }
 
 #showLeftPush{
@@ -69,10 +67,6 @@ i{
     background-color: white;
 }
 
-#editor{
-    width:80%;
-    float:right;
-}
 .toolbar {
     border: 1px solid #ccc;
 }
@@ -97,18 +91,19 @@ i{
     height:500px;
     overflow:auto
 }
-#article:active{
-    background: #feee7d;
-    background-color: #feee7d;
-}
 
 
 .article_item{
     background-color: white;
 }
+.article_item:active{
+    background-color: yellow;
+}
+.article_item::-webkit-keygen-select{
+    
+}
 
 .article_createTime{
-
 }
 
 .article_content{
