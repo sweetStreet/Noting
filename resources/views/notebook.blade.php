@@ -13,9 +13,6 @@
 
     <script type="text/javascript" src="/node_modules/angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect.js"></script>
 
-    <script src="/js/notebook.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/notebook.css">
-
     <script src="/node_modules/angular-cookies/angular-cookies.js"></script>
 
     <!--左侧导航栏-->
@@ -29,11 +26,20 @@
     <!--font awesome-->
 <!--    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css"/>
+
+    <!--转成pdf格式-->
+    <script src="/js/topdf/html2canvas.js"></script>
+    <script src="/js/topdf/jspdf.debug.js"></script>
+    <script type="text/javascript" src="/node_modules/angular-save-html-to-pdf/dist/saveHtmlToPdf.js"></script>
+    <!--notebook的js和css-->
+    <script src="/js/notebook.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/notebook.css">
+
 </head>
 <body class="cbp-spmenu-push">
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
                 <h3>Menu</h3>
-                <a href="http://www.htmleaf.com/" target="_blank">Celery seakale</a>
+                <a href="http://www.htmleaf.com/" target="_blank">个人中心</a>
                 <a href="http://www.htmleaf.com/" target="_blank">Dulse daikon</a>
                 <a href="http://www.htmleaf.com/" target="_blank">Zucchini garlic</a>
                 <a href="http://www.htmleaf.com/" target="_blank">Catsear azuki bean</a>
@@ -50,6 +56,8 @@
                 <button id="btn_delete_article" class="header_button" ng-click="deleteArticle()"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 <button id="btn_save_article"class="header_button" ng-click="saveArticle()"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
                 <button id="btn_tag" class="header_button"><i class="fa fa-bookmark" aria-hidden="true"></i></button>
+                <button id="btn_share" class="header_button"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+                <button id="btn_export" class="header_button" ng-click="export()"><i class="fa fa-download" aria-hidden="true"></i></button>
 
                 <div id="search_article" >
                     <form id="search-form">
@@ -60,10 +68,15 @@
             </header>
 
     <div id="container">
+        <button pdf-save-button="idOneGraph" pdf-name="hello.pdf" class="btn">Hello World</button>
+
+
+
+
+
         <div id = "notebook_nav">
             <!--快速选择笔记本和笔记-->
             <button id="addNotebook"><i class="fa fa-plus-square fa-2x" aria-hidden="true"></i></button>
-
 
             <div id="notebook-item">
                     <multiselect ng-model="notebookSelected" options="notebooks" id-prop="id"
@@ -94,7 +107,7 @@
             </div>
         </div>
         </div>
-
+        <div pdf-save-content="idOneGraph" >
         <div id = "editor">
 <!--            <div id="editor-trigger" ng-model="editorContent" contenteditable="true">-->
 <!--            </div>-->
@@ -105,12 +118,11 @@
             <div id="div2" class="text" ng-model="editorContent" contenteditable="true"> <!--可使用 min-height 实现编辑区域自动增加高度-->
                 <p><b>以下是编辑器的内容：</b></p>
             </div>
+        </div>
+        </div>
 
 
-    </div>
-
-
-    <script>
+            <script>
         var showLeftPush = document.getElementById( 'showLeftPush' ),
             body = document.body;
         menuLeft = document.getElementById( 'cbp-spmenu-s1' ),

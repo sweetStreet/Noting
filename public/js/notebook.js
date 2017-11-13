@@ -1,7 +1,7 @@
 (function () {
     'user strict';
 
-    var app = angular.module('notebook',['ui.router','ngCookies','btorfs.multiselect','ngCookies']);
+    var app = angular.module('notebook',['ui.router','ngCookies','btorfs.multiselect','ngCookies','htmlToPdfSave']);
 
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
         function($interpolateProvider,$stateProvider,$urlRouterProvider) {
@@ -153,6 +153,24 @@
             }
 
         }
+
+        // $scope.export = function () {
+        //     html2canvas($scope.editorContent, {
+        //         onrendered: function(canvas) {
+        //             //通过html2canvas将html渲染成canvas，然后获取图片数据
+        //             var imgData = canvas.toDataURL('image/jpeg');
+        //
+        //             //初始化pdf，设置相应格式
+        //             var doc = new jsPDF("p", "mm", "a4");
+        //
+        //             //这里设置的是a4纸张尺寸
+        //             doc.addImage(imgData, 'JPEG', 0, 0,210,297);
+        //
+        //             //输出保存命名为content的pdf
+        //             doc.save('content.pdf');
+        //         }
+        //     });
+        // }
 
         //获得属于某个笔记本的所有文章
         $scope.notebookSelected = [];

@@ -24,7 +24,6 @@
 //用户模块
 //默认界面
     Route::any('api/user', 'UserController@index');
-
 //注册
     Route::any('api/user/register', 'UserController@register');
 
@@ -47,6 +46,7 @@
     Route::any('/api/article/getArticlesByNotebookID','ArticleController@getArticlesByNotebookID');
     //删除文章
     Route::any('/api/article/deleteArticle','ArticleController@deleteArticle');
+
 
 //管理员模块
 //默认界面
