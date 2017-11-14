@@ -89,21 +89,15 @@ i{
 
 #article{
     height:500px;
-    overflow:auto
 }
-
 
 .article_item{
     background-color: white;
-}
-.article_item:active{
-    background-color: yellow;
-}
-.article_item::-webkit-keygen-select{
-    
+    height:70px;
 }
 
 .article_createTime{
+
 }
 
 .article_content{

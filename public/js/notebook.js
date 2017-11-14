@@ -187,12 +187,20 @@
             replace: true,
             link: function(scope, elem, attrs) {
                 elem.bind('click', function() {
-                    elem.css("background-color", "yellow");
-                    elem.css("color", "white");
-                    elem.css("border", "5px solid red");
-                });
-                elem.bind('mouseover', function() {
-                    elem.css('background-color', 'white');
+
+                    var divs = document.getElementsByName("article_item");
+                    var len = divs.length;
+                    for(var i=0;i<len;i++){
+                            for(var j=0;j<len;j++) {
+                                divs[j].style.backgroundColor = "white";
+                                divs[j].style.color="black";
+                            }
+                    }
+
+                        elem.css("background-color", "rgb(254,198,6)");
+                        elem.css("color", "white");
+
+
                 });
             }
         };
