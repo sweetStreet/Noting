@@ -5,7 +5,7 @@
 }
 
 #notebook_nav {
-    background-color:#eeeeee;
+    background-color:#282830;
 }
 
 #header{
@@ -61,10 +61,10 @@ i{
     background-color: #000;
 }
 #input_search_article:focus{
-    background-color: white;
+    background-color: #888888;
 }
 #input_search_article:active{
-    background-color: white;
+    background-color:#888888;
 }
 
 .toolbar {

@@ -19,8 +19,6 @@
     <link rel="stylesheet" type="text/css" href="/css/nav/component.css" />
     <script src="/js/nav/modernizr.custom.js"></script>
     <script src="/js/nav/classie.js"></script>
-
-
 <!--    <link rel="stylesheet" type="text/css" href="/node_modules/wangeditor/release/wangEditor.css">-->
     <!--font awesome-->
 <!--    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
@@ -33,6 +31,11 @@
     <!--notebook的js和css-->
     <script src="/js/notebook.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/notebook.css">
+    <!--笔记-->
+    <link rel="stylesheet" type="text/css" href="/css/book/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/css/book/demo.css" />
+    <link rel="stylesheet" type="text/css" href="/css/book/book2.css" />
+    <script src="/js/book/modernizr.custom.js"></script>
 
 </head>
 <body class="cbp-spmenu-push">
@@ -43,12 +46,52 @@
                     <!--快速选择笔记本和笔记-->
                     <button id="addNotebook"><i class="fa fa-plus-square fa-2x" aria-hidden="true"></i></button>
 
+<!--                    <multiselect ng-model="notebookSelected" options="notebooks" id-prop="id"-->
+<!--                                 display-prop="title" show-search="true" selection-limit="1"-->
+<!--                                 placeholder="选择一本笔记本""-->
+<!--                    >-->
+<!--                    </multiselect>-->
                     <div id="notebook-item">
-                        <multiselect ng-model="notebookSelected" options="notebooks" id-prop="id"
-                                     display-prop="title" show-search="true" selection-limit="1"
-                                     placeholder="选择一本笔记本""
-                        >
-                        </multiselect>
+                        <li>
+                            <figure class='book'>
+
+                                <!-- Front -->
+
+                                <ul class='paperback_front'>
+                                    <li>
+                                        <span class="ribbon">NEW</span>
+                                        <img src="/images/paper.jpg" alt="" width="100%" height="100%">
+                                    </li>
+                                    <li></li>
+                                </ul>
+
+                                <!-- Pages -->
+
+                                <ul class='ruled_paper'>
+                                    <li></li>
+                                    <li>
+                                        <a class="btn" href="http://www.codehero.top">PREVIEW</a>
+                                    </li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+
+                                <!-- Back -->
+
+                                <ul class='paperback_back'>
+                                    <li>
+                                        <img src="/images/paper.jpg" alt="" width="100%" height="100%">
+                                    </li>
+                                    <li></li>
+                                </ul>
+                                <figcaption>
+                                    <h1>绘制</h1>
+                                    <span>By 代码侠</span>
+                                    <p>代码侠是一个分享酷站的网站，这里有很多炫酷的效果展示，也有教程，玩代码，找代码侠。</p>
+                                </figcaption>
+                            </figure>
+                        </li>
 
                         <div>选中的内容 [: notebookSelected[0].title :]</div>
                     </div>

@@ -15,12 +15,176 @@
 
     <script src="/node_modules/angular-cookies/angular-cookies.js"></script>
 
-    <!--    <link rel="stylesheet" type="text/css" href="/node_modules/wangeditor/release/wangEditor.css">-->
     <!--font awesome-->
     <!--    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css"/>
+
+    <!--profile的js和css-->
+    <script src="/js/profile.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/profile.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/book/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/css/book/demo.css" />
+    <link rel="stylesheet" type="text/css" href="/css/book/book2.css" />
+    <script src="/js/book/modernizr.custom.js"></script>
+
 </head>
-2
 <body>
-<h>个人中心233</h>
+
+<div class="component">
+
+    <ul class="align">
+        <li>
+            <figure class='book'>
+
+                <!-- Front -->
+
+                <ul class='paperback_front'>
+                    <li>
+                        <span class="ribbon">Nº1</span>
+                        <img src="img/bg.jpg" alt="" width="100%" height="100%">
+                    </li>
+                    <li></li>
+                </ul>
+
+                <!-- Pages -->
+
+                <ul class='ruled_paper'>
+                    <li></li>
+                    <li>
+                        <a class="btn" href="http://www.codehero.top">VIEW</a>
+                    </li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+
+                <!-- Back -->
+
+                <ul class='paperback_back'>
+                    <li>
+                        <img src="img/bg.jpg" alt="" width="100%" height="100%">
+                    </li>
+                    <li></li>
+                </ul>
+                <figcaption>
+                    <h1>草图</h1>
+                    <span>By 代码侠</span>
+                    <p>代码侠是一个分享酷站的网站，这里有很多炫酷的效果展示，也有教程，玩代码，找代码侠。</p>
+                </figcaption>
+            </figure>
+        </li>
+        <li>
+            <figure class='book'>
+
+                <!-- Front -->
+
+                <ul class='paperback_front'>
+                    <li>
+                        <span class="ribbon">NEW</span>
+                        <img src="/images/paper.jpg" alt="" width="100%" height="100%">
+                    </li>
+                    <li></li>
+                </ul>
+
+                <!-- Pages -->
+
+                <ul class='ruled_paper'>
+                    <li></li>
+                    <li>
+                        <a class="btn" href="http://www.codehero.top">PREVIEW</a>
+                    </li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+
+                <!-- Back -->
+
+                <ul class='paperback_back'>
+                    <li>
+                        <img src="/images/paper.jpg" alt="" width="100%" height="100%">
+                    </li>
+                    <li></li>
+                </ul>
+                <figcaption>
+                    <h1>绘制</h1>
+                    <span>By 代码侠</span>
+                    <p>代码侠是一个分享酷站的网站，这里有很多炫酷的效果展示，也有教程，玩代码，找代码侠。</p>
+                </figcaption>
+            </figure>
+        </li>
+        <li>
+            <figure class='book'>
+
+                <!-- Front -->
+
+                <ul class='paperback_front green'>
+                    <li></li>
+                    <li></li>
+                </ul>
+
+                <!-- Pages -->
+
+                <ul class='ruled_paper'>
+                    <li></li>
+                    <li>
+                        <a class="btn" href="http://www.codehero.top">VIEW</a>
+                    </li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+
+                <!-- Back -->
+
+                <ul class='paperback_back green'>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <figcaption>
+                    <h1>日记</h1>
+                    <span>By 代码侠</span>
+                    <p>代码侠是一个分享酷站的网站，这里有很多炫酷的效果展示，也有教程，玩代码，找代码侠。</p>
+                </figcaption>
+            </figure>
+        </li>
+        <li>
+            <figure class='book'>
+
+                <!-- Front -->
+
+                <ul class='paperback_front red'>
+                    <li></li>
+                    <li></li>
+                </ul>
+
+                <!-- Pages -->
+
+                <ul class='ruled_paper'>
+                    <li></li>
+                    <li>
+                        <a class="btn" href="http://www.codehero.top">VIEW</a>
+                    </li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+
+                <!-- Back -->
+
+                <ul class='paperback_back red'>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <figcaption>
+                    <h1>涂鸦</h1>
+                    <span>By 代码侠</span>
+                    <p>代码侠是一个分享酷站的网站，这里有很多炫酷的效果展示，也有教程，玩代码，找代码侠。</p>
+                </figcaption>
+            </figure>
+        </li>
+    </ul>
+</div>
+
 </body>
