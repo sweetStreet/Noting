@@ -14,55 +14,6 @@
 	content: "";
 }
 
-html,
-body {
-	height: 100%;
-	-webkit-font-smoothing: subpixel-antialiased;
-}
-
-html {
-	font-size: 100%;
-}
-
-body {
-	background: #ecf0f1;
-	color: #34495e;
-	font-family: 'Lato', 'Arial', sans-serif;
-	font-weight: 400;
-	line-height: 1.2;
-}
-
-ul {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-a {
-	color: #2c3e50;
-	text-decoration: none;
-}
-
-.btn {
-	display: inline-block;
-	margin-top: 100px;
-	font-size: 1.2em;
-	font-weight: 700;
-	padding: 0.1em 0.8em;
-	text-align: center;
-	-webkit-transform: rotate(20deg);
-	-moz-transform: rotate(20deg);
-	transform: rotate(20deg);
-	font-family: "Indie Flower", serif;
-	-webkit-transition: color 0.3s;
-	-moz-transition: color 0.3s;
-	transition: color 0.3s;
-}
-
-.btn:hover {
-	color: #16a085;
-}
-
 /* basic grid, only for this demo */
 
 .align {
@@ -104,8 +55,7 @@ Table of Contents
 */
 
 .book {
-	position: relative;
-	width: 160px; 
+	width: 160px;
 	height: 220px;
 	-webkit-perspective: 1000px;
 	-moz-perspective: 1000px;
@@ -121,9 +71,9 @@ Table of Contents
 
 /* HARDCOVER FRONT */
 
-.paperback_front {
-	background-color: #000;
-}
+/*.paperback_front {*/
+	/*background-color: #000;*/
+/*}*/
 
 .paperback_front::after{
 	background-image: -webkit-linear-gradient( -135deg, rgba(255, 255, 255, 0.45) 0%, transparent 100%);
@@ -382,14 +332,14 @@ Table of Contents
 	background: #c0392b;
 	color: #fff;
 	display: block;
-	font-size: 0.7em;
+	font-size: 0.4em;
 	position: absolute;
 	top: 11px;
 	right: 1px;
 	width: 40px;
 	height: 20px;
 	line-height: 20px;
-	letter-spacing: 0.15em; 
+	letter-spacing: 0.1em;
 	text-align: center;
 	-webkit-transform: rotateZ(45deg) translateZ(1px);
 	-moz-transform: rotateZ(45deg) translateZ(1px);

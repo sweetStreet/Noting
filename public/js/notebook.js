@@ -36,64 +36,69 @@
         }
     ]);
 
-    app.controller('notebookCrtl',function($scope,$http,$cookieStore){
+    app.controller('notebookCrtl',function($scope,$http,$cookieStore) {
         //页面初始化
-        $scope.init = function(){
+        $scope.init = function () {
             userid = $cookieStore.get('userid');
             console.log(userid);
-            $scope.html = '<span style="color: red">这是格式化的HTML文本</span>';
             $scope.notebooks = [];
-            $http.get('/api/notebook/getAll',{
+            $scope.articles = [];
+            $http.get('/api/notebook/getAll', {
                 params: {
-                    "userid":userid
+                    "userid": userid
                 }
             })
-                .then(function(response){
-                    if(response.data.status) {//有笔记本
+                .then(function (response) {
+                    if (response.data.status) {//有笔记本
                         $scope.notebooks = response.data.notebooks;
                         console.log(response.data.notebooks);
-                    }else{
+                    } else {
                         console.log('没有数据');
                     }
-                }),function(){
+                }), function () {
                 console.log('e');
-                }
+            }
         };
 
         //保存文章
-        $scope.saveArticle = function(){
+        $scope.saveArticle = function () {
             articleid = $cookieStore.get('articleid');
             content = editor.txt.html();
             userid = $cookieStore.get('userid');
-            notebookid= $scope.notebookSelected[0].id;
-            $http.post('/api/article/saveArticle',{article_id:articleid,user_id:userid,notebook_id:notebookid,content:content})
-                .then(function(response){
-                    if(response.data.status) {//创建成功
+            notebookid = $scope.notebookSelected[0].id;
+            $http.post('/api/article/saveArticle', {
+                article_id: articleid,
+                user_id: userid,
+                notebook_id: notebookid,
+                content: content
+            })
+                .then(function (response) {
+                    if (response.data.status) {//创建成功
                         //刷新文章列表
                         $scope.updateList();
                         console.log('success');
-                    }else{
+                    } else {
                         //创建失败
                         console.log('error');
                     }
-                }),function(){
+                }), function () {
                 console.log('e');
             }
         }
 
         //将左侧列表选中的文章显示在右侧编辑器上
-        $scope.showInEditor = function(article){
+        $scope.showInEditor = function (article) {
             editor.txt.html(article.content);
-            $cookieStore.put('articleid',article.id);
+            $cookieStore.put('articleid', article.id);
         }
 
         //刷新文章列表
-        $scope.updateList = function(){
+        $scope.updateList = function () {
             userid = $cookieStore.get('userid');
             notebookid = $cookieStore.get('notebookid');
-            if(notebookid == ''){
+            if (notebookid == '') {
                 //提示请选择笔记本
-            }else {
+            } else {
                 $http.get('/api/article/getArticlesByNotebookID', {
                     params: {
                         user_id: userid,
@@ -119,27 +124,27 @@
         $scope.addArticle = function () {
             editorContent = '<p><br></p>';
             editor.txt.html(editorContent);
-            $http.post('/api/article/addArticle',{user_id:userid,notebook_id:notebookid,content:editorContent})
-                .then(function(response){
-                    if(response.data.status) {//创建成功
+            $http.post('/api/article/addArticle', {user_id: userid, notebook_id: notebookid, content: editorContent})
+                .then(function (response) {
+                    if (response.data.status) {//创建成功
                         //刷新文章列表
                         $scope.updateList();
-                        $cookieStore.put('articleid',$scope.articles[0].id);
+                        $cookieStore.put('articleid', $scope.articles[0].id);
                         console.log('success');
-                    }else{
+                    } else {
                         //创建失败
                         console.log('error');
                     }
-                }),function(){
+                }), function () {
                 console.log('e');
             }
         }
 
         //删除文章
-        $scope.deleteArticle=function(){
+        $scope.deleteArticle = function () {
             editor.txt.html('<p><br></p>');
             $articleid = $cookieStore.get('articleid')
-            $http.get('/api/article/deleteArticle', {params:{article_id:$articleid}})
+            $http.get('/api/article/deleteArticle', {params: {article_id: $articleid}})
                 .then(function (response) {
                     if (response.data.status) {
                         //刷新文章列表
@@ -156,30 +161,26 @@
 
 
         //获得属于某个笔记本的所有文章
-        $scope.notebookSelected = [];
-        $scope.$watch('notebookSelected',function (newVal) {
-            if (newVal.length == 0) {
-                $cookieStore.put('notebookid','');
-            } else {
-                userid = $cookieStore.get('userid');
-                notebookid = newVal[0].id;
-                $cookieStore.put('notebookid',notebookid);
-                $http.get('/api/article/getArticlesByNotebookID', {params:{user_id: userid, notebook_id: notebookid}})
-                    .then(function (response) {
-                        if (response.data.status) {//获得文章列表
-                            if(response.data.data){
-                                $scope.articles = response.data.data.data;
-                            }
-                            console.log('success');
-                        } else {
-                            console.log('error');
+        $scope.selectNotebook = function (notebook) {
+            userid = $cookieStore.get('userid');
+            notebookid = notebook.id;
+            console.log(notebookid);
+            $cookieStore.put('notebookid', notebookid);
+            $http.get('/api/article/getArticlesByNotebookID', {params: {user_id: userid, notebook_id: notebookid}})
+                .then(function (response) {
+                    if (response.data.status) {//获得文章列表
+                        if (response.data.data) {
+                            $scope.articles = response.data.data.data;
                         }
-                    }), function () {
-                    console.log('e');
-                }
+                        console.log('success');
+                    } else {
+                        console.log('error');
+                    }
+                }), function () {
+                console.log('e');
             }
-        })
-    });
+        }
+    })
 
     app.directive('ngToYellow', function() {
         return {

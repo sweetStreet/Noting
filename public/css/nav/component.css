@@ -2,6 +2,7 @@
 .cbp-spmenu {
 	background: #282830;
 	position: fixed;
+	overflow:scroll;
 }
 
 .cbp-spmenu h3 {
@@ -32,7 +33,7 @@
 /* Orientation-dependent styles for the content of the menu */
 
 .cbp-spmenu-vertical {
-	width: 240px;
+	width: 40%;
 	height: 100%;
 	top: 0;
 	z-index: 1000;
@@ -67,7 +68,7 @@
 /* Vertical menu that slides from the left or right */
 
 .cbp-spmenu-left {
-	left: -240px;
+	left: -40%;
 }
 
 .cbp-spmenu-right {
@@ -109,11 +110,11 @@
 }
 
 .cbp-spmenu-push-toright {
-	left: 240px;
+	left: 40%;
 }
 
 .cbp-spmenu-push-toleft {
-	left: -240px;
+	left: -40%;
 }
 
 /* Transitions */

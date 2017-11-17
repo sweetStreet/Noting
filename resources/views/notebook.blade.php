@@ -33,7 +33,6 @@
     <link rel="stylesheet" type="text/css" href="/css/notebook.css">
     <!--笔记-->
     <link rel="stylesheet" type="text/css" href="/css/book/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="/css/book/demo.css" />
     <link rel="stylesheet" type="text/css" href="/css/book/book2.css" />
     <script src="/js/book/modernizr.custom.js"></script>
 
@@ -41,17 +40,23 @@
 <body class="cbp-spmenu-push">
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
 
-                <a href="/api/user"><i class="fa fa-user-o fa-3x" aria-hidden="true"></i>我的主页</a>
+                <p id="mydesk">我的书桌</p>
                 <div id = "notebook_nav">
                     <!--快速选择笔记本和笔记-->
-                    <button id="addNotebook"><i class="fa fa-plus-square fa-2x" aria-hidden="true"></i></button>
+                    <div class="search bar7">
+                        <form>
+                            <input type="text" placeholder="请输入笔记本名字...">
+                            <button type="submit"></button>
+                        </form>
+                    </div>
+
 
 <!--                    <multiselect ng-model="notebookSelected" options="notebooks" id-prop="id"-->
 <!--                                 display-prop="title" show-search="true" selection-limit="1"-->
 <!--                                 placeholder="选择一本笔记本""-->
 <!--                    >-->
 <!--                    </multiselect>-->
-                    <div id="notebook-item">
+                    <ul id="notebook-list" ng-repeat="notebook in notebooks" >
                         <li>
                             <figure class='book'>
 
@@ -59,7 +64,7 @@
 
                                 <ul class='paperback_front'>
                                     <li>
-                                        <span class="ribbon">NEW</span>
+                                        <span class="ribbon">[: notebook.created_at.substring(5,10) :]</span>
                                         <img src="/images/paper.jpg" alt="" width="100%" height="100%">
                                     </li>
                                     <li></li>
@@ -70,7 +75,7 @@
                                 <ul class='ruled_paper'>
                                     <li></li>
                                     <li>
-                                        <a class="btn" href="http://www.codehero.top">PREVIEW</a>
+                                        <a class="btn" ng-click="selectNotebook(notebook)">PREVIEW</a>
                                     </li>
                                     <li></li>
                                     <li></li>
@@ -86,31 +91,21 @@
                                     <li></li>
                                 </ul>
                                 <figcaption>
-                                    <h1>绘制</h1>
-                                    <span>By 代码侠</span>
-                                    <p>代码侠是一个分享酷站的网站，这里有很多炫酷的效果展示，也有教程，玩代码，找代码侠。</p>
+                                    <h1>[: notebook.title :]</h1>
+                                    <span>By yuki</span>
                                 </figcaption>
                             </figure>
                         </li>
 
-                        <div>选中的内容 [: notebookSelected[0].title :]</div>
-                    </div>
-                </div
-
-                <div id="article" >
-                    <div ng-repeat="article in articles" ng-click="showInEditor(article)">
-                        <div class="article_item" name="article_item" ng-to-yellow>
-                            <p class="article_createTime">[: article.created_at :]</p>
-                            <p class="article_content"><span ng-bind-html="article.content|htmlContent"></span></p>
-                        </div>
-                    </div>
+<!--                        <div>选中的内容 [: notebookSelected[0].title :]</div>-->
+                    </ul>
                 </div>
             </nav>
 
             <header id="header">
                 <!--打开侧边栏-->
                 <!-- class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
-                <button id="showLeftPush"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
+                <button id="showLeftPush"><i class="fa fa-book fa-2x" aria-hidden="true"></i></button>
                 <button id="btn_add_article" class="header_button" ng-click="addArticle()"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
                 <button id="btn_delete_article" class="header_button" ng-click="deleteArticle()"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 <button id="btn_save_article"class="header_button" ng-click="saveArticle()"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
@@ -126,6 +121,16 @@
                 </div>
             </header>
 
+<div id="container">
+    <div id="article" >
+        <div ng-repeat="article in articles" ng-click="showInEditor(article)">
+            <div class="article_item" name="article_item" ng-to-yellow>
+                <p class="article_createTime">[: article.created_at :]</p>
+                <p class="article_content"><span ng-bind-html="article.content|htmlContent"></span></p>
+            </div>
+        </div>
+    </div>
+
     <div id="editor">
         <div id="div1" class="toolbar">
         </div>
@@ -133,7 +138,7 @@
             <p>请输入内容</p>
         </div>
     </div>
-
+</div>
             <script type="text/javascript" src="/node_modules/wangeditor/release/wangEditor.js"></script>
             <script type="text/javascript" src="/js/article.js"></script>
 
