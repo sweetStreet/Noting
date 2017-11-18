@@ -65,7 +65,7 @@
             articleid = $cookieStore.get('articleid');
             content = editor.txt.html();
             userid = $cookieStore.get('userid');
-            notebookid = $scope.notebookSelected[0].id;
+            notebookid = $cookieStore.get('notebookid');
             $http.post('/api/article/saveArticle', {
                 article_id: articleid,
                 user_id: userid,
@@ -180,6 +180,20 @@
                 console.log('e');
             }
         }
+
+        $scope.addNotebook=function () {
+
+        }
+
+        $scope.shareNotebook=function (notebook) {
+            console.log()
+
+        }
+
+        $scope.deleteNotebook=function (notebook) {
+
+        }
+
     })
 
     app.directive('ngToYellow', function() {

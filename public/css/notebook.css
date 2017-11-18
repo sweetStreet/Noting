@@ -91,17 +91,7 @@ i{
     height:100%;
 }
 
-#notebook-list{
-    padding-left:100px;
-    overflow:scroll;
-}
 
-#addNotebook{
-    background-color: transparent;
-    border:none;
-    outline:none;
-    display: block;
-}
 
 #article{
     width: 20%;
@@ -115,7 +105,7 @@ i{
 }
 .article_item{
     background-color: white;
-    height:70px;
+    height:65px;
 }
 
 .article_createTime{
@@ -126,8 +116,12 @@ i{
 
 }
 
+.search{
+
+}
 .bar7 form {
-    height: 40px;
+    height: 35px;
+    display: inline-block;
 }
 .bar7 input {
     width: 150px;
@@ -141,15 +135,28 @@ i{
     width: 300px;
     height: 100%;
 }
-.bar7 button {
+#btn_bar7{
     background: none;
     top: -2px;
     right: 0;
     border:none;
     outline:none;
 }
-.bar7 button:before{
+#btn_bar7:before{
     content: "\f002";
     font-family: FontAwesome;
     color: #324b4e;
+}
+#notebook-list{
+    padding-left:100px;
+    overflow:scroll;
+}
+
+#btn_addnotebook{
+    background-color: transparent;
+    border:none;
+    outline:none;
+    float:right;
+    padding-top: 5px;
+    margin-right: 5px;
 }

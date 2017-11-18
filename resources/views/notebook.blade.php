@@ -43,20 +43,18 @@
                 <p id="mydesk">我的书桌</p>
                 <div id = "notebook_nav">
                     <!--快速选择笔记本和笔记-->
-                    <div class="search bar7">
-                        <form>
-                            <input type="text" placeholder="请输入笔记本名字...">
-                            <button type="submit"></button>
-                        </form>
+                    <div class="search">
+                        <div class="bar7">
+                            <form>
+                                <input type="text" placeholder="请输入笔记本名字...">
+                                <button id="btn_bar7" type="submit"></button>
+                            </form>
+                            <button id="btn_addnotebook" ng-click="addNotebook()"><i class="fa fa-plus" aria-hidden="true"></i>新增笔记本</button>
+                        </div>
                     </div>
 
 
-<!--                    <multiselect ng-model="notebookSelected" options="notebooks" id-prop="id"-->
-<!--                                 display-prop="title" show-search="true" selection-limit="1"-->
-<!--                                 placeholder="选择一本笔记本""-->
-<!--                    >-->
-<!--                    </multiselect>-->
-                    <ul id="notebook-list" ng-repeat="notebook in notebooks" >
+                    <ul id="notebook-list" ng-repeat="notebook in notebooks">
                         <li>
                             <figure class='book'>
 
@@ -75,7 +73,7 @@
                                 <ul class='ruled_paper'>
                                     <li></li>
                                     <li>
-                                        <a class="btn" ng-click="selectNotebook(notebook)">PREVIEW</a>
+                                        <a class="btn" ng-click="selectNotebook(notebook)">进入笔记本</a>
                                     </li>
                                     <li></li>
                                     <li></li>
@@ -93,11 +91,13 @@
                                 <figcaption>
                                     <h1>[: notebook.title :]</h1>
                                     <span>By yuki</span>
+                                    <button ng-click="shareNotebook(notebook)"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+                                    <button ng-click="deleteNotebook(notebook)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                 </figcaption>
                             </figure>
                         </li>
 
-<!--                        <div>选中的内容 [: notebookSelected[0].title :]</div>-->
+
                     </ul>
                 </div>
             </nav>
@@ -110,7 +110,7 @@
                 <button id="btn_delete_article" class="header_button" ng-click="deleteArticle()"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 <button id="btn_save_article"class="header_button" ng-click="saveArticle()"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
                 <button id="btn_tag" class="header_button"><i class="fa fa-bookmark" aria-hidden="true"></i></button>
-                <button id="btn_share" class="header_button"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+<!--                <button id="btn_share" class="header_button"></button>-->
                 <button id="btn_export" class="header_button" pdf-save-button="idOneGraph" pdf-name="hello.pdf" "><i class="fa fa-download" aria-hidden="true"></i></button>
 
                 <div id="search_article" >
@@ -122,12 +122,14 @@
             </header>
 
 <div id="container">
+    <hr/>
     <div id="article" >
         <div ng-repeat="article in articles" ng-click="showInEditor(article)">
             <div class="article_item" name="article_item" ng-to-yellow>
                 <p class="article_createTime">[: article.created_at :]</p>
                 <p class="article_content"><span ng-bind-html="article.content|htmlContent"></span></p>
             </div>
+            <hr/>
         </div>
     </div>
 

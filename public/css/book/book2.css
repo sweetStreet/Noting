@@ -16,15 +16,8 @@
 
 /* basic grid, only for this demo */
 
-.align {
-	clear: both;
-	margin: 90px auto 20px;
-	width: 100%;
-	max-width: 1170px;
-	text-align: center;
-}
 
-.align > li {
+.li {
 	width: 500px;
 	min-height: 300px;
 	display: inline-block;
@@ -55,8 +48,8 @@ Table of Contents
 */
 
 .book {
-	width: 160px;
-	height: 220px;
+	width: 140px;
+	height: 190px;
 	-webkit-perspective: 1000px;
 	-moz-perspective: 1000px;
 	perspective: 1000px;
@@ -395,6 +388,13 @@ figcaption span {
 figcaption p {
 	color: #63707d;
 	line-height: 1.3;
+}
+
+figcaption button{
+	background: transparent;
+	outline:none;
+	border:none;
+	margin-right:5px;
 }
 
 /* Media Queries */
