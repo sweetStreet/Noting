@@ -48,7 +48,7 @@ class UserController extends Controller
         ]);
 
         if($result){
-            return ['status' => 1, 'msg' => 'success'];
+            return ['status' => 1, 'msg' => '/'];
         }else{
             return ['status' => 0, 'msg' => 'db inset failed'];
         }

@@ -47,7 +47,7 @@
         ]);
 
 
-        app.controller('welcomeCrtl',function($scope,$http,$cookieStore,SweetAlert){
+        app.controller('welcomeCrtl',function($scope,$http,$cookieStore,SweetAlert,$timeout){
 
             $scope.myTxt = "你还没有提交";
             $scope.login = function (user) {
@@ -58,12 +58,10 @@
                                         window.location.href = response.data.msg;
                                     }else{
                                         SweetAlert.swal({
-                                            title: "自动关闭弹窗！",
                                             text: response.data.msg,
-                                            timer: 2000,
+                                            timer: 1000,
                                             showConfirmButton: false
                                         });
-                                        $scope.myTxt = response.data.msg;
                                     }
                                 }),function(){
                                     console.log('e');
@@ -76,11 +74,27 @@
                 $scope.myTxt = 'clicked';
                 $http.post('/api/user/register',{email:user.email,username:user.username,password:user.password})
                     .then(function(response){
-                        //$location.path('/resources/views/welcome/blade.php');
-                        // $scope.myTxt = response.data;
-                        console.log('success');
+                        if(response.data.status){//注册成功
+                            SweetAlert.swal({
+                                    title:'注册成功',
+                                    text:'即将跳转到登录页面',
+                                    type:'success',
+                                    showConfirmButton:false
+                                }
+                            )
+                            //1.2 seconds delay
+                            $timeout( function(){
+                                window.location.href = response.data.msg;
+                            }, 1200 );
+                        }else {
+                            SweetAlert.swal({
+                                title: response.data.msg,
+                                timer: 1000,
+                                showConfirmButton: false
+                            });
+                        }
                     }),function(){
-                        console.log('error');
+                        //todo:
                 }
             }
             $scope.reset = function (){
