@@ -42,7 +42,7 @@ class ArticleController
         if($result){
             return ['status'=>1, 'msg'=>'创建成功'];
         }else{
-            return ['status'=>1, 'msg'=>'创建失败'];
+            return ['status'=>0, 'msg'=>'创建失败'];
         }
     }
 
@@ -55,7 +55,7 @@ class ArticleController
         if($result){
             return ['status'=>1, 'msg'=>'创建成功'];
         }else{
-            return ['status'=>1, 'msg'=>'创建失败'];
+            return ['status'=>0, 'msg'=>'创建失败'];
         }
 
     }

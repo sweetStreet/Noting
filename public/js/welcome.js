@@ -68,8 +68,6 @@
                                 }
             }
 
-
-
             $scope.register = function (user) {
                 $scope.myTxt = 'clicked';
                 $http.post('/api/user/register',{email:user.email,username:user.username,password:user.password})

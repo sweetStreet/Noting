@@ -19,6 +19,7 @@ class CretaeTableNotebooks extends Migration
             $table->string('title',128);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
+            $table->softDeletes();
         });
     }
 

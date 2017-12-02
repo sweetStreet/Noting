@@ -1,7 +1,7 @@
 (function () {
     'user strict';
 
-    var app = angular.module('notebook',['ui.router','ngCookies','ngCookies','htmlToPdfSave']);
+    var app = angular.module('notebook',['ui.router','ngCookies','ngCookies','htmlToPdfSave','socialbase.sweetAlert']);
 
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
         function($interpolateProvider,$stateProvider,$urlRouterProvider) {
@@ -12,47 +12,56 @@
         }
     ]);
 
-    app.controller('notebookCrtl',function($scope,$http,$cookieStore) {
+    app.controller('notebookCrtl',function($scope,$http,$cookieStore,SweetAlert) {
         //页面初始化
         $scope.init = function () {
-            userid = $cookieStore.get('userid');
-            console.log(userid);
             $scope.notebooks = [];
             $scope.notebookSelected = [];
             // $scope.articles = [];
-            $http.get('/api/notebook/getAll', {
-                params: {
-                    userid: userid
-                }
-            })
-                .then(function (response) {
-                    if (response.data.status) {//有笔记本
-                        $scope.notebooks = response.data.notebooks;
-                        console.log(response.data.notebooks);
-                    } else {
-                        console.log('没有数据');
+            $scope.selectUserNotebooks();
+            $scope.selectUserArticles();
+        };
+
+            //获得属于某个用户的所有笔记本
+            $scope.selectUserNotebooks = function(){
+                userid = $cookieStore.get('userid');
+                $http.get('/api/notebook/getAll', {
+                    params: {
+                        userid: userid
                     }
-                }), function () {
-                console.log('e');
+                })
+                    .then(function (response) {
+                        if (response.data.status) {//有笔记本
+                            $scope.notebooks = response.data.notebooks;
+                            console.log(response.data.notebooks);
+                        } else {
+                            console.log('没有数据');
+                        }
+                    }), function () {
+                    console.log('e');
+                }
             }
 
-            $http.get('/api/article/getArticlesByUserID', {
-                params: {
-                    user_id: userid
-                }
-            })
-                .then(function (response) {
-                    if (response.data.status) {//有文章
-                        $scope.articles = response.data.data;
-                        console.log(response.data.data);
-                        console.log(response.data.msg);
-                    } else {
-                        console.log('没有数据');
+            //获得属于某个用户的所有文章
+            $scope.selectUserArticles = function () {
+                userid = $cookieStore.get('userid');
+                $http.get('/api/article/getArticlesByUserID', {
+                    params: {
+                        user_id: userid
                     }
-                }), function () {
-                console.log('e');
+                })
+                    .then(function (response) {
+                        if (response.data.status) {//有文章
+                            $scope.articles = response.data.data;
+                            console.log(response.data.data);
+                            console.log(response.data.msg);
+                        } else {
+                            console.log('没有数据');
+                        }
+                    }), function () {
+                    console.log('e');
+                }
             }
-        };
 
         //保存文章
         $scope.saveArticle = function () {
@@ -117,22 +126,34 @@
 
         //新增文章
         $scope.addArticle = function () {
-            editorContent = '<p><br></p>';
-            editor.txt.html(editorContent);
-            $http.post('/api/article/addArticle', {user_id: userid, notebook_id: notebookid, content: editorContent})
-                .then(function (response) {
-                    if (response.data.status) {//创建成功
-                        //刷新文章列表
-                        $scope.updateList();
-                        $cookieStore.put('articleid', $scope.articles[0].id);
-                        console.log('success');
-                    } else {
-                        //创建失败
-                        console.log('error');
-                    }
-                }), function () {
-                console.log('e');
+            $editorContent = '<p><br></p>';
+            editor.txt.html($editorContent);
+            $userid = $cookieStore.get('userid');
+            $notebookid = $cookieStore.get('notebookid');
+            if($notebookid != null){
+                $http.post('/api/article/addArticle', {user_id: $userid, notebook_id: $notebookid, content: $editorContent})
+                    .then(function (response) {
+                        if (response.data.status) {//创建成功
+                            //刷新文章列表
+                            $scope.updateList();
+                            if($scope.articles!=null) {
+                                $cookieStore.put('articleid', $scope.articles[0].id);
+                                console.log('success');
+                            }
+                        } else {
+                            //创建失败
+                            console.log('error');
+                        }
+                    }), function () {
+                    console.log('e');
+                }
+            }else{
+                swal({
+                    type:'warning',
+                    html:'请先选择笔记本'
+                })
             }
+
         }
 
         //删除文章
@@ -177,8 +198,51 @@
             }
         }
 
+        //新建笔记本
         $scope.addNotebook=function () {
+            userid = $cookieStore.get('userid');
+            swal({
+                title: '为你的笔记本取个名字吧',
+                input: 'text',
+                showCancelButton: true,
+                inputValidator: function (value) {
+                    return new Promise(function (resolve, reject) {
+                        if (value){
+                            resolve()
+                        }else {
+                            reject('你需要输入一些东西')
+                        }
+                    })
+                }
+            }).then(function (result) {
+                if(result.value){
+                    $userid = $cookieStore.get('userid');
 
+                    $http.post('/api/notebook/create', {userid: userid, title: result.value})
+                        .then(function (response) {
+                            if (response.data.status) {//创建成功
+                                $scope.selectUserNotebooks();
+                                $scope.selectNotebook(response.data.notebookid);
+                                $cookieStore.put('notebookid',response.data.notebookid);
+                                swal({
+                                    type: 'success',
+                                    html: response.data.msg
+                                })
+                            } else {
+                                console.log(response.data);
+                                swal({
+                                    type: 'warning',
+                                    html: response.data.msg
+                                })
+                            }
+                        }), function () {
+                        console.log('e');
+                    }
+                }else {
+                    //没有填写内容
+                }
+
+            })
         }
 
         $scope.shareNotebook=function (notebook) {
@@ -316,6 +380,9 @@
                             currentKey = '';
                             choseNode.find('.j-view:first').text('请选择');
                             choseNode.find('i').addClass('chose-hide');
+
+                            //显示所有笔记
+                            scope.selectUserArticles();
                         }
                         if ((currentKey + '').length > 0) {
                             for (var i = 0, l = rs.idArray.length; i < l; i++) {

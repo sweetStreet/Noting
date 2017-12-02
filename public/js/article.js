@@ -4,6 +4,7 @@ editor.customConfig.uploadImgServer = '/upload'  // 上传图片到服务器
 editor.customConfig.linkImgCallback = function (url) {
     console.log(url) // url 即插入图片的地址
 }
+editor.customConfig.zIndex = 100;
 //TODO 配置debug模式 记得结束之后删除
 editor.customConfig.debug = true
 

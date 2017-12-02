@@ -5,9 +5,9 @@
 .chose-container {
     border: none!important;
     float: left;
-    margin-right: 40px;
+    margin-right: 20px;
     padding: 0!important;
-    position: relative;
+    width: 160px;
 }
 .chose-container .chose-single {
     padding: 6px 12px;
@@ -35,7 +35,7 @@
     right: 8px;
     font-size: 12px;
     height: 12px;
-    color:transparent;
+    color:black;
 }
 .chose-container .chose-drop {
     width: 195px;

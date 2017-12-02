@@ -29,9 +29,11 @@ Route::get('/', function () {
 
 //笔记本模块
 //默认界面
-    Route::any('api/notebook', 'NotebookController@index');
+    Route::any('/api/notebook', 'NotebookController@index');
 //获得某一用户的所有笔记本
-Route::get('api/notebook/getAll', 'NotebookController@getAllByUserId');
+Route::get('/api/notebook/getAll', 'NotebookController@getAllByUserId');
+//新建笔记本
+Route::any('/api/notebook/create','NotebookController@create');
     //笔记编辑模块
     Route::any('/api/article', 'ArticleController@index');
     //图片上传
