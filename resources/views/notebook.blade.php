@@ -14,7 +14,7 @@
     <!--笔记-->
     <link rel="stylesheet" type="text/css" href="/css/book/normalize.css" />
     <link rel="stylesheet" type="text/css" href="/css/book/book2.css" />
-
+    <link rel="stylesheet" type="text/css" href="/css/select.css" />
     <link rel="stylesheet" href="/node_modules/sweetalert2/dist/sweetalert2.css">
 
 </head>
@@ -104,6 +104,13 @@
 <div id="container">
     <hr/>
     <div id="article" >
+        <label>
+            <select ngc-select-search class="common-select" ng-model="notebookSelected" ng-options="notebook.id as notebook.title for notebook in notebooks" name="notebookSelected"  >
+                <option value="notebook">请选择笔记本</option></select>
+            <div>selected [: notebooks :]</div>
+            <button id="btn_addnotebook" ng-click="addNotebook()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        </label>
+
         <div ng-repeat="article in articles" ng-click="showInEditor(article)">
             <div class="article_item" name="article_item" ng-to-yellow>
                 <p class="article_createTime">[: article.created_at :]</p>

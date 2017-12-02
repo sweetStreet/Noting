@@ -95,6 +95,7 @@ i{
     width: 20%;
     height: 640px;
     float:left;
+    overflow: scroll;
 }
 #editor{
     width: 80%;
