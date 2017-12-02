@@ -156,9 +156,9 @@
 
 
         //获得属于某个笔记本的所有文章
-        $scope.selectNotebook = function (notebook) {
+        $scope.selectNotebook = function (notebookid) {
             userid = $cookieStore.get('userid');
-            notebookid = notebook.id;
+            // notebookid = notebook.id;
             console.log(notebookid);
             $cookieStore.put('notebookid', notebookid);
             $http.get('/api/article/getArticlesByNotebookID', {params: {user_id: userid, notebook_id: notebookid}})
@@ -224,7 +224,7 @@
      * 使用方法 <select ngc-select-search name="select1" ng-options="">
      * 说明[ select 一定要有name,ng-options 属性]
      */
-    app.directive('ngcSelectSearch', function($animate, $compile, $parse) {
+    app.directive('ngcSelectSearch', function($animate, $compile, $parse, $http, $cookieStore) {
 
         function parseOptions(optionsExp, element, scope) {
             // ngOptions里的正则
@@ -322,6 +322,9 @@
                                 if (rs.idArray[i] == currentKey) {
                                     choseNode.find('.j-view:first').text(rs.labelArray[i]);
                                     choseNode.find('i').removeClass('chose-hide');
+
+                                    //todo: 设置页面笔记本对应的笔记
+                                    scope.selectNotebook(currentKey);
                                     break;
                                 }
                             }

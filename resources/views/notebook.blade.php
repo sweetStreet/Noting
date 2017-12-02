@@ -107,7 +107,6 @@
         <label>
             <select ngc-select-search class="common-select" ng-model="notebookSelected" ng-options="notebook.id as notebook.title for notebook in notebooks" name="notebookSelected"  >
                 <option value="notebook">请选择笔记本</option></select>
-            <div>selected [: notebooks :]</div>
             <button id="btn_addnotebook" ng-click="addNotebook()"><i class="fa fa-plus" aria-hidden="true"></i></button>
         </label>
 
