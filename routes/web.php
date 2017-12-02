@@ -42,6 +42,8 @@ Route::get('api/notebook/getAll', 'NotebookController@getAllByUserId');
     Route::post('/api/article/saveArticle','ArticleController@updateArticle');
     //查看文章
     Route::any('/api/article/getArticlesByNotebookID','ArticleController@getArticlesByNotebookID');
+    //获得所有文章
+    Route::any('/api/article/getArticlesByUserID','ArticleController@getArticlesByUserID');
     //删除文章
     Route::any('/api/article/deleteArticle','ArticleController@deleteArticle');
 

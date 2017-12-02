@@ -62,7 +62,16 @@ class ArticleController
 
     public function getArticlesByUserID(){
         $user_id = Request::get('user_id');
-
+        $articles = DB::table('articles')->where([
+            ['user_id', '=', $user_id],
+            ['deleted_at','=',null]
+        ])->orderBy('created_at', 'asc')
+            ->get();
+        if ($articles) {
+            return ['status' => 1, 'data' => $articles,'msg'=>$user_id];
+        } else {
+            return ['status' => 0, 'msg' => '查询失败'];
+        }
     }
 
 
@@ -70,14 +79,25 @@ class ArticleController
     {
         $user_id = Request::get('user_id');
         $notebook_id = Request::get('notebook_id');
-        //每次默认取5篇文章
+//        //每次默认取5篇文章
+//        $articles = DB::table('articles')->where([
+//            ['user_id', '=', $user_id],
+//            ['notebook_id', '=', $notebook_id],
+//            ['deleted_at','=',null]
+//        ])->orderBy('created_at', 'asc')
+//            ->paginate(5);
+//
+//        if ($articles) {
+//            return ['status' => 1, 'data' => $articles];
+//        } else {
+//            return ['status' => 0, 'msg' => '查询失败'];
+//        }
         $articles = DB::table('articles')->where([
             ['user_id', '=', $user_id],
             ['notebook_id', '=', $notebook_id],
             ['deleted_at','=',null]
         ])->orderBy('created_at', 'asc')
-            ->paginate(5);
-
+            ->get();
         if ($articles) {
             return ['status' => 1, 'data' => $articles];
         } else {

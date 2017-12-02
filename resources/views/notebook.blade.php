@@ -8,13 +8,14 @@
     <!--左侧导航栏-->
     <link rel="stylesheet" type="text/css" href="/css/nav/component.css" />
     <!--font awesome-->
-<!--    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css"/>
+    <link rel="stylesheet" type="text/css" href="/node_modules/font-awesome/css/font-awesome.css">
     <!--notebook的css-->
     <link rel="stylesheet" type="text/css" href="/css/notebook.css">
     <!--笔记-->
     <link rel="stylesheet" type="text/css" href="/css/book/normalize.css" />
     <link rel="stylesheet" type="text/css" href="/css/book/book2.css" />
+
+    <link rel="stylesheet" href="/node_modules/sweetalert2/dist/sweetalert2.css">
 
 </head>
 <body class="cbp-spmenu-push">
@@ -103,7 +104,7 @@
 <div id="container">
     <hr/>
     <div id="article" >
-        <div ng-repeat="article in articles" ng-click="showInEditor(article)" style="">
+        <div ng-repeat="article in articles" ng-click="showInEditor(article)">
             <div class="article_item" name="article_item" ng-to-yellow>
                 <p class="article_createTime">[: article.created_at :]</p>
                 <p class="article_content"><span ng-bind-html="article.content|htmlContent"></span></p>
@@ -144,6 +145,8 @@
             <script src="/js/nav/classie.js"></script>
             <script src="/js/notebook.js"></script>
             <script src="/js/book/modernizr.custom.js"></script>
+            <script src="/node_modules/sweetalert2/dist/sweetalert2.js"></script>
+            <script src="/node_modules/angular-sweetalert-2/dist/angular-sweetalert2.min.js"></script>
             <!--转成pdf格式-->
             <script src="/js/topdf/html2canvas.js"></script>
             <script src="/js/topdf/jspdf.debug.js"></script>

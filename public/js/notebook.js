@@ -18,16 +18,34 @@
             userid = $cookieStore.get('userid');
             console.log(userid);
             $scope.notebooks = [];
-            $scope.articles = [];
+            // $scope.articles = [];
             $http.get('/api/notebook/getAll', {
                 params: {
-                    "userid": userid
+                    userid: userid
                 }
             })
                 .then(function (response) {
                     if (response.data.status) {//有笔记本
                         $scope.notebooks = response.data.notebooks;
                         console.log(response.data.notebooks);
+                    } else {
+                        console.log('没有数据');
+                    }
+                }), function () {
+                console.log('e');
+            }
+
+
+            $http.get('/api/article/getArticlesByUserID', {
+                params: {
+                    user_id: userid
+                }
+            })
+                .then(function (response) {
+                    if (response.data.status) {//有文章
+                        $scope.articles = response.data.data;
+                        console.log(response.data.data);
+                        console.log(response.data.msg);
                     } else {
                         console.log('没有数据');
                     }
@@ -66,6 +84,7 @@
         $scope.showInEditor = function (article) {
             editor.txt.html(article.content);
             $cookieStore.put('articleid', article.id);
+            $cookieStore.put('notebookid',article.notebookid);
         }
 
         //刷新文章列表
@@ -86,7 +105,7 @@
                             if (response.data.data) {
                                 $scope.articles = response.data.data.data;
                             }
-                            console.log('success');
+                            console.log($scope.articles);
                         } else {
                             console.log('error');
                         }
@@ -145,10 +164,11 @@
             $http.get('/api/article/getArticlesByNotebookID', {params: {user_id: userid, notebook_id: notebookid}})
                 .then(function (response) {
                     if (response.data.status) {//获得文章列表
-                        if (response.data.data) {
-                            $scope.articles = response.data.data.data;
-                        }
-                        console.log('success');
+                        // if (response.data.data) {
+                        //     $scope.articles = response.data.data.data;
+                        // }
+                        $scope.articles = response.data.data;
+                        console.log(response.data.data);
                     } else {
                         console.log('error');
                     }
