@@ -4,42 +4,21 @@
     <title>notebook</title>
 
     <link rel="stylesheet" href="/node_modules/normalize-css/normalize.css">
-    <script src="/node_modules/jquery/dist/jquery.js"></script>
-    <script src="/node_modules/angular/angular.js"></script>
-    <script src="/node_modules/angular-ui-router/release/angular-ui-router.js"></script>
-
     <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-
-    <script type="text/javascript" src="/node_modules/angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect.js"></script>
-
-    <script src="/node_modules/angular-cookies/angular-cookies.js"></script>
-
     <!--左侧导航栏-->
     <link rel="stylesheet" type="text/css" href="/css/nav/component.css" />
-    <script src="/js/nav/modernizr.custom.js"></script>
-    <script src="/js/nav/classie.js"></script>
-<!--    <link rel="stylesheet" type="text/css" href="/node_modules/wangeditor/release/wangEditor.css">-->
     <!--font awesome-->
 <!--    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css"/>
-
-    <!--转成pdf格式-->
-    <script src="/js/topdf/html2canvas.js"></script>
-    <script src="/js/topdf/jspdf.debug.js"></script>
-    <script type="text/javascript" src="/node_modules/angular-save-html-to-pdf/dist/saveHtmlToPdf.js"></script>
-    <!--notebook的js和css-->
-    <script src="/js/notebook.js"></script>
+    <!--notebook的css-->
     <link rel="stylesheet" type="text/css" href="/css/notebook.css">
     <!--笔记-->
     <link rel="stylesheet" type="text/css" href="/css/book/normalize.css" />
     <link rel="stylesheet" type="text/css" href="/css/book/book2.css" />
-    <script src="/js/book/modernizr.custom.js"></script>
 
 </head>
 <body class="cbp-spmenu-push">
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
-
                 <p id="mydesk">我的书桌</p>
                 <div id = "notebook_nav">
                     <!--快速选择笔记本和笔记-->
@@ -124,12 +103,12 @@
 <div id="container">
     <hr/>
     <div id="article" >
-        <div ng-repeat="article in articles" ng-click="showInEditor(article)">
+        <div ng-repeat="article in articles" ng-click="showInEditor(article)" style="">
             <div class="article_item" name="article_item" ng-to-yellow>
                 <p class="article_createTime">[: article.created_at :]</p>
                 <p class="article_content"><span ng-bind-html="article.content|htmlContent"></span></p>
             </div>
-            <hr/>
+            <div style="width:100%; height:2px; border-top:1px solid lightgrey; clear:both;"></div>
         </div>
     </div>
 
@@ -145,9 +124,9 @@
             <script type="text/javascript" src="/js/article.js"></script>
 
             <script>
-        var showLeftPush = document.getElementById( 'showLeftPush' ),
+            var showLeftPush = document.getElementById( 'showLeftPush' ),
             body = document.body;
-        menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+            menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 
             showLeftPush.onclick = function() {
                     classie.toggle( this, 'active' );
@@ -156,5 +135,19 @@
             };
 
     </script>
+            <script src="/node_modules/jquery/dist/jquery.js"></script>
+            <script src="/node_modules/angular/angular.js"></script>
+            <script src="/node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+            <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+            <script src="/node_modules/angular-cookies/angular-cookies.js"></script>
+            <script src="/js/nav/modernizr.custom.js"></script>
+            <script src="/js/nav/classie.js"></script>
+            <script src="/js/notebook.js"></script>
+            <script src="/js/book/modernizr.custom.js"></script>
+            <!--转成pdf格式-->
+            <script src="/js/topdf/html2canvas.js"></script>
+            <script src="/js/topdf/jspdf.debug.js"></script>
+            <script type="text/javascript" src="/node_modules/angular-save-html-to-pdf/dist/saveHtmlToPdf.js"></script>
 </body>
 </html>
+

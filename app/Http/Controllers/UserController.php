@@ -60,13 +60,6 @@ class UserController extends Controller
         $user = DB::table('users')->where('email',$email)->first();
         if($user){//邮箱存在
             if(Hash::check($password,$user->password)){//密码正确
-                //将username和userid保存到session
-//                Session::put('USERID', $user->id);
-//                Session::put('EMAIL',$email);
-//                session(['username' => $user->name]);
-//                session(['userid' => $user->id]);
-//                session()->put('USERNAME',$user->name);
-//                session()->put('USERID',$user->id);
                 return ['status' => 1, 'msg' => '/api/notebook','userid'=>$user->id];
             }else{
                 return ['status' => 0, 'msg' => '密码错误'];

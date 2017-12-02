@@ -1,7 +1,7 @@
 (function () {
     'user strict';
 
-    var app = angular.module('notebook',['ui.router','ngCookies','btorfs.multiselect','ngCookies','htmlToPdfSave']);
+    var app = angular.module('notebook',['ui.router','ngCookies','ngCookies','htmlToPdfSave']);
 
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
         function($interpolateProvider,$stateProvider,$urlRouterProvider) {
@@ -9,30 +9,6 @@
             $interpolateProvider.startSymbol("[:");
             $interpolateProvider.endSymbol(":]");
 
-
-            //定义了路由规则
-            $stateProvider
-            // .state('home',{
-            //     url:'/home',//在地址栏的显示
-            //     template:'<h1>首页</h1>'//模版，这一页需要的html在哪里，把模版插入需要的位置
-            //     //会被动态插入ui-view
-            //     /*会在html（blade.php）中检查是不是有相同名字
-            //     *／例如templateUrl:'home.tpl'
-            //     * 如果在index.blade.php中定义了(在当前所有.tpl中找)
-            //     * <script type="text/ng-template" id="home.tpl"></script>
-            //     * 如果找不到就去服务器上找
-            //     * 找到后插入到<div ui-view></div>中
-            //      */
-            //     //templateUrl: '***/***'从服务器上动态获取
-            // })
-                .state('notebook', {
-                    url: '/notebook',
-                    templateUrl: "notebook"
-                })
-
-
-            //没有满足上面的所有规则
-            $urlRouterProvider.otherwise('/notebook');
         }
     ]);
 
@@ -202,7 +178,6 @@
             replace: true,
             link: function(scope, elem, attrs) {
                 elem.bind('click', function() {
-
                     var divs = document.getElementsByName("article_item");
                     var len = divs.length;
                     for(var i=0;i<len;i++){
@@ -211,11 +186,8 @@
                                 divs[j].style.color="black";
                             }
                     }
-
                         elem.css("background-color", "rgb(254,198,6)");
                         elem.css("color", "white");
-
-
                 });
             }
         };

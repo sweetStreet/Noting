@@ -2,11 +2,13 @@
     'user strict';
     
     var app = angular.module('welcome',['ui.router','ngCookies']);
-    app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
-            function($interpolateProvider,$stateProvider,$urlRouterProvider) {
+    app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider','$httpProvider',
+            function($interpolateProvider,$stateProvider,$urlRouterProvider,$httpProvider) {
                 //原本默认的是两个大括号{{内容}}，但是angular和laravel会冲突
                 $interpolateProvider.startSymbol("[:");
                 $interpolateProvider.endSymbol(":]");
+
+                $httpProvider.defaults.withCredentials=true;
 
                 //定义了路由规则
                 $stateProvider

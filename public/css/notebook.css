@@ -91,21 +91,23 @@ i{
     height:100%;
 }
 
-
-
 #article{
     width: 20%;
-    height: 680px;
+    height: 640px;
     float:left;
 }
 #editor{
     width: 80%;
     float:right;
-    height: 648px;
+    height: 608px;
 }
 .article_item{
     background-color: white;
     height:65px;
+    overflow:hidden;/*让超出宽度的部分隐藏*/
+    text-overflow:ellipsis;/* 其他 浏览器 显示省略符号来代表被修剪的文本。*/
+    -o-text-overflow:ellipsis; /* Opera 9-10 显示省略符号来代表被修剪的文本。*/
+    white-space:nowrap;/*让文字不自动换行，无论CSS宽度设置多少，所有文字都在一行内显示*/
 }
 
 .article_createTime{
@@ -151,7 +153,6 @@ i{
     padding-left:100px;
     overflow:scroll;
 }
-
 #btn_addnotebook{
     background-color: transparent;
     border:none;
