@@ -20,66 +20,7 @@
 </head>
 <body class="cbp-spmenu-push">
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
-                <p id="mydesk">我的书桌</p>
-                <div id = "notebook_nav">
-                    <!--快速选择笔记本和笔记-->
-                    <div class="search">
-                        <div class="bar7">
-                            <form>
-                                <input type="text" placeholder="请输入笔记本名字...">
-                                <button id="btn_bar7" type="submit"></button>
-                            </form>
-                            <button id="btn_addnotebook" ng-click="addNotebook()"><i class="fa fa-plus" aria-hidden="true"></i>新增笔记本</button>
-                        </div>
-                    </div>
-
-
-                    <ul id="notebook-list" ng-repeat="notebook in notebooks">
-                        <li>
-                            <figure class='book'>
-
-                                <!-- Front -->
-
-                                <ul class='paperback_front'>
-                                    <li>
-                                        <span class="ribbon">[: notebook.created_at.substring(5,10) :]</span>
-                                        <img src="/images/paper.jpg" alt="" width="100%" height="100%">
-                                    </li>
-                                    <li></li>
-                                </ul>
-
-                                <!-- Pages -->
-
-                                <ul class='ruled_paper'>
-                                    <li></li>
-                                    <li>
-                                        <a class="btn" ng-click="selectNotebook(notebook)">进入笔记本</a>
-                                    </li>
-                                    <li></li>
-                                    <li></li>
-                                    <li></li>
-                                </ul>
-
-                                <!-- Back -->
-
-                                <ul class='paperback_back'>
-                                    <li>
-                                        <img src="/images/paper.jpg" alt="" width="100%" height="100%">
-                                    </li>
-                                    <li></li>
-                                </ul>
-                                <figcaption>
-                                    <h1>[: notebook.title :]</h1>
-                                    <span>By yuki</span>
-                                    <button ng-click="shareNotebook(notebook)"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
-                                    <button ng-click="deleteNotebook(notebook)"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                                </figcaption>
-                            </figure>
-                        </li>
-
-
-                    </ul>
-                </div>
+                <p id="mydesk">我的文件</p>
             </nav>
 
             <header id="header">
@@ -105,8 +46,8 @@
     <hr/>
     <div id="article" >
         <label>
-            <select ngc-select-search class="common-select" ng-model="notebookSelected" ng-options="notebook.id as notebook.title for notebook in notebooks" name="notebookSelected"  >
-                <option value="notebook">请选择笔记本</option></select>
+            <select ngc-select-search class="common-select" ng-model="notebookSelected" ng-options="notebook.id as notebook.title for notebook in notebooks" name="notebook">
+                <option value="">请选择</option></select>
             <button id="btn_addnotebook" ng-click="addNotebook()"><i class="fa fa-plus" aria-hidden="true"></i></button>
         </label>
 
