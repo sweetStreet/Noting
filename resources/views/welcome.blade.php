@@ -3,7 +3,7 @@
     <head>
         <title>Noting</title>
         <link rel="stylesheet" href="/node_modules/normalize-css/normalize.css">
-        <link rel="stylesheet" href="https://npmcdn.com/sweetalert2@4.0.15/dist/sweetalert2.min.css">
+        <link rel="stylesheet" href="/node_modules/sweetalert2/dist/sweetalert2.css">
         <link rel="stylesheet" type="text/css" href="/css/welcome.css">
     </head>
 
@@ -89,7 +89,8 @@
         <script src="/node_modules/angular/angular.js"></script>
         <script src="/node_modules/angular-ui-router/release/angular-ui-router.js"></script>
         <script src="/node_modules/angular-cookies/angular-cookies.js"></script>
+        <script src="/node_modules/sweetalert2/dist/sweetalert2.js"></script>
+        <script src="/node_modules/angular-sweetalert-2/dist/angular-sweetalert2.min.js"></script>
         <script src="/js/welcome.js"></script>
-
     </body>
 </html>

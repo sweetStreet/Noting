@@ -1,7 +1,7 @@
 (function () {
     'user strict';
     
-    var app = angular.module('welcome',['ui.router','ngCookies']);
+    var app = angular.module('welcome',['ui.router','ngCookies','socialbase.sweetAlert']);
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider','$httpProvider',
             function($interpolateProvider,$stateProvider,$urlRouterProvider,$httpProvider) {
                 //原本默认的是两个大括号{{内容}}，但是angular和laravel会冲突
@@ -47,7 +47,7 @@
         ]);
 
 
-        app.controller('welcomeCrtl',function($scope,$http,$cookieStore){
+        app.controller('welcomeCrtl',function($scope,$http,$cookieStore,SweetAlert){
 
             $scope.myTxt = "你还没有提交";
             $scope.login = function (user) {
@@ -57,6 +57,12 @@
                                         $cookieStore.put('userid',response.data.userid);
                                         window.location.href = response.data.msg;
                                     }else{
+                                        SweetAlert.swal({
+                                            title: "自动关闭弹窗！",
+                                            text: response.data.msg,
+                                            timer: 2000,
+                                            showConfirmButton: false
+                                        });
                                         $scope.myTxt = response.data.msg;
                                     }
                                 }),function(){
