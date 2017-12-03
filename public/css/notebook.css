@@ -75,10 +75,10 @@ i{
     background-color: #000;
 }
 #input_search_article:focus{
-    background-color: #888888;
+    background-color: lightgrey;
 }
 #input_search_article:active{
-    background-color:#888888;
+    background-color: lightgrey;
 }
 
 .toolbar {

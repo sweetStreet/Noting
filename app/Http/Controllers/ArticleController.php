@@ -38,6 +38,7 @@ class ArticleController
         $article->user_id = $user_id;
         $article->notebook_id = $notebook_id;
         $article->content = $content;
+        $article->content_text = $this->html2text($content);
         $result = $article->save();
         if($result){
             return ['status'=>1, 'msg'=>'创建成功'];
@@ -51,7 +52,7 @@ class ArticleController
         $user_id = Request::get('user_id');
         $notebook_id = Request::get('notebook_id');
         $content = Request::get('content');
-        $result = DB::update('update articles set content=? where id=? and user_id=? and notebook_id=?',[$content,$id,$user_id,$notebook_id]);
+        $result = DB::update('update articles set content=?,content_text=? where id=? and user_id=? and notebook_id=?',[$content,$this->html2text($content),$id,$user_id,$notebook_id]);
         if($result){
             return ['status'=>1, 'msg'=>'创建成功'];
         }else{
@@ -96,7 +97,7 @@ class ArticleController
             ['user_id', '=', $user_id],
             ['notebook_id', '=', $notebook_id],
             ['deleted_at','=',null]
-        ])->orderBy('created_at', 'asc')
+        ])->orderBy('created_at', 'desc')
             ->get();
         if ($articles) {
             return ['status' => 1, 'data' => $articles];
@@ -115,5 +116,54 @@ class ArticleController
                 return ['status'=>0];
             }
         }
+
+
+        public function searchContent(){
+            $user_id = Request::get('user_id');
+            $keyword = Request::get('keyword');
+            $articles = DB::table('articles')->where([
+                ['user_id', '=', $user_id],
+                ['content_text', 'like', "%"+$keyword+"%"],
+                ['deleted_at','=',null]
+            ])->orderBy('created_at', 'desc')
+                ->get();
+            if ($articles) {
+                return ['status' => 1, 'data' => $articles];
+            } else {
+                return ['status' => 0, 'msg' => '查询失败'];
+            }
+        }
+
+    function html2text($str){
+        $str = preg_replace("/<style .*?<\\/style>/is", "", $str);
+        $str = preg_replace("/<script .*?<\\/script>/is", "", $str);
+        $str = preg_replace("/<br \\s*\\/>/i", "", $str);
+        $str = preg_replace("/<\\/?p>/i", "", $str);
+        $str = preg_replace("/<\\/?td>/i", "", $str);
+        $str = preg_replace("/<\\/?div>/i", "", $str);
+        $str = preg_replace("/<\\/?blockquote>/i", "", $str);
+        $str = preg_replace("/<\\/?li>/i", "", $str);
+        $str = preg_replace("/ /i", "", $str);
+        $str = preg_replace("/ /i", "", $str);
+        $str = preg_replace("/&/i", "", $str);
+        $str = preg_replace("/&/i", "", $str);
+        $str = preg_replace("/</i", "", $str);
+        $str = preg_replace("/</i", "", $str);
+        $str = preg_replace("/“/i", '"', $str);
+        $str = preg_replace("/&ldquo/i", '"', $str);
+        $str = preg_replace("/‘/i", "'", $str);
+        $str = preg_replace("/&lsquo/i", "'", $str);
+        $str = preg_replace("/'/i", "'", $str);
+        $str = preg_replace("/&rsquo/i", "'", $str);
+        $str = preg_replace("/>/i", "", $str);
+        $str = preg_replace("/>/i", "", $str);
+        $str = preg_replace("/”/i", '"', $str);
+        $str = preg_replace("/&rdquo/i", '"', $str);
+        $str = strip_tags($str);
+        $str = html_entity_decode($str, ENT_QUOTES, "utf-8");
+        $str = preg_replace("/&#.*?;/i", "", $str);
+        return $str;
+    }
+
 
 }

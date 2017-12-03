@@ -48,14 +48,15 @@ Route::any('/api/notebook/create','NotebookController@create');
     Route::any('/api/article/getArticlesByUserID','ArticleController@getArticlesByUserID');
     //删除文章
     Route::any('/api/article/deleteArticle','ArticleController@deleteArticle');
-
+    //搜索文章
+    Route::any('/api/article/searchContent','ArticleController@searchContent');
 
     //日志模块
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+Route::get('/api/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 //管理员模块
 //默认界面
-    Route::any('/api/admin', 'AdminController@login');
+    Route::any('/api/admin', 'AdminController@index');
 //管理员登录
     Route::post('/api/admin/login', 'AdminController@login');
 //管理员主界面

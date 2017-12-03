@@ -17,8 +17,9 @@ class CretaeTableArticles extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('notebook_id');
-            $table->string('keywords',128)->nullable();
+            $table->string('tag',128)->nullable();
             $table->text('content');
+            $table->text('content_text')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
             $table->softDeletes();
