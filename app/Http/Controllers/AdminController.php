@@ -20,22 +20,6 @@ class AdminController
         return view('admin');
     }
 
-    public function userList(){
-        return view('adminUserList');
-    }
-
-    public function addUser(){
-        return view('adminAddUser');
-    }
-
-    public function welcome(){
-        return view('adminWelcome');
-    }
-
-    public function changePassword(){
-        return view('adminChangePassword');
-    }
-
     public function login(){
         $username = Request::get('username');
         $password = Request::get('password');

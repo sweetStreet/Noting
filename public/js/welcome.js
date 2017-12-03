@@ -1,7 +1,7 @@
 (function () {
     'user strict';
     
-    var app = angular.module('welcome',['ui.router','ngCookies','socialbase.sweetAlert']);
+    var app = angular.module('welcome',['ui.router','ngCookies','socialbase.sweetAlert','ngAnimate', 'toastr']);
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider','$httpProvider',
             function($interpolateProvider,$stateProvider,$urlRouterProvider,$httpProvider) {
                 //原本默认的是两个大括号{{内容}}，但是angular和laravel会冲突
@@ -47,7 +47,7 @@
         ]);
 
 
-        app.controller('welcomeCrtl',function($scope,$http,$cookieStore,SweetAlert,$timeout){
+        app.controller('welcomeCrtl',function($scope,$http,$cookieStore,SweetAlert,$timeout,toastr){
             $scope.login = function (user) {
                 $http.post('/api/user/login',{email:user.email,password:user.password})
                                 .then(function(response){
@@ -55,11 +55,7 @@
                                         $cookieStore.put('userid',response.data.userid);
                                         window.location.href = response.data.msg;
                                     }else{
-                                        SweetAlert.swal({
-                                            text: response.data.msg,
-                                            timer: 1000,
-                                            showConfirmButton: false
-                                        });
+                                        toastr.error(response.data.msg);
                                     }
                                 }),function(){
                                     console.log('e');
@@ -83,11 +79,7 @@
                                 window.location.href = response.data.msg;
                             }, 1200 );
                         }else {
-                            SweetAlert.swal({
-                                title: response.data.msg,
-                                timer: 1000,
-                                showConfirmButton: false
-                            });
+                            toastr.error(response.data.msg);
                         }
                     }),function(){
                         //todo:
@@ -101,6 +93,20 @@
 
             }
         });
+
+    app.config(function(toastrConfig) {
+        angular.extend(toastrConfig, {
+            autoDismiss: true,
+            containerId: 'toast-container',
+            maxOpened: 0,
+            newestOnTop: true,
+            positionClass: 'toast-bottom-full-width',
+            preventDuplicates: false,
+            preventOpenDuplicates: false,
+            target: 'body',
+            timeOut: 1000,
+        });
+    });
 
 })();
 
