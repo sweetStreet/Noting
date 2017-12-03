@@ -1,7 +1,7 @@
 (function () {
     'user strict';
 
-    var app = angular.module('notebook',['ui.router','ngCookies','ngCookies','htmlToPdfSave','socialbase.sweetAlert','angularFileUpload']);
+    var app = angular.module('notebook',['ui.router','ngCookies','htmlToPdfSave','socialbase.sweetAlert','angularFileUpload','ngAnimate', 'toastr']);
 
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
         function($interpolateProvider,$stateProvider,$urlRouterProvider) {
@@ -12,7 +12,7 @@
         }
     ]);
 
-    app.controller('notebookCrtl',function($scope,$http,$cookieStore,SweetAlert,FileUploader) {
+    app.controller('notebookCrtl',function($scope,$http,$cookieStore,SweetAlert,FileUploader,toastr) {
         //页面初始化
         $scope.init = function () {
             $scope.notebooks = [];
@@ -136,9 +136,9 @@
                         if (response.data.status) {//创建成功
                             //刷新文章列表
                             $scope.updateList();
+                            toastr.success('创建成功');
                             if($scope.articles!=[]) {
                                 $cookieStore.put('articleid', $scope.articles[0].id);
-                                console.log('success');
                             }
                         } else {
                             //创建失败
@@ -343,6 +343,20 @@
             return $sce.trustAsHtml(input);
         }
     }]);
+
+    app.config(function(toastrConfig) {
+        angular.extend(toastrConfig, {
+            autoDismiss: true,
+            containerId: 'toast-container',
+            maxOpened: 0,
+            newestOnTop: true,
+            positionClass: 'toast-bottom-full-width',
+            preventDuplicates: false,
+            preventOpenDuplicates: false,
+            target: 'body',
+            timeOut: 1000,
+        });
+    });
 
     /**
      * 带筛选功能的下拉框

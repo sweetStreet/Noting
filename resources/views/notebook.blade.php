@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="/css/book/book2.css" />
     <link rel="stylesheet" type="text/css" href="/css/select.css" />
     <link rel="stylesheet" href="/node_modules/sweetalert2/dist/sweetalert2.css">
+    <link rel="stylesheet" type="text/css" href="/node_modules/angular-toastr/dist/angular-toastr.css" />
 
 </head>
 <body class="cbp-spmenu-push" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
@@ -184,6 +185,9 @@
             <script src="/js/topdf/html2canvas.js"></script>
             <script src="/js/topdf/jspdf.debug.js"></script>
             <script type="text/javascript" src="/node_modules/angular-save-html-to-pdf/dist/saveHtmlToPdf.js"></script>
+            <!--提示-->
+            <script type="text/javascript" src="/node_modules/angular-animate/angular-animate.js"></script>
+            <script type="text/javascript" src="/node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
 </body>
 </html>
 
