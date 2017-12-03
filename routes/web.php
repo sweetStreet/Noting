@@ -50,6 +50,9 @@ Route::any('/api/notebook/create','NotebookController@create');
     Route::any('/api/article/deleteArticle','ArticleController@deleteArticle');
 
 
+    //日志模块
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
 //管理员模块
 //默认界面
     Route::any('/api/admin', 'AdminController@login');

@@ -48,8 +48,6 @@
 
 
         app.controller('welcomeCrtl',function($scope,$http,$cookieStore,SweetAlert,$timeout){
-
-            $scope.myTxt = "你还没有提交";
             $scope.login = function (user) {
                 $http.post('/api/user/login',{email:user.email,password:user.password})
                                 .then(function(response){

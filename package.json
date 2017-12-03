@@ -22,11 +22,13 @@
     "angular": "^1.6.6",
     "angular-animate": "^1.6.6",
     "angular-cookies": "^1.6.6",
+    "angular-file-upload": "^2.5.0",
     "angular-save-html-to-pdf": "^1.3.2",
     "angular-ui-router": "^0.4.3",
     "bootstrap": "^3.3.7",
     "bootstrap-multiselect": "^0.9.13-1",
     "font-awesome": "^4.7.0",
+    "ng-file-upload": "^12.2.13",
     "normalize-css": "^2.3.1",
     "wangeditor": "^3.0.12"
   }

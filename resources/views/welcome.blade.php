@@ -15,7 +15,7 @@
         <div ui-view></div>
 
         <footer class="footer">
-            <p>[:myTxt:]</p>
+<!--            <p>[:myTxt:]</p>-->
             <div> Copyright © 2017 sweetstreet. All rights reserved. </div>
         </footer>
 
