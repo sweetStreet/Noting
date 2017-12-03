@@ -17,7 +17,7 @@
         $scope.init = function () {
             $scope.notebooks = [];
             $scope.notebookSelected = [];
-            // $scope.articles = [];
+            $scope.articles = [];
             $scope.selectUserNotebooks();
             $scope.selectUserArticles();
         };
@@ -65,10 +65,11 @@
 
         //保存文章
         $scope.saveArticle = function () {
-            articleid = $cookieStore.get('articleid');
-            content = editor.txt.html();
-            userid = $cookieStore.get('userid');
             notebookid = $cookieStore.get('notebookid');
+            articleid = $cookieStore.get('articleid');
+            userid = $cookieStore.get('userid');
+            content = editor.txt.html();
+            console.log('when save article',notebookid);
             $http.post('/api/article/saveArticle', {
                 article_id: articleid,
                 user_id: userid,
@@ -76,6 +77,7 @@
                 content: content
             })
                 .then(function (response) {
+                    console.log('when change notebook',notebookid);
                     if (response.data.status) {//创建成功
                         //刷新文章列表
                         $scope.updateList();
@@ -93,16 +95,16 @@
         $scope.showInEditor = function (article) {
             editor.txt.html(article.content);
             $cookieStore.put('articleid', article.id);
-            $cookieStore.put('notebookid',article.notebookid);
+            $cookieStore.put('notebookid',article.notebook_id);
         }
 
         //刷新文章列表
         $scope.updateList = function () {
             userid = $cookieStore.get('userid');
             notebookid = $cookieStore.get('notebookid');
-            if (notebookid == '') {
-                //提示请选择笔记本
-            } else {
+            // if (notebookid == '') {
+            //     //提示请选择笔记本
+            // } else {
                 $http.get('/api/article/getArticlesByNotebookID', {
                     params: {
                         user_id: userid,
@@ -111,9 +113,7 @@
                 })
                     .then(function (response) {
                         if (response.data.status) {//获得文章列表
-                            if (response.data.data) {
-                                $scope.articles = response.data.data.data;
-                            }
+                            $scope.articles = response.data.data;
                             console.log($scope.articles);
                         } else {
                             console.log('error');
@@ -121,7 +121,7 @@
                     }), function () {
                     console.log('e');
                 }
-            }
+            // }
         }
 
         //新增文章
@@ -136,7 +136,7 @@
                         if (response.data.status) {//创建成功
                             //刷新文章列表
                             $scope.updateList();
-                            if($scope.articles!=null) {
+                            if($scope.articles!=[]) {
                                 $cookieStore.put('articleid', $scope.articles[0].id);
                                 console.log('success');
                             }
@@ -179,8 +179,8 @@
         //获得属于某个笔记本的所有文章
         $scope.selectNotebook = function (notebookid) {
             userid = $cookieStore.get('userid');
-            // notebookid = notebook.id;
             console.log(notebookid);
+
             $cookieStore.put('notebookid', notebookid);
             $http.get('/api/article/getArticlesByNotebookID', {params: {user_id: userid, notebook_id: notebookid}})
                 .then(function (response) {
