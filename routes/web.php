@@ -61,6 +61,8 @@ Route::get('/api/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index
     Route::post('/api/admin/login', 'AdminController@login');
 //管理员主界面
     Route::any('/api/admin/index', 'AdminController@index');
+//修改邮箱
+    Route::any('/api/admin/reviseEmail','AdminController@reviseEmail');
 //用户列表
     Route::any('/api/admin/adminUserList', 'AdminController@userList');
 //恢复用户

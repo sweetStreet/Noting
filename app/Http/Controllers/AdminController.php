@@ -10,7 +10,6 @@ namespace App\Http\Controllers;
 
 use Request;
 use DB;
-use Zend\Diactoros\Response\RedirectResponse;
 use App\User;
 
 class AdminController
@@ -43,12 +42,15 @@ class AdminController
         }
     }
 
-
-    public function revisePassword(){
+    public function reviseEmail(){
+        $id = Request::get('id');
         $email = Request::get('email');
-        $password = Request::get('password');
-
-
+        $result = DB::update('update users set email=? where id = ?',[$email,$id]);
+        if($result){
+            return ['status'=>1,'msg'=>'修改成功'];
+        }else{
+            return ['status'=>0,'msg'=>'修改失败'];
+        }
     }
 
     public function deleteUser(){

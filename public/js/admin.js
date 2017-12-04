@@ -7,7 +7,9 @@
             //原本默认的是两个大括号{{内容}}，但是angular和laravel会冲突
             $interpolateProvider.startSymbol("[:");
             $interpolateProvider.endSymbol(":]");
+
             $urlRouterProvider.otherwise("/");
+
             $stateProvider
                 .state('user', {
                     url: "/user",
@@ -26,7 +28,6 @@
                 .then(function (response){
                     if(response.data.status){//有笔记本
                         $scope.users = response.data.data;
-                        console.log(response.data.data);
                     }else {
                         console.log('没有数据');
                     }
@@ -115,23 +116,23 @@
         //
         // };
         //定义一个点击保存按钮时触发的事件
-        $scope.save = function(){
-            //将添加的值赋给数组
-            $scope.users.name = $scope.newName;
-            $scope.users.age = $scope.newAge;
-            $scope.users.city = $scope.newCity;
-            $scope.users.push({name:$scope.newName,age:$scope.newAge,city:$scope.newCity});
-            //关闭模块窗口
-            $('#modal-1').modal('hide');
-        };
+        // $scope.save = function(){
+        //     //将添加的值赋给数组
+        //     $scope.users.name = $scope.newName;
+        //     $scope.users.age = $scope.newAge;
+        //     $scope.users.city = $scope.newCity;
+        //     $scope.users.push({name:$scope.newName,age:$scope.newAge,city:$scope.newCity});
+        //     //关闭模块窗口
+        //     $('#modal-1').modal('hide');
+        // };
 
 
         //定义一个点击修改按钮时出发的事件，用于修改数据
         $scope.update = function($index){
             //显示bootstrap中的模块窗口
             $('#modal-2').modal('show');
-
             //将选中行的数据绑定到临时对象prod中，在下面的模态窗口中展示出来
+            $scope.prod.id = $scope.users[$index].id;
             $scope.prod.name = $scope.users[$index].name;
             $scope.prod.email = $scope.users[$index].email;
             //选中行的索引赋值给全局变量idx
@@ -140,11 +141,30 @@
 
         //定义一个点击确定按钮时触发的事件,
         $scope.ensure = function () {
-            //将修改后的值赋给数组
-            $scope.users[idx].name = $scope.prod.name;
-            $scope.users[idx].email = $scope.prod.email;
-            //关闭模块窗口
-            $('#modal-2').modal('hide');
+            $http.post('/api/admin/reviseEmail', {
+                id: $scope.prod.id,
+                email: $scope.prod.email
+            })
+                .then(function (response) {
+                    if (response.data.status) {//修改成功
+                        console.log('hi',$scope.prod.email)
+                        //将修改后的值赋给数组
+                        $scope.users[idx].name = $scope.prod.name;
+                        $scope.users[idx].email = $scope.prod.email;
+                        //关闭模块窗口
+                        $('#modal-2').modal('hide');
+                    } else {
+                        console.log(response.data.msg);
+                        //关闭模块窗口
+                        $('#modal-2').modal('hide');
+                    }
+                }), function () {
+                console.log('e');
+            }
+        };
+
+        $scope.logout = function(){
+
         };
     });
 
