@@ -53,7 +53,7 @@
             <button id="btn_addnotebook" ng-click="addNotebook()"><i class="fa fa-plus" aria-hidden="true"></i></button>
         </label>
 
-        <div ng-repeat="article in articles" ng-click="showInEditor(article)">
+        <div ng-repeat="article in articles" ng-click="showInEditor($index)">
             <div class="article_item" name="article_item" ng-to-yellow>
                 <p class="article_createTime">[: article.created_at :]</p>
                 <p class="article_content"><span ng-bind-html="article.content|htmlContent"></span></p>

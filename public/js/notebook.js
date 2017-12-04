@@ -13,6 +13,9 @@
     ]);
 
     app.controller('notebookCrtl',function($scope,$http,$cookieStore,SweetAlert,FileUploader,toastr) {
+        //定义一个空对象，用于保存和修改数据时临时存储
+        $scope.prod = {};
+
         //页面初始化
         $scope.init = function () {
             $scope.notebooks = [];
@@ -33,12 +36,11 @@
                     .then(function (response) {
                         if (response.data.status) {//有笔记本
                             $scope.notebooks = response.data.notebooks;
-                            console.log(response.data.notebooks);
                         } else {
                             console.log('没有数据');
                         }
                     }), function () {
-                    console.log('e');
+                    toastr.error('网络故障，请重试');
                 }
             }
 
@@ -50,138 +52,114 @@
                         user_id: userid
                     }
                 })
-                    .then(function (response) {
+                    .then(function(response){
                         if (response.data.status) {//有文章
                             $scope.articles = response.data.data;
-                            console.log(response.data.data);
-                            console.log(response.data.msg);
                         } else {
-                            console.log('没有数据');
+                            console.log('没有文章');
                         }
                     }), function () {
-                    console.log('e');
+                    toastr.error('网络故障，请重试');
                 }
             }
 
         //保存文章
         $scope.saveArticle = function () {
-            notebookid = $cookieStore.get('notebookid');
-            articleid = $cookieStore.get('articleid');
-            userid = $cookieStore.get('userid');
-            content = editor.txt.html();
-            console.log('when save article',notebookid);
-            $http.post('/api/article/saveArticle', {
-                article_id: articleid,
-                user_id: userid,
-                notebook_id: notebookid,
-                content: content
-            })
-                .then(function (response) {
-                    console.log('when change notebook',notebookid);
-                    if (response.data.status) {//创建成功
-                        //刷新文章列表
-                        $scope.updateList();
-                        console.log('success');
-                    } else {
-                        //创建失败
-                        console.log('error');
-                    }
-                }), function () {
-                console.log('e');
+            if(typeof($scope.prod.article)=="undefined"){
+                if(typeof($scope.prod.notebookid)=="undefined"){
+                    toastr.error("请先选择笔记本");
+                }else {
+                    toastr.error("请先选择文章");
+                }
+            }else {
+                var notebookid = $scope.prod.article.notebook_id;
+                var articleid = $scope.prod.article.id;
+                var userid = $cookieStore.get('userid');
+                var content = editor.txt.html();
+                console.log('when save article', notebookid);
+                $http.post('/api/article/saveArticle', {
+                    article_id: articleid,
+                    user_id: userid,
+                    notebook_id: notebookid,
+                    content: content
+                })
+                    .then(function (response) {
+                        if (response.data.status) {//保存成功
+                            //更新文章内容
+                            $scope.prod.article.content = content;
+                            toastr.success("保存成功");
+                        } else {
+                            //创建失败
+                            toastr.error(response.data.msg);
+                        }
+                    }), function () {
+                    toastr.error('网络故障，请重试');
+                }
             }
         }
 
         //将左侧列表选中的文章显示在右侧编辑器上
-        $scope.showInEditor = function (article) {
+        $scope.showInEditor = function ($index) {
             editor.txt.html(article.content);
-            $cookieStore.put('articleid', article.id);
-            $cookieStore.put('notebookid',article.notebook_id);
-        }
-
-        //刷新文章列表
-        $scope.updateList = function () {
-            userid = $cookieStore.get('userid');
-            notebookid = $cookieStore.get('notebookid');
-            // if (notebookid == '') {
-            //     //提示请选择笔记本
-            // } else {
-                $http.get('/api/article/getArticlesByNotebookID', {
-                    params: {
-                        user_id: userid,
-                        notebook_id: notebookid
-                    }
-                })
-                    .then(function (response) {
-                        if (response.data.status) {//获得文章列表
-                            $scope.articles = response.data.data;
-                            console.log($scope.articles);
-                        } else {
-                            console.log('error');
-                        }
-                    }), function () {
-                    console.log('e');
-                }
-            // }
+            $scope.prod.article = $scope.articles[$index];
         }
 
         //新增文章
         $scope.addArticle = function () {
-            $editorContent = '<p><br></p>';
-            editor.txt.html($editorContent);
-            $userid = $cookieStore.get('userid');
-            $notebookid = $cookieStore.get('notebookid');
-            if($notebookid != null){
-                $http.post('/api/article/addArticle', {user_id: $userid, notebook_id: $notebookid, content: $editorContent})
+            var userid = $cookieStore.get('userid');
+            var editorContent = '<p><br></p>';
+            var notebookid = $scope.prod.notebookid;
+            if(typeof(notebookid) == "undefined"){
+                toastr.error('请选择笔记本');
+            }else{
+                $http.post('/api/article/addArticle',{
+                    user_id: userid,
+                    notebook_id: notebookid,
+                    content: editorContent
+                })
                     .then(function (response) {
                         if (response.data.status) {//创建成功
                             //刷新文章列表
-                            $scope.updateList();
+                            $scope.prod.article = response.data.data;
+                            $scope.articles.unshift(response.data.data);
+                            editor.txt.html(editorContent);
                             toastr.success('创建成功');
-                            if($scope.articles!=[]) {
-                                $cookieStore.put('articleid', $scope.articles[0].id);
-                            }
                         } else {
-                            //创建失败
-                            console.log('error');
+                            toastr.error(response.data.msg);
                         }
                     }), function () {
-                    console.log('e');
+                        toastr.error('网络故障');
+                    }
                 }
-            }else{
-                swal({
-                    type:'warning',
-                    html:'请先选择笔记本'
-                })
-            }
-
         }
 
         //删除文章
         $scope.deleteArticle = function () {
-            editor.txt.html('<p><br></p>');
-            $articleid = $cookieStore.get('articleid')
-            $http.get('/api/article/deleteArticle', {params: {article_id: $articleid}})
-                .then(function (response) {
-                    if (response.data.status) {
-                        //刷新文章列表
-                        $scope.updateList();
-                        console.log('success');
-                    } else {
-                        console.log('error');
-                    }
-                }), function () {
-                console.log('e');
+            if(typeof($scope.prod.article)=="undefined"){
+                toastr.error('请先选择文章');
+            }else {
+                console.log("deleteArticle");
+                console.log($scope.prod.article);
+                $http.get('/api/article/deleteArticle', {params: {article_id: $scope.prod.article.id}})
+                    .then(function (response) {
+                        if (response.data.status) {
+                            editor.txt.html('<p><br></p>');
+                            $scope.articles.splice($scope.prod.article,1);
+                            $scope.prod.article = undefined;
+                            toastr.success('删除成功');
+                        } else {
+                            toastr.error(response.data.msg);
+                        }
+                    }), function () {
+                    toastr.error('网络故障');
+                }
             }
-
         }
 
 
         //获得属于某个笔记本的所有文章
         $scope.selectNotebook = function (notebookid) {
             userid = $cookieStore.get('userid');
-            console.log(notebookid);
-
-            $cookieStore.put('notebookid', notebookid);
             $http.get('/api/article/getArticlesByNotebookID', {params: {user_id: userid, notebook_id: notebookid}})
                 .then(function (response) {
                     if (response.data.status) {//获得文章列表
@@ -189,12 +167,12 @@
                         //     $scope.articles = response.data.data.data;
                         // }
                         $scope.articles = response.data.data;
-                        console.log(response.data.data);
+                        console.log('获取成功');
                     } else {
-                        console.log('error');
+                        toastr.error(response.data.msg);
                     }
                 }), function () {
-                console.log('e');
+                toastr.error("网络故障，请重试");
             }
         }
 
@@ -278,7 +256,6 @@
         });
 
         // CALLBACKS
-
         uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
             console.info('onWhenAddingFileFailed', item, filter, options);
         };
@@ -467,6 +444,7 @@
 
                                     //todo: 设置页面笔记本对应的笔记
                                     scope.selectNotebook(currentKey);
+                                    scope.prod.notebookid = currentKey;
                                     break;
                                 }
                             }

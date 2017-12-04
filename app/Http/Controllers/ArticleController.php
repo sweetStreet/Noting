@@ -34,14 +34,10 @@ class ArticleController
         $user_id = Request::get('user_id');
         $notebook_id = Request::get('notebook_id');
         $content = Request::get('content');
-        $article = new Article();
-        $article->user_id = $user_id;
-        $article->notebook_id = $notebook_id;
-        $article->content = $content;
-        $article->content_text = $this->html2text($content);
-        $result = $article->save();
-        if($result){
-            return ['status'=>1, 'msg'=>'创建成功'];
+        $id=DB::table('articles')->insertGetId(['user_id'=>$user_id,'notebook_id'=>$notebook_id,'content'=>$content,'content_text'=>$this->html2text($content)]);
+        $article = DB::table('articles')->where('id',$id)->first();
+        if($article){
+            return ['status'=>1, 'data'=>$article, 'msg'=>'创建成功'];
         }else{
             return ['status'=>0, 'msg'=>'创建失败'];
         }
@@ -66,7 +62,7 @@ class ArticleController
         $articles = DB::table('articles')->where([
             ['user_id', '=', $user_id],
             ['deleted_at','=',null]
-        ])->orderBy('created_at', 'asc')
+        ])->orderBy('created_at', 'desc')
             ->get();
         if ($articles) {
             return ['status' => 1, 'data' => $articles,'msg'=>$user_id];
