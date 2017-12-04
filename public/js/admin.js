@@ -66,7 +66,7 @@
                 if(confirm("是否删除"+$scope.users[$index].name) ){
                     $http.get('/api/admin/adminDeleteUser', {
                         params: {
-                            email: $scope.users[$index].email
+                            id: $scope.users[$index].id
                         }
                     })
                         .then(function (response) {

@@ -51,9 +51,8 @@ class AdminController
     }
 
     public function deleteUser(){
-        $email = Request::get('email');
-        $user = DB::table('users')-> where('email',$email)->get();
-
+        $id = Request::get('id');
+        $user = User::find($id);
         if($user){
             $result = $user->delete();
             if($result){
@@ -63,9 +62,6 @@ class AdminController
             }
         }else{
             return ['status' => 0, 'msg'=>"用户不存在"];
-//            $result = User::find($email)->delete();
-//            $result = User::destroy($email);
-//            $result = DB::table('users')->where('email',$email)->delete();
         }
     }
 
