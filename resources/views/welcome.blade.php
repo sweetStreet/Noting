@@ -91,6 +91,8 @@
         <script src="/node_modules/angular-cookies/angular-cookies.js"></script>
         <script src="/node_modules/sweetalert2/dist/sweetalert2.js"></script>
         <script src="/node_modules/angular-sweetalert-2/dist/angular-sweetalert2.min.js"></script>
+        <script type="text/javascript" src="/node_modules/angular-animate/angular-animate.js"></script>
+        <script type="text/javascript" src="/node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
         <script src="/js/welcome.js"></script>
     </body>
 </html>

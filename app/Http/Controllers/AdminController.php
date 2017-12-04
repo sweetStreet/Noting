@@ -52,17 +52,30 @@ class AdminController
 
     public function deleteUser(){
         $email = Request::get('email');
-        $user_exisis = DB::table('users')-> where('email',$email)->exists();
+        $user = DB::table('users')-> where('email',$email)->get();
 
-        if($user_exisis==false){
-            return ['status' => 0, 'msg'=>"用户不存在"];
-        }else{
-            $result = DB::table('users')->where('email',$email)->delete();
+        if($user){
+            $result = $user->delete();
             if($result){
                 return ['status' => 1, 'msg'=>"删除成功"];
             }else{
                 return ['status' => 0, 'msg'=>"删除失败，请重新删除"];
             }
+        }else{
+            return ['status' => 0, 'msg'=>"用户不存在"];
+//            $result = User::find($email)->delete();
+//            $result = User::destroy($email);
+//            $result = DB::table('users')->where('email',$email)->delete();
+        }
+    }
+
+    public function userList(){
+        $users = DB::table('users')->orderBy('created_at', 'desc')
+            ->get();
+        if($users){
+            return ['status' => 1, 'data'=>$users, 'msg'=>"查找成功"];
+        }else{
+            return ['status' => 0, 'msg'=>"查找失败"];
         }
     }
 }
