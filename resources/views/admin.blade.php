@@ -72,6 +72,24 @@
             </tbody>
         </table>
 
+        <nav>
+            <ul class="pagination">
+                <li>
+                    <a ng-click="Previous()">
+                        <span>上一页</span>
+                    </a>
+                </li>
+                <li ng-repeat="page in pageList" ng-class="{active: isActivePage(page)}" >
+                    <a ng-click="selectPage(page)" >[: page :]</a>
+                </li>
+                <li>
+                    <a ng-click="Next()">
+                        <span>下一页</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
         <!-- 修改信息 -->
         <div class="modal" id="modal-2">
 

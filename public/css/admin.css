@@ -133,4 +133,15 @@ header{
     margin-left:90%;
     outline:none;
     background-color: transparent;
+}#divMain {
+     width: 500px;
+     margin: 0 auto;
+     margin-top: 100px;
+ }
+
+
+.pagination {
+    right: 0px;
+    position: absolute;
+    margin-right: 5%;
 }
