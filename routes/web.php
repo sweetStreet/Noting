@@ -63,11 +63,9 @@ Route::get('/api/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index
     Route::any('/api/admin/index', 'AdminController@index');
 //用户列表
     Route::any('/api/admin/adminUserList', 'AdminController@userList');
-//增加用户
-    Route::any('/api/admin/addUser', 'AdminController@addUser');
+//恢复用户
+    Route::any('/api/admin/recoverUser', 'AdminController@recoverUser');
 //删除用户
     Route::any('/api/admin/adminDeleteUser', 'AdminController@deleteUser');
 //后台服务器信息
     Route::any('/api/admin/adminWelcome', 'AdminController@welcome');
-//修改密码
-    Route::any('/api/admin/adminChangePassword', 'AdminController@changePassword');

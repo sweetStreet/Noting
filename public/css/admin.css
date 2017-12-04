@@ -130,7 +130,7 @@ table {
     background-color: #C82647;
 }
 
-.label_available{
+.label_available,.btn_recovery{
     background-color:#71BA51;
     color:white;
     font-size:5px;

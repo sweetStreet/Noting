@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use Request;
 use DB;
 use Zend\Diactoros\Response\RedirectResponse;
+use App\User;
 
 class AdminController
 {
@@ -64,6 +65,17 @@ class AdminController
             return ['status' => 0, 'msg'=>"用户不存在"];
         }
     }
+
+    public function recoverUser(){
+        $id = Request::get('id');
+        $result = User::withTrashed()->where('id', $id)->restore();
+        if($result){
+            return ['status' => 1, 'msg'=>"恢复成功"];
+        }else{
+            return ['status' => 0, 'msg'=>"恢复失败"];
+        }
+    }
+
 
     public function userList(){
         $users = DB::table('users')->orderBy('created_at', 'desc')

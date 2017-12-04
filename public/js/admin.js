@@ -71,7 +71,29 @@
                     })
                         .then(function (response) {
                             if (response.data.status) {//删除成功
-                                $scope.users.deleted_at = true;
+                                $scope.users[$index].deleted_at = true;
+                                console.log(response.data.msg);
+                            } else {
+                                console.log(response.data);
+                            }
+                        }), function () {
+                        console.log('e');
+                    }
+                }
+            }
+        };
+
+        $scope.recover = function ($index) {
+            if($index>=0){
+                if(confirm("是否恢复"+$scope.users[$index].name) ){
+                    $http.get('/api/admin/recoverUser', {
+                        params: {
+                            id: $scope.users[$index].id
+                        }
+                    })
+                        .then(function (response) {
+                            if (response.data.status) {//恢复
+                                $scope.users[$index].deleted_at = false;
                                 console.log(response.data.msg);
                             } else {
                                 console.log(response.data);
