@@ -239,7 +239,6 @@
                     .then(function(response){
                         if (response.data.status) {//查询成功
                             $scope.articles = response.data.data;
-                            editor.txt.html('<p><br></p>');
                         } else {
 
                         }

@@ -56,8 +56,8 @@ Route::any('/api/notebook/create','NotebookController@create');
     Route::get('/api/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 //管理员模块
-//默认界面
-    Route::any('/api/admin', 'AdminController@index');
+//默认登录界面
+    Route::any('/api/admin', 'AdminController@loginIndex');
 //管理员登录
     Route::post('/api/admin/login', 'AdminController@login');
 //管理员主界面

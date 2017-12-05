@@ -14,10 +14,21 @@ use App\User;
 
 class AdminController
 {
-
+    /**
+     * 主界面
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('admin');
+    }
+
+    /**
+     * 管理员登录界面
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function loginIndex(){
+        return view('adminLogin');
     }
 
     public function login(){
