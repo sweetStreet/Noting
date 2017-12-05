@@ -4,6 +4,7 @@
         <title>Noting</title>
         <link rel="stylesheet" href="/node_modules/normalize-css/normalize.css">
         <link rel="stylesheet" href="/node_modules/sweetalert2/dist/sweetalert2.css">
+        <link rel="stylesheet" type="text/css" href="/node_modules/angular-toastr/dist/angular-toastr.css" />
         <link rel="stylesheet" type="text/css" href="/css/welcome.css">
     </head>
 

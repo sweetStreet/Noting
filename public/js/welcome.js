@@ -81,7 +81,7 @@
                             toastr.error(response.data.msg);
                         }
                     }),function(){
-                        //todo:
+                    toastr.error(responseText.data.msg);
                 }
             }
             $scope.reset = function (){

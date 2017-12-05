@@ -22,13 +22,14 @@ class ArticleController
 
     /**
      * 将图片保存在某个文件夹中
-     * 同一个日期的图片放在同一个文件夹下
+     * 同一个用户的图片放在同一个文件夹下
      * @return array
      */
     public function imgUpload(){
         //从请求中拿出wangEditorH5File 储存到public空间 并且用时间戳重命名
         if(Request::hasfile('myFileName')) {
-            $path = Request::file('myFileName')->store(md5(date("Y/m/d")));
+//            $path = Request::file('myFileName')->store(md5(date("Y/m/d")));
+            $path = Request::file('myFileName')->store(Request::get('userid'));
             //保存到storage目录下
             return ['error' => 0, 'data' => asset('/storage/' . $path)];
         }

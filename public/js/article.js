@@ -10,7 +10,7 @@ editor.customConfig.debug = true
 
 editor.customConfig.onchange = function (html) {
     // html 即变化之后的内容
-    console.log(html)
+    console.log(html);
 }
 // 自定义 onchange 触发的延迟时间，默认为 200 ms
 editor.customConfig.onchangeTimeout = 1000 // 单位 ms
@@ -21,13 +21,18 @@ editor.customConfig.linkCheck = function (text, link) {
     return true // 返回 true 表示校验成功
     // return '验证失败' // 返回字符串，即校验失败的提示信息
 }
-
 editor.customConfig.uploadImgServer = '/api/article/img/upload';
 editor.customConfig.uploadFileName = 'myFileName';
+//todo
+// userid = 1;
+// editor.customConfig.uploadImgParams = {
+//     userid: userid // 属性值会自动进行 encode ，此处无需 encode
+// }
+// editor.customConfig.uploadImgParamsWithUrl = true;
 // 将图片大小限制为 5M
-editor.customConfig.uploadImgMaxSize = 5 * 1024 * 1024
+editor.customConfig.uploadImgMaxSize = 5 * 1024 * 1024;
 // 限制一次最多上传 15 张图片
-editor.customConfig.uploadImgMaxLength = 15
+editor.customConfig.uploadImgMaxLength = 15;
 editor.customConfig.uploadImgHooks = {
     before: function (xhr, editor, files) {
         // 图片上传之前触发

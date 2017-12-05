@@ -18,6 +18,28 @@
     <link rel="stylesheet" href="/node_modules/sweetalert2/dist/sweetalert2.css">
     <link rel="stylesheet" type="text/css" href="/node_modules/angular-toastr/dist/angular-toastr.css" />
 
+
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script src="/node_modules/angular/angular.js"></script>
+    <script src="/node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/node_modules/angular-cookies/angular-cookies.js"></script>
+    <script src="/js/nav/modernizr.custom.js"></script>
+    <script src="/js/nav/classie.js"></script>
+    <script src="/js/notebook.js"></script>
+    <script src="/js/book/modernizr.custom.js"></script>
+    <script src="/node_modules/sweetalert2/dist/sweetalert2.js"></script>
+    <script src="/node_modules/angular-sweetalert-2/dist/angular-sweetalert2.min.js"></script>
+    <!--上传文件-->
+    <script src="/node_modules/angular-file-upload/dist/angular-file-upload.js"></script>
+    <!--转成pdf格式-->
+    <script src="/js/topdf/html2canvas.js"></script>
+    <script src="/js/topdf/jspdf.debug.js"></script>
+    <script type="text/javascript" src="/node_modules/angular-save-html-to-pdf/dist/saveHtmlToPdf.js"></script>
+    <!--提示-->
+    <script type="text/javascript" src="/node_modules/angular-animate/angular-animate.js"></script>
+    <script type="text/javascript" src="/node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
+
 </head>
 <body class="cbp-spmenu-push" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
@@ -163,33 +185,12 @@
             menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 
             showLeftPush.onclick = function() {
-                    classie.toggle( this, 'active' );
-                    classie.toggle( body, 'cbp-spmenu-push-toright' );
-                    classie.toggle( menuLeft, 'cbp-spmenu-open' );
+            classie.toggle( this, 'active' );
+            classie.toggle( body, 'cbp-spmenu-push-toright' );
+            classie.toggle( menuLeft, 'cbp-spmenu-open' );
             };
 
-    </script>
-            <script src="/node_modules/jquery/dist/jquery.js"></script>
-            <script src="/node_modules/angular/angular.js"></script>
-            <script src="/node_modules/angular-ui-router/release/angular-ui-router.js"></script>
-            <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-            <script src="/node_modules/angular-cookies/angular-cookies.js"></script>
-            <script src="/js/nav/modernizr.custom.js"></script>
-            <script src="/js/nav/classie.js"></script>
-            <script src="/js/notebook.js"></script>
-            <script src="/js/book/modernizr.custom.js"></script>
-            <script src="/node_modules/sweetalert2/dist/sweetalert2.js"></script>
-            <script src="/node_modules/angular-sweetalert-2/dist/angular-sweetalert2.min.js"></script>
-            <!--上传文件-->
-            <script src="/node_modules/angular-file-upload/dist/angular-file-upload.js"></script>
-            <!--转成pdf格式-->
-            <script src="/js/topdf/html2canvas.js"></script>
-            <script src="/js/topdf/jspdf.debug.js"></script>
-            <script type="text/javascript" src="/node_modules/angular-save-html-to-pdf/dist/saveHtmlToPdf.js"></script>
-            <!--提示-->
-            <script type="text/javascript" src="/node_modules/angular-animate/angular-animate.js"></script>
-            <script type="text/javascript" src="/node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
-
+            </script>
 </body>
 </html>
 

@@ -27,7 +27,9 @@
 
             //获得属于某个用户的所有笔记本
             $scope.selectUserNotebooks = function(){
-                userid = $cookieStore.get('userid');
+                var userid = $cookieStore.get('userid');
+                console.log("selseUserNotebooks");
+                console.log(userid);
                 $http.get('/api/notebook/getAll', {
                     params: {
                         userid: userid
@@ -46,7 +48,7 @@
 
             //获得属于某个用户的所有文章
             $scope.selectUserArticles = function () {
-                userid = $cookieStore.get('userid');
+                var userid = $cookieStore.get('userid');
                 $http.get('/api/article/getArticlesByUserID', {
                     params: {
                         user_id: userid
@@ -166,7 +168,7 @@
 
         //获得属于某个笔记本的所有文章
         $scope.selectNotebook = function (notebookid) {
-            userid = $cookieStore.get('userid');
+            var userid = $cookieStore.get('userid');
             $http.get('/api/article/getArticlesByNotebookID', {params: {user_id: userid, notebook_id: notebookid}})
                 .then(function (response) {
                     if (response.data.status) {//获得文章列表
@@ -186,7 +188,7 @@
 
         //新建笔记本
         $scope.addNotebook=function () {
-            userid = $cookieStore.get('userid');
+            var userid = $cookieStore.get('userid');
             swal({
                 title: '为你的笔记本取个名字吧',
                 input: 'text',
@@ -202,7 +204,7 @@
                 }
             }).then(function (result) {
                 if(result.value){
-                    $userid = $cookieStore.get('userid');
+                    var userid = $cookieStore.get('userid');
 
                     $http.post('/api/notebook/create', {userid: userid, title: result.value})
                         .then(function (response) {
