@@ -7,7 +7,6 @@ editor.customConfig.linkImgCallback = function (url) {
 editor.customConfig.zIndex = 100;
 //TODO 配置debug模式 记得结束之后删除
 editor.customConfig.debug = true
-
 editor.customConfig.onchange = function (html) {
     // html 即变化之后的内容
     console.log(html);
@@ -24,16 +23,16 @@ editor.customConfig.linkCheck = function (text, link) {
 editor.customConfig.uploadImgServer = '/api/article/img/upload';
 editor.customConfig.uploadFileName = 'myFileName';
 //todo
-// userid = 1;
-// editor.customConfig.uploadImgParams = {
-//     userid: userid // 属性值会自动进行 encode ，此处无需 encode
-// }
-// editor.customConfig.uploadImgParamsWithUrl = true;
+editor.customConfig.uploadImgParams = {
+    userid: getCookie("userid") // 属性值会自动进行 encode ，此处无需 encode
+}
+editor.customConfig.uploadImgParamsWithUrl = true;
 // 将图片大小限制为 5M
 editor.customConfig.uploadImgMaxSize = 5 * 1024 * 1024;
 // 限制一次最多上传 15 张图片
 editor.customConfig.uploadImgMaxLength = 15;
 editor.customConfig.uploadImgHooks = {
+
     before: function (xhr, editor, files) {
         // 图片上传之前触发
         // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，files 是选择的图片文件
@@ -42,6 +41,7 @@ editor.customConfig.uploadImgHooks = {
         //     prevent: true,
         //     msg: '放弃上传'
         // }
+
     },
     success: function (xhr, editor, result) {
         // 图片上传并返回结果，图片插入成功之后触发
@@ -72,3 +72,14 @@ editor.customConfig.uploadImgHooks = {
     }
 }
 editor.create();
+
+function getCookie(name)
+{
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+
+    if(arr=document.cookie.match(reg))
+
+        return unescape(arr[2]);
+    else
+        return null;
+}

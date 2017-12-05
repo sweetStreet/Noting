@@ -211,7 +211,6 @@
                             if (response.data.status) {//创建成功
                                 $scope.selectUserNotebooks();
                                 $scope.selectNotebook(response.data.notebookid);
-                                $cookieStore.put('notebookid',response.data.notebookid);
                                 swal({
                                     type: 'success',
                                     html: response.data.msg

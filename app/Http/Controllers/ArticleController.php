@@ -29,7 +29,8 @@ class ArticleController
         //从请求中拿出wangEditorH5File 储存到public空间 并且用时间戳重命名
         if(Request::hasfile('myFileName')) {
 //            $path = Request::file('myFileName')->store(md5(date("Y/m/d")));
-            $path = Request::file('myFileName')->store(Request::get('userid'));
+            $userid=str_replace('"','', Request::get('userid'));
+            $path = Request::file('myFileName')->store($userid);
             //保存到storage目录下
             return ['error' => 0, 'data' => asset('/storage/' . $path)];
         }
