@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use DB;
 
 class ExampleTest extends TestCase
 {
@@ -19,10 +20,10 @@ class ExampleTest extends TestCase
         $keyword = "我们";
         $articles = DB::table('articles')->where([
             ['user_id', '=', $user_id],
-            ['content', 'like', "%"+$keyword+"%"],
-            ['deleted_at','=',null]
+            ['content', 'like', "%".$keyword."%"],
         ])->orderBy('created_at', 'desc')
             ->get();
+        echo $articles;
         if ($articles) {
             return ['status' => 1, 'data' => $articles];
         } else {

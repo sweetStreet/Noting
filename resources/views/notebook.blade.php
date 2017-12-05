@@ -38,8 +38,10 @@
 
                 <div id="search_article" >
                     <form id="search-form">
-                        <input id="input_search_article" type="text" value="搜索笔记"
-                               onfocus="if (value =='搜索笔记'){value =''}"onblur="if (value ==''){value='搜索笔记'}"/>><button id="btn_search_article"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <div>
+                            <input id="search_article" class="form-control" type="text" ng-model="key" placeholder="搜索笔记" ng-change="searchKeyWord()"/>
+<!--                            <button id="btn_search_article"><i class="fa fa-search" aria-hidden="true"></i></button>-->
+                        </div>
                     </form>
                 </div>
             </header>
@@ -49,13 +51,13 @@
     <div id="article" >
         <label>
             <select ngc-select-search class="common-select" ng-model="notebookSelected" ng-options="notebook.id as notebook.title for notebook in notebooks" name="notebook">
-                <option value="">请选择</option></select>
+                <option value=""></option></select>
             <button id="btn_addnotebook" ng-click="addNotebook()"><i class="fa fa-plus" aria-hidden="true"></i></button>
         </label>
 
         <div ng-repeat="article in articles" ng-click="showInEditor($index)">
             <div class="article_item" name="article_item" ng-to-yellow>
-                <p class="article_createTime">[: article.created_at :]</p>
+                <p class="article_createTime" ng-bind="article.created_at"></p>
                 <p class="article_content"><span ng-bind-html="article.content|htmlContent"></span></p>
             </div>
             <div style="width:100%; height:2px; border-top:1px solid lightgrey; clear:both;"></div>

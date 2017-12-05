@@ -55,6 +55,7 @@
                     .then(function(response){
                         if (response.data.status) {//有文章
                             $scope.articles = response.data.data;
+                            editor.txt.html('<p><br></p>');
                         } else {
                             console.log('没有文章');
                         }
@@ -100,7 +101,7 @@
 
         //将左侧列表选中的文章显示在右侧编辑器上
         $scope.showInEditor = function ($index) {
-            editor.txt.html(article.content);
+            editor.txt.html($scope.articles[$index].content);
             $scope.prod.article = $scope.articles[$index];
         }
 
@@ -121,7 +122,13 @@
                         if (response.data.status) {//创建成功
                             //刷新文章列表
                             $scope.prod.article = response.data.data;
-                            $scope.articles.unshift(response.data.data);
+                            $scope.articles.unshift($scope.prod.article);
+                            var x = document.getElementsByClassName("article_item");
+                            var i;
+                            for (i = 0; i < x.length; i++){
+                                x[i].style.backgroundColor = "white";
+                                x[i].style.color="black";
+                            }
                             editor.txt.html(editorContent);
                             toastr.success('创建成功');
                         } else {
@@ -167,6 +174,7 @@
                         //     $scope.articles = response.data.data.data;
                         // }
                         $scope.articles = response.data.data;
+                        editor.txt.html('<p><br></p>');
                         console.log('获取成功');
                     } else {
                         toastr.error(response.data.msg);
@@ -221,6 +229,24 @@
                 }
 
             })
+        }
+
+        $scope.searchKeyWord = function(){
+            console.log("search");
+            var user_id = $cookieStore.get('userid');
+            if(typeof($scope.key)!="undefined"||$scope.key!=null||$scope.key!="") {
+                $http.post('/api/article/searchContent', {user_id:user_id, keyword:$scope.key})
+                    .then(function(response){
+                        if (response.data.status) {//查询成功
+                            $scope.articles = response.data.data;
+                            editor.txt.html('<p><br></p>');
+                        } else {
+
+                        }
+                    }), function () {
+                    console.log('e');
+                }
+            }
         }
 
         $scope.shareNotebook=function (notebook) {
@@ -442,7 +468,7 @@
                                     choseNode.find('.j-view:first').text(rs.labelArray[i]);
                                     choseNode.find('i').removeClass('chose-hide');
 
-                                    //todo: 设置页面笔记本对应的笔记
+                                    //设置页面笔记本对应的笔记
                                     scope.selectNotebook(currentKey);
                                     scope.prod.notebookid = currentKey;
                                     break;

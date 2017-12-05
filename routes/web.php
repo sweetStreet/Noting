@@ -51,8 +51,9 @@ Route::any('/api/notebook/create','NotebookController@create');
     //搜索文章
     Route::any('/api/article/searchContent','ArticleController@searchContent');
 
+
     //日志模块
-Route::get('/api/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+    Route::get('/api/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 //管理员模块
 //默认界面

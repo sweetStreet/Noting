@@ -53,13 +53,13 @@ i{
 #search_article{
     float:right;
     margin-right: 2%;
-    margin-top:1%;
+    margin-top: 0.3%;
 }
-#btn_search_article{
-    border:#222;
-    background-color: #333333;
-    outline:none;
-}
+/*#btn_search_article{*/
+    /*border:#222;*/
+    /*background-color: #333333;*/
+    /*outline:none;*/
+/*}*/
 #btn_search_article:hover{
     background-color: transparent;
 }
@@ -105,7 +105,7 @@ i{
 }
 .article_item{
     background-color: white;
-    height:65px;
+    height:60px;
     overflow:hidden;/*让超出宽度的部分隐藏*/
     text-overflow:ellipsis;/* 其他 浏览器 显示省略符号来代表被修剪的文本。*/
     -o-text-overflow:ellipsis; /* Opera 9-10 显示省略符号来代表被修剪的文本。*/

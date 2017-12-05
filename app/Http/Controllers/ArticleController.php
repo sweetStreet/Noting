@@ -20,10 +20,15 @@ class ArticleController
         return view('article');
     }
 
+    /**
+     * 将图片保存在某个文件夹中
+     * 同一个日期的图片放在同一个文件夹下
+     * @return array
+     */
     public function imgUpload(){
         //从请求中拿出wangEditorH5File 储存到public空间 并且用时间戳重命名
         if(Request::hasfile('myFileName')) {
-            $path = Request::file('myFileName')->store('md5(time())');
+            $path = Request::file('myFileName')->store(md5(date("Y/m/d")));
             //保存到storage目录下
             return ['error' => 0, 'data' => asset('/storage/' . $path)];
         }
@@ -46,17 +51,20 @@ class ArticleController
     public function updateArticle(){
         $id = Request::get('article_id');
         $user_id = Request::get('user_id');
-        $notebook_id = Request::get('notebook_id');
         $content = Request::get('content');
-        $result = DB::update('update articles set content=?,content_text=? where id=? and user_id=? and notebook_id=?',[$content,$this->html2text($content),$id,$user_id,$notebook_id]);
+        $result = DB::update('update articles set content=?,content_text=? where id=? and user_id=?',[$content,$this->html2text($content),$id,$user_id]);
         if($result){
-            return ['status'=>1, 'msg'=>'创建成功'];
+            return ['status'=>1, 'msg'=>'保存成功'];
         }else{
-            return ['status'=>0, 'msg'=>'创建失败'];
+            return ['status'=>0, 'msg'=>'保存失败'];
         }
 
     }
 
+    /**
+     * 获得某个用户的所有文章
+     * @return array
+     */
     public function getArticlesByUserID(){
         $user_id = Request::get('user_id');
         $articles = DB::table('articles')->where([
@@ -72,6 +80,10 @@ class ArticleController
     }
 
 
+    /**
+     * 获得某个用户某本笔记本内的所有文章
+     * @return array
+     */
     public function getArticlesByNotebookID()
     {
         $user_id = Request::get('user_id');
@@ -113,53 +125,28 @@ class ArticleController
             }
         }
 
-
+    /**
+     * 根据关键字搜索文章
+     * @return array
+     */
         public function searchContent(){
             $user_id = Request::get('user_id');
             $keyword = Request::get('keyword');
+
             $articles = DB::table('articles')->where([
                 ['user_id', '=', $user_id],
-                ['content_text', 'like', "%"+$keyword+"%"],
-                ['deleted_at','=',null]
+                ['content_text', 'like', "%".$keyword."%"]
             ])->orderBy('created_at', 'desc')
                 ->get();
+
             if ($articles) {
-                return ['status' => 1, 'data' => $articles];
+                return ['status' => 1, 'data' => $articles,'msg'=>'查询成功'];
             } else {
                 return ['status' => 0, 'msg' => '查询失败'];
             }
         }
 
     function html2text($str){
-        $str = preg_replace("/<style .*?<\\/style>/is", "", $str);
-        $str = preg_replace("/<script .*?<\\/script>/is", "", $str);
-        $str = preg_replace("/<br \\s*\\/>/i", "", $str);
-        $str = preg_replace("/<\\/?p>/i", "", $str);
-        $str = preg_replace("/<\\/?td>/i", "", $str);
-        $str = preg_replace("/<\\/?div>/i", "", $str);
-        $str = preg_replace("/<\\/?blockquote>/i", "", $str);
-        $str = preg_replace("/<\\/?li>/i", "", $str);
-        $str = preg_replace("/ /i", "", $str);
-        $str = preg_replace("/ /i", "", $str);
-        $str = preg_replace("/&/i", "", $str);
-        $str = preg_replace("/&/i", "", $str);
-        $str = preg_replace("/</i", "", $str);
-        $str = preg_replace("/</i", "", $str);
-        $str = preg_replace("/“/i", '"', $str);
-        $str = preg_replace("/&ldquo/i", '"', $str);
-        $str = preg_replace("/‘/i", "'", $str);
-        $str = preg_replace("/&lsquo/i", "'", $str);
-        $str = preg_replace("/'/i", "'", $str);
-        $str = preg_replace("/&rsquo/i", "'", $str);
-        $str = preg_replace("/>/i", "", $str);
-        $str = preg_replace("/>/i", "", $str);
-        $str = preg_replace("/”/i", '"', $str);
-        $str = preg_replace("/&rdquo/i", '"', $str);
-        $str = strip_tags($str);
-        $str = html_entity_decode($str, ENT_QUOTES, "utf-8");
-        $str = preg_replace("/&#.*?;/i", "", $str);
-        return $str;
+        return strip_tags($str);
     }
-
-
 }
