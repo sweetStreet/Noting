@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use Request;
 use DB;
 use App\User;
+use Hash;
 
 class AdminController
 {
@@ -40,11 +41,10 @@ class AdminController
         if(!$password){
             return ['status'=>0,'msg'=>'密码不能为空'];
         }
-
-        $user = DB::table('users')->where('username',$username)->get();
+        $user = DB::table('admins')->where('username',$username)->get();
         if(!$user->isEmpty()){//账号存在
             if(Hash::check($password,$user->first()->password)){//密码正确
-                return ['status' => 1, 'msg' => 'api/admin/index'];
+                return ['status' => 1,'msg' => '/api/admin/index'];
             }else{
                 return ['status' => 0, 'msg' => '账号或密码错误'];
             }

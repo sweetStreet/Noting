@@ -46,7 +46,6 @@
             }
         ]);
 
-
         app.controller('welcomeCrtl',function($scope,$http,$cookieStore,SweetAlert,$timeout,toastr){
             $scope.login = function (user) {
                 $http.post('/api/user/login',{email:user.email,password:user.password})
