@@ -48,13 +48,12 @@ class ExampleTest extends TestCase
         {
             if ($file != "." && $file != "..") {
                 $array_file[] = $file; //输出文件名
-                //输出图片
-                file_get_contents($path.$file);
             }
         }
         closedir($handle);
         print_r($array_file);
 
         exit;
+
     }
 }

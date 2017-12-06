@@ -148,8 +148,32 @@ class ArticleController
             }
         }
 
+    /**
+     * 获得某个用户的所有文件
+     * @return array
+     */
         public function getFile(){
+            $userid=str_replace('"','', Request::get('userid')); $userid = Request::get('user_id');
+            $path = storage_path() . "/app/public/".$userid."/";
+            $basicpath = "http://127.0.0.1:8000/storage/".$userid."/";
 
+            //用户没有上传过文件
+            if(!file_exists($path)){
+                return ['status'=>1,'data'=>[],'msg'=>"没有上传过文件"];
+            }
+
+            //PHP遍历文件夹下所有文件
+            $handle=opendir($path.".");
+            //定义用于存储文件名的数组
+            $array_file = array();
+            while (false !== ($file = readdir($handle)))
+            {
+                if ($file != "." && $file != "..") {
+                    $array_file[]= $basicpath.$file; //将文件名加入到输出文件名
+                }
+            }
+            closedir($handle);
+            return ['status'=>1,'data'=>$array_file,'msg'=>'查询成功'];
         }
 
     function html2text($str){

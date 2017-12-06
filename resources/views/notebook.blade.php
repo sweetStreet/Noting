@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/node_modules/sweetalert2/dist/sweetalert2.css">
     <link rel="stylesheet" type="text/css" href="/node_modules/angular-toastr/dist/angular-toastr.css" />
 
-    <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.bootstrap.css">
+<!--    <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.bootstrap.css">-->
     <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.css">
 
     <script src="/node_modules/jquery/dist/jquery.js"></script>
@@ -41,10 +41,8 @@
     <!--提示-->
     <script type="text/javascript" src="/node_modules/angular-animate/angular-animate.js"></script>
     <script type="text/javascript" src="/node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
-    <!--展示图片-->
-    <script src="/node_modules/angular-deckgrid/angular-deckgrid.js"></script>
     <!--标签-->
-    <script src="/node_modules/ng-tags-input/build/ng-tags-input.js"></script>
+
 
 
 
@@ -53,10 +51,8 @@
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
                 <p id="mydesk">我的文件</p>
 
-                <div deckgrid class="deckgrid" source="photos">
-                    <div class="a-card" >
-                            <img src="" data-ng-src="[:card.src:]" enlarge-pic>
-                    </div>
+                <div ng-repeat="photo in photos">
+                    <img class="photo" ng-src="[:photo:]" enlarge-pic/>
                 </div>
 
                 <!-- 图片放大遮罩层 -->
@@ -91,9 +87,8 @@
             </header>
 
 <div id="container">
-    <tags-input ng-model="tags" >
-<!--        <auto-complete source="loadTags($query)"></auto-complete>-->
-    </tags-input>
+
+    <tags model="[:tags:]"></tags>
     <div id="article" >
         <label>
             <select ngc-select-search class="common-select" ng-model="notebookSelected" ng-options="notebook.id as notebook.title for notebook in notebooks" name="notebook">

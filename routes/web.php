@@ -50,8 +50,11 @@ Route::any('/api/notebook/create','NotebookController@create');
     Route::any('/api/article/deleteArticle','ArticleController@deleteArticle');
     //搜索文章
     Route::any('/api/article/searchContent','ArticleController@searchContent');
+    //获得文件
+    Route::any('/api/article/getFile','ArticleController@getFile');
     //日志模块
     Route::get('/api/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
 
 //管理员模块
 //默认登录界面
