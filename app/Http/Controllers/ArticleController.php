@@ -148,6 +148,10 @@ class ArticleController
             }
         }
 
+        public function getFile(){
+
+        }
+
     function html2text($str){
         return strip_tags($str);
     }

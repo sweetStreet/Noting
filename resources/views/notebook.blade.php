@@ -39,19 +39,34 @@
     <!--提示-->
     <script type="text/javascript" src="/node_modules/angular-animate/angular-animate.js"></script>
     <script type="text/javascript" src="/node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <!--展示图片-->
+    <script src="/node_modules/angular-deckgrid/angular-deckgrid.js"></script>
 
 </head>
-<body class="cbp-spmenu-push" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+<body class="cbp-spmenu-push" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter" >
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
                 <p id="mydesk">我的文件</p>
 
+                <div deckgrid class="deckgrid" source="photos">
+                    <div class="a-card" >
+                            <img src="" data-ng-src="[:card.src:]" enlarge-pic>
+                    </div>
+                </div>
 
+                <!-- 图片放大遮罩层 -->
+                <div class="mask" close-pic>
+                    <div class="mask-box"></div>
+                    <div class="big-pic-wrap">
+                        <img src="" alt="" class="bigPic" />
+                        <span class="close-pic"><i class="fa fa-close"></i></span>
+                    </div>
+                </div>
             </nav>
 
             <header id="header">
                 <!--打开侧边栏-->
                 <!-- class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
-                <button id="showLeftPush"><i class="fa fa-book fa-2x" aria-hidden="true"></i></button>
+                <button id="showLeftPush"><i class="fa fa-book fa-2x" aria-hidden="true" ng-click="popLeft()"></i></button>
                 <button id="btn_add_article" class="header_button" ng-click="addArticle()"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
                 <button id="btn_delete_article" class="header_button" ng-click="deleteArticle()"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 <button id="btn_save_article"class="header_button" ng-click="saveArticle()"><i class="fa fa-check-circle" aria-hidden="true"></i></button>

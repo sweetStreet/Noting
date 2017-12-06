@@ -1,7 +1,7 @@
 (function () {
     'user strict';
 
-    var app = angular.module('notebook',['ui.router','ngCookies','htmlToPdfSave','socialbase.sweetAlert','angularFileUpload','ngAnimate', 'toastr']);
+    var app = angular.module('notebook',['ui.router','ngCookies','htmlToPdfSave','socialbase.sweetAlert','angularFileUpload','ngAnimate', 'toastr','akoenig.deckgrid']);
 
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
         function($interpolateProvider,$stateProvider,$urlRouterProvider) {
@@ -21,6 +21,7 @@
             $scope.notebooks = [];
             $scope.notebookSelected = [];
             $scope.articles = [];
+            $scope.photos = [];
             $scope.selectUserNotebooks();
             $scope.selectUserArticles();
         };
@@ -240,6 +241,7 @@
                     .then(function(response){
                         if (response.data.status) {//查询成功
                             $scope.articles = response.data.data;
+                            console.log($scope.articles);
                         } else {
 
                         }
@@ -254,10 +256,57 @@
 
         }
 
+
+
         $scope.deleteNotebook=function (notebook) {
 
         }
 
+
+
+        $scope.popLeft = function(){
+            $scope.photos = [{
+                src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/abf9b57d34338cdd95de59fe6903e3fe_600.jpg",
+                link: "http://bokete.jp/boke/39978078",
+                title: "とぼけんな、給料日だろ"
+            }, {
+                src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/904a534a5dba72ea5eb879182441cd16_600.jpg",
+                link: "http://bokete.jp/boke/39979574",
+                title: "奈落より　出でよ破壊の"
+            }, {
+                src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/81d5a932257f2cb36dc6e56b7d1e1fa4_600.jpg",
+                link: "http://bokete.jp/boke/39972987",
+                title: "職質かけたら思いっきりグーパンされたので一旦部下のとこへ戻る"
+            }, {
+                src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/09ea4d769e819f473a2b538860a94c9e_600.jpg",
+                link: "http://bokete.jp/boke/39970408",
+                title: "ヘディングしてから様子がおかしい"
+            }, {
+                src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/ef164c0fa2b42aac8e6cb512811cbed0_600.jpg",
+                link: "http://bokete.jp/boke/39964824",
+                title: "けえ"
+            }, {
+                src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/07af9fc488bb67250a5f5dc69cea9bae_600.jpg",
+                link: "http://bokete.jp/boke/39953927",
+                title: "大佐が掃除機かけ始めた。"
+            }, {
+                src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/92a0c960ca925b7cf8fc714a16463d23_600.jpg",
+                link: "http://bokete.jp/boke/39980792",
+                title: "占い師に「今年２月に人生で最高についてることが起こります」って言われてたけどコレじゃないことを全力で祈る"
+            }, {
+                src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/4e11f7ba4767d995053442bb3a98c0ab_600.jpg",
+                link: "http://bokete.jp/boke/39967369",
+                title: "四年も経って"
+            }, {
+                src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/ea01d23c4713273be387d58d611331ac_600.jpg",
+                link: "http://bokete.jp/boke/39998749",
+                title: "這ってるヤツと中腰のヤツがやたら早い"
+            }, {
+                src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/ac25d96925da8be29b71724ca780491c_600.jpg",
+                link: "http://bokete.jp/boke/39973578",
+                title: "銀のエンゼルがなかなか当たらないので直接狩りにきたら結構強かった"
+            }]
+        }
 
         var uploader = $scope.uploader = new FileUploader({
 
@@ -320,6 +369,30 @@
 
     })
 
+    /*图片点击放大再点击还原*/
+    app.directive('enlargePic',function(){//enlargePic指令名称，写在需要用到的地方img中即可实现放大图片
+        return{
+            restrict: "AE",
+            link: function(scope,elem){
+                elem.bind('click',function($event){
+                    var img = $event.srcElement || $event.target;
+                    angular.element(document.querySelector(".mask"))[0].style.display = "block";
+                    angular.element(document.querySelector(".bigPic"))[0].src = img.src;
+                })
+            }
+        }
+    })
+        .directive('closePic',function(){
+            return{
+                restrict: "AE",
+                link: function(scope,elem){
+                    elem.bind('click',function($event){
+                        angular.element(document.querySelector(".mask"))[0].style.display = "none";
+                    })
+                }
+            }
+        });
+
     app.directive('ngToYellow', function() {
         return {
             restrict: 'AE',
@@ -334,7 +407,7 @@
                                 divs[j].style.color="black";
                             }
                     }
-                        elem.css("background-color", "rgb(254,198,6)");
+                        elem.css("background-color", "#F6CD61");
                         elem.css("color", "white");
                 });
             }

@@ -169,3 +169,97 @@ i{
     width:100%;
 }
 .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+
+
+
+.a-card {
+    height: auto;
+    border: 3px solid black;
+    margin: 5px;
+}
+
+h2 {
+    margin: 0;
+    padding: 10px;
+}
+
+img {
+    width: 100%;
+}
+
+.deckgrid .column {
+    float: left;
+}
+
+.deckgrid .column-1-1 {
+    width: 100%;
+}
+
+.deckgrid .column-1-4 {
+    width: 25%;
+}
+
+.deckgrid[deckgrid]::before {
+    content: '1 .column.column-1-1';
+    font-size: 0;
+    visibility: hidden;
+}
+
+@media screen and (min-width: 600px) {
+    .deckgrid[deckgrid]::before {
+        content: '4 .column.column-1-4';
+    }
+}
+
+
+/*图片放大遮罩层*/
+.mask{
+    display: none;
+}
+.mask-box{
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 80;
+    opacity: 0.5;
+    background: #000;
+}
+.big-pic-wrap{
+    position:fixed;
+    top:50%;
+    left:50%;
+    margin-left: -460px;
+    margin-top: -300px;
+    width:920px;
+    height:620px;
+    padding:10px;
+    z-index:90;
+    background:#fff;
+}
+.bigPic{
+    width:900px;
+    height:600px;
+}
+/*关闭大图按钮*/
+.close-pic{
+    position:absolute;
+    top:-5px;
+    right:-5px;
+    display:inline-block;
+    width: 35px;
+    height: 35px;
+    cursor:pointer;
+    border-radius:50% !important;
+    background: #393A3C;
+    text-align: center;
+    line-height: 40px;
+}
+.close-pic:hover{
+    background: #D43F27;
+}
+.close-pic>i{
+    font-size: 25px;
+    color:#fff;
+}
