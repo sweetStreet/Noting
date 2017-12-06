@@ -43,40 +43,34 @@
     <script type="text/javascript" src="/node_modules/angular-animate/angular-animate.js"></script>
     <script type="text/javascript" src="/node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
     <!--标签-->
-    <script type="text/javascript" src="/node_modules/ng-tags-input/build/ng-tags-input.min.js"></script>
-
-
-
-
-
+    <script type="text/javascript" src="/node_modules/ng-tags-input/build/ng-tags-input.js"></script>
 </head>
 <body class="cbp-spmenu-push" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter" >
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
-                <p id="mydesk">我的文件</p>
-
-                <div ng-repeat="photo in photos">
-                    <img class="photo" ng-src="[:photo:]" enlarge-pic/>
+                <div id="profile">
+                    <img id="avator" src="/images/avator.jpeg"/>
+                    <button id="btn_edit" ng-click="reviseProfile()"><i class="fa fa-pencil" aria-hidden="true"></i>修改</button>
+                    <label id="name">yuki</label>
                 </div>
 
-                <!-- 图片放大遮罩层 -->
-                <div class="mask" close-pic>
-                    <div class="mask-box"></div>
-                    <div class="big-pic-wrap">
-                        <img src="" alt="" class="bigPic" />
-                        <span class="close-pic"><i class="fa fa-close"></i></span>
-                    </div>
-                </div>
+                    <ul class="nav nav-tabs">
+                        <li><a  ui-sref="friends" data-toggle="tab">好友列表</a></li>
+                        <li><a  ui-sref="file" data-toggle="tab">我的文件</a></li>
+                        <li><a  ui-sref="garbage" data-toggle="tab">回收站</a></li>
+                    </ul>
+
+                <div ui-view></div>
             </nav>
 
             <header id="header">
                 <!--打开侧边栏-->
                 <!-- class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
-                <button id="showLeftPush"><i class="fa fa-book fa-2x" aria-hidden="true" ng-click="popLeft()"></i></button>
+                <button id="showLeftPush"><i class="fa fa-bars fa-2x" aria-hidden="true" ng-click="popLeft()"></i></button>
                 <button id="btn_add_article" class="header_button" ng-click="addArticle()"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
                 <button id="btn_delete_article" class="header_button" ng-click="deleteArticle()"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 <button id="btn_save_article"class="header_button" ng-click="saveArticle()"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
-                <button id="btn_tag" class="header_button"><i class="fa fa-bookmark" aria-hidden="true"></i></button>
-<!--                <button id="btn_share" class="header_button"></button>-->
+<!--                <button id="btn_tag" class="header_button"><i class="fa fa-bookmark" aria-hidden="true"></i></button>-->
+                <button id="btn_share" class="header_button"><i class="fa fa-user-plus" ng-click="invite()" aria-hidden="true"></i></button>
                 <button id="btn_export" class="header_button" pdf-save-button="idOneGraph" pdf-name="noting.pdf" "><i class="fa fa-download" aria-hidden="true"></i></button>
 
                 <div id="search_article" >
@@ -216,6 +210,33 @@
             };
 
             </script>
+
+
+            <script type="text/ng-template" id="friends.tpl">
+
+
+            </script>
+
+            <script type="text/ng-template" id="garbage.tpl">
+
+            </script>
+
+            <script type="text/ng-template" id="file.tpl">
+
+                <div ng-repeat="photo in photos">
+                    <img class="photo" ng-src="[:photo:]" enlarge-pic/>
+                </div>
+
+                <!-- 图片放大遮罩层 -->
+                <div class="mask" close-pic>
+                    <div class="mask-box"></div>
+                    <div class="big-pic-wrap">
+                        <img src="" alt="" class="bigPic" />
+                        <span class="close-pic"><i class="fa fa-close"></i></span>
+                    </div>
+                </div>
+            </script>
+
 </body>
 </html>
 

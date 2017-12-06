@@ -9,8 +9,28 @@
             $interpolateProvider.startSymbol("[:");
             $interpolateProvider.endSymbol(":]");
 
-        }
-    ]);
+
+            //定义了路由规则
+            $stateProvider
+                .state('friends', {
+                    url: '/friends',
+                    templateUrl: "friends.tpl"
+                })
+
+                .state("file", {
+                    url: '/file',
+                    templateUrl: "file.tpl"
+                })
+
+                .state("garbage", {
+                    url: '/garbage',
+                    templateUrl: "garbage.tpl"
+                })
+            //没有满足上面的所有规则
+            $urlRouterProvider.otherwise('/login');
+
+        }]);
+
 
     app.controller('notebookCrtl',function($scope,$http,$cookieStore,SweetAlert,FileUploader,toastr) {
         //定义一个空对象，用于保存和修改数据时临时存储
@@ -271,6 +291,28 @@
 
         $scope.deleteNotebook=function (notebook) {
 
+        }
+
+        $scope.reviseProfile=function(){
+            swal({
+                title: '个人信息',
+                html:
+                '用户名<input id="swal-input1" class="swal2-input">' +
+                '密码<input id="swal-input2" class="swal2-input">',
+                preConfirm: function () {
+                    return new Promise(function (resolve) {
+                        resolve([
+                            $('#swal-input1').val(),
+                            $('#swal-input2').val()
+                        ])
+                    })
+                },
+                onOpen: function () {
+                    $('#swal-input1').focus()
+                }
+            }).then(function (result) {
+                swal(JSON.stringify(result))
+            }).catch(swal.noop)
         }
 
         $scope.popLeft = function(){

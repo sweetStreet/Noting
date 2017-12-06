@@ -62,7 +62,6 @@
             }
 
             $scope.register = function (user) {
-                $scope.myTxt = 'clicked';
                 $http.post('/api/user/register',{email:user.email,username:user.username,password:user.password})
                     .then(function(response){
                         if(response.data.status){//注册成功
