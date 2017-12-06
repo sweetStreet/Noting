@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="/node_modules/sweetalert2/dist/sweetalert2.css">
     <link rel="stylesheet" type="text/css" href="/node_modules/angular-toastr/dist/angular-toastr.css" />
 
+    <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.css">
 
     <script src="/node_modules/jquery/dist/jquery.js"></script>
     <script src="/node_modules/angular/angular.js"></script>
@@ -41,6 +43,10 @@
     <script type="text/javascript" src="/node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
     <!--展示图片-->
     <script src="/node_modules/angular-deckgrid/angular-deckgrid.js"></script>
+    <!--标签-->
+    <script src="/node_modules/ng-tags-input/build/ng-tags-input.js"></script>
+
+
 
 </head>
 <body class="cbp-spmenu-push" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter" >
@@ -85,7 +91,9 @@
             </header>
 
 <div id="container">
-    <hr/>
+    <tags-input ng-model="tags" >
+<!--        <auto-complete source="loadTags($query)"></auto-complete>-->
+    </tags-input>
     <div id="article" >
         <label>
             <select ngc-select-search class="common-select" ng-model="notebookSelected" ng-options="notebook.id as notebook.title for notebook in notebooks" name="notebook">
