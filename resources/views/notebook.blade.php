@@ -18,8 +18,9 @@
     <link rel="stylesheet" href="/node_modules/sweetalert2/dist/sweetalert2.css">
     <link rel="stylesheet" type="text/css" href="/node_modules/angular-toastr/dist/angular-toastr.css" />
 
-<!--    <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.bootstrap.css">-->
     <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.css">
+   <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.bootstrap.css">
+
 
     <script src="/node_modules/jquery/dist/jquery.js"></script>
     <script src="/node_modules/angular/angular.js"></script>
@@ -42,6 +43,8 @@
     <script type="text/javascript" src="/node_modules/angular-animate/angular-animate.js"></script>
     <script type="text/javascript" src="/node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
     <!--标签-->
+    <script type="text/javascript" src="/node_modules/ng-tags-input/build/ng-tags-input.min.js"></script>
+
 
 
 
@@ -88,7 +91,11 @@
 
 <div id="container">
 
-    <tags model="[:tags:]"></tags>
+    <tags-input ng-model="tags">
+<!--        <auto-complete source="loadTags($query)"></auto-complete>-->
+    </tags-input>
+
+
     <div id="article" >
         <label>
             <select ngc-select-search class="common-select" ng-model="notebookSelected" ng-options="notebook.id as notebook.title for notebook in notebooks" name="notebook">

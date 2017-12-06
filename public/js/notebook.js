@@ -1,7 +1,7 @@
 (function () {
     'user strict';
 
-    var app = angular.module('notebook',['ui.router','ngCookies','htmlToPdfSave','socialbase.sweetAlert','angularFileUpload','ngAnimate', 'toastr','decipher.tags', 'ui.bootstrap.typeahead']);
+    var app = angular.module('notebook',['ui.router','ngCookies','htmlToPdfSave','socialbase.sweetAlert','angularFileUpload','ngAnimate', 'toastr','ngTagsInput']);
 
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
         function($interpolateProvider,$stateProvider,$urlRouterProvider) {
@@ -68,7 +68,10 @@
             }
 
         $scope.tags = [
-            'hi','hello','meet'
+            { text: 'just' },
+            { text: 'some' },
+            { text: 'cool' },
+            { text: 'tags' }
         ];
 
         // $scope.loadTags = function(query) {
