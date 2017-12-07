@@ -213,7 +213,17 @@
 
 
             <script type="text/ng-template" id="friends.tpl">
-
+                <div class="input-group">
+                    <input type="text" class="form-control" >
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><i class="fa fa-search" aria-hidden="true" style="color:black"></i></button>
+                    </span>
+                </div><!-- /input-group -->
+                <div id="frienditem" ng-repeat="friend in friends">
+                    <img id="friend_avator" ng-src=[:friend.imgsrc:] />
+                    <label id="friend_email">[:friend.email:]</label>
+                    <label id="friend_name">[:friend.name:]</label>
+                </div>
 
             </script>
 

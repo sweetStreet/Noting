@@ -246,13 +246,12 @@ i{
 }
 
 #btn_edit{
-    width:100%;
     border: none;
     outline: none;
     background-color: transparent;
-    align-content: center;
-    margin-left: 15%;
+    margin-left: 60%;
 }
+
 
 #btn_edit:hover{
     color:white;
@@ -260,4 +259,22 @@ i{
 
 #btn_edit:active{
     color:white;
+}
+
+#frienditem{
+    margin-top: 10px;
+}
+
+#friend_avator{
+    width: 40px;
+    height: 40px;
+    border-radius:10px;
+}
+
+#friend_email{
+    color:lightgrey;
+}
+
+#friend_name{
+    color: white;
 }

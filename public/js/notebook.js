@@ -94,6 +94,12 @@
             { text: 'tags' }
         ];
 
+        $scope.friends = [
+            { imgsrc:'/images/avator1.png', name:'muse',email:"151250101@smail.nju.edu.cn"},
+            { imgsrc:'/images/avator2.jpeg', name:'大美女',email:"942290857@qq.com"},
+            { imgsrc:'/images/avator3.png', name:'petty杨',email:"324345357@qq.com"}
+        ]
+
         // $scope.loadTags = function(query) {
         //     return $http.get('/tags?query=' + query);
         // };
