@@ -33,6 +33,9 @@ i{
     outline:none;
     border:none;
 }
+#showLeftPush:hover{
+    background-color: black;
+}
 
 .header_button{
     border:#222;
@@ -55,53 +58,43 @@ i{
     margin-right: 3%;
     margin-top: 0.3%;
 }
-/*#btn_search_article{*/
-    /*border:#222;*/
-    /*background-color: #333333;*/
-    /*outline:none;*/
-/*}*/
+
 #btn_search_article:hover{
     background-color: transparent;
 }
 #btn_search_article:active {
     background-color: #333333;
 }
+
 #btn_addnotebook i{
     color: black;
-}
-#input_search_article{
-    outline: none;
-    border:none;
-    background-color: #000;
-}
-#input_search_article:focus{
-    background-color: lightgrey;
-}
-#input_search_article:active{
-    background-color: lightgrey;
 }
 
 .toolbar {
     border: none;
     padding:10px;
 }
-.text {
-    border:none;
-    /*border: 1px solid #ccc;*/
+.text{
+    border: 1px solid #ccc;
     outline:none;
     height:100%;
 }
 
 #article{
     width: 20%;
-    height: 610px;
+    height: 600px;
     float:left;
+}
+#article-list{
+    border:1px solid #ccc;
     overflow: scroll;
+    height: 100%;
 }
 #editor{
     width: 80%;
     float:right;
     height: 598px;
+    margin-top: 12px;
 }
 .article_item{
     background-color: white;

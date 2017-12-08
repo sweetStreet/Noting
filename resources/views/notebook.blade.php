@@ -20,6 +20,7 @@
 
     <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.css">
    <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.bootstrap.css">
+    <link href="/node_modules/angular-tooltips/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css" />
 
 
     <script src="/node_modules/jquery/dist/jquery.js"></script>
@@ -44,6 +45,8 @@
     <script type="text/javascript" src="/node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
     <!--标签-->
     <script type="text/javascript" src="/node_modules/ng-tags-input/build/ng-tags-input.js"></script>
+    <!--提示-->
+    <script src="/node_modules/angular-tooltips/dist/angular-tooltips.min.js"></script>
 </head>
 <body class="cbp-spmenu-push" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter" >
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
@@ -64,14 +67,14 @@
 
             <header id="header">
                 <!--打开侧边栏-->
-                <!-- class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
-                <button id="showLeftPush"><i class="fa fa-bars fa-2x" aria-hidden="true" ng-click="popLeft()"></i></button>
-                <button id="btn_add_article" class="header_button" ng-click="addArticle()"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
-                <button id="btn_delete_article" class="header_button" ng-click="deleteArticle()"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                <button id="btn_save_article"class="header_button" ng-click="saveArticle()"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
+                <button id="showLeftPush"><i tooltips tooltip-template="个人中心" class="fa fa-bars fa-2x" aria-hidden="true" ng-click="popLeft()"></i></button>
+                <button id="btn_add_article"  class="header_button" ng-click="addArticle()"><i tooltips tooltip-template="新建笔记" class="fa fa-plus-circle" aria-hidden="true"></i></button>
+
+                <button id="btn_delete_article" class="header_button" ng-click="deleteArticle()"><i tooltips tooltip-template="删除笔记" class="fa fa-trash" aria-hidden="true"></i></button>
+                <button id="btn_save_article"class="header_button" ng-click="saveArticle()"><i tooltips tooltip-template="保存笔记" class="fa fa-check-circle" aria-hidden="true"></i></button>
 <!--                <button id="btn_tag" class="header_button"><i class="fa fa-bookmark" aria-hidden="true"></i></button>-->
-                <button id="btn_share" class="header_button"><i class="fa fa-user-plus" ng-click="invite()" aria-hidden="true"></i></button>
-                <button id="btn_export" class="header_button" pdf-save-button="idOneGraph" pdf-name="noting.pdf" "><i class="fa fa-download" aria-hidden="true"></i></button>
+                <button id="btn_share" class="header_button"><i tooltips tooltip-template="分享" class="fa fa-user-plus" ng-click="invite()" aria-hidden="true"></i></button>
+                <button id="btn_export" class="header_button" pdf-save-button="idOneGraph" pdf-name="noting.pdf"><i tooltips tooltip-template="保存到本地" class="fa fa-download" aria-hidden="true"></i></button>
 
                 <div id="search_article" >
                     <form id="search-form">
@@ -97,12 +100,14 @@
             <button id="btn_addnotebook" ng-click="addNotebook()"><i class="fa fa-plus" aria-hidden="true"></i></button>
         </label>
 
-        <div ng-repeat="article in articles" ng-click="showInEditor($index)">
+        <div id="article-list">
+            <div  ng-repeat="article in articles" ng-click="showInEditor($index)">
             <div class="article_item" name="article_item" ng-to-yellow>
                 <p class="article_createTime" ng-bind="article.created_at"></p>
                 <p class="article_content"><span ng-bind-html="article.content|htmlContent"></span></p>
             </div>
             <div style="width:100%; height:2px; border-top:1px solid lightgrey; clear:both;"></div>
+        </div>
         </div>
     </div>
 
@@ -214,7 +219,7 @@
 
             <script type="text/ng-template" id="friends.tpl">
                 <div class="input-group">
-                    <input type="text" class="form-control" >
+                    <input type="text" class="form-control">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button"><i class="fa fa-search" aria-hidden="true" style="color:black"></i></button>
                     </span>

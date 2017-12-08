@@ -34,6 +34,8 @@ Route::get('/', function () {
 Route::get('/api/notebook/getAll', 'NotebookController@getAllByUserId');
 //新建笔记本
 Route::any('/api/notebook/create','NotebookController@create');
+//删除笔记本
+Route::get('/api/notebook/delete','NotebookController@deleteNotebook');
     //笔记编辑模块
     Route::any('/api/article', 'ArticleController@index');
     //图片上传
@@ -71,5 +73,3 @@ Route::any('/api/notebook/create','NotebookController@create');
     Route::any('/api/admin/recoverUser', 'AdminController@recoverUser');
 //删除用户
     Route::any('/api/admin/adminDeleteUser', 'AdminController@deleteUser');
-//后台服务器信息
-    Route::any('/api/admin/adminWelcome', 'AdminController@welcome');

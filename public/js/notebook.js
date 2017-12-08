@@ -1,7 +1,8 @@
 (function () {
     'user strict';
 
-    var app = angular.module('notebook',['ui.router','ngCookies','htmlToPdfSave','socialbase.sweetAlert','angularFileUpload','ngAnimate', 'toastr','ngTagsInput']);
+    var app = angular.module('notebook',['ui.router','ngCookies','htmlToPdfSave','socialbase.sweetAlert',
+        'angularFileUpload','ngAnimate', 'toastr','ngTagsInput','720kb.tooltips']);
 
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
         function($interpolateProvider,$stateProvider,$urlRouterProvider) {
@@ -270,6 +271,7 @@
             })
         }
 
+        //按关键字搜索文章
         $scope.searchKeyWord = function(){
             console.log("search");
             var user_id = $cookieStore.get('userid');
@@ -293,12 +295,7 @@
 
         }
 
-
-
-        $scope.deleteNotebook=function (notebook) {
-
-        }
-
+        //修改个人信息
         $scope.reviseProfile=function(){
             swal({
                 title: '个人信息',
@@ -321,6 +318,7 @@
             }).catch(swal.noop)
         }
 
+        //左侧弹出框
         $scope.popLeft = function(){
             var userid = $cookieStore.get('userid');
             $http.get('/api/article/getFile', {params: {user_id: userid}})
@@ -335,50 +333,9 @@
                 }), function () {
                 toastr.error("网络故障，请重试");
             }
-
-            // $scope.photos = [{
-            //     src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/abf9b57d34338cdd95de59fe6903e3fe_600.jpg",
-            //     link: "http://bokete.jp/boke/39978078",
-            //     title: "とぼけんな、給料日だろ"
-            // }, {
-            //     src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/904a534a5dba72ea5eb879182441cd16_600.jpg",
-            //     link: "http://bokete.jp/boke/39979574",
-            //     title: "奈落より　出でよ破壊の"
-            // }, {
-            //     src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/81d5a932257f2cb36dc6e56b7d1e1fa4_600.jpg",
-            //     link: "http://bokete.jp/boke/39972987",
-            //     title: "職質かけたら思いっきりグーパンされたので一旦部下のとこへ戻る"
-            // }, {
-            //     src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/09ea4d769e819f473a2b538860a94c9e_600.jpg",
-            //     link: "http://bokete.jp/boke/39970408",
-            //     title: "ヘディングしてから様子がおかしい"
-            // }, {
-            //     src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/ef164c0fa2b42aac8e6cb512811cbed0_600.jpg",
-            //     link: "http://bokete.jp/boke/39964824",
-            //     title: "けえ"
-            // }, {
-            //     src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/07af9fc488bb67250a5f5dc69cea9bae_600.jpg",
-            //     link: "http://bokete.jp/boke/39953927",
-            //     title: "大佐が掃除機かけ始めた。"
-            // }, {
-            //     src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/92a0c960ca925b7cf8fc714a16463d23_600.jpg",
-            //     link: "http://bokete.jp/boke/39980792",
-            //     title: "占い師に「今年２月に人生で最高についてることが起こります」って言われてたけどコレじゃないことを全力で祈る"
-            // }, {
-            //     src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/4e11f7ba4767d995053442bb3a98c0ab_600.jpg",
-            //     link: "http://bokete.jp/boke/39967369",
-            //     title: "四年も経って"
-            // }, {
-            //     src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/ea01d23c4713273be387d58d611331ac_600.jpg",
-            //     link: "http://bokete.jp/boke/39998749",
-            //     title: "這ってるヤツと中腰のヤツがやたら早い"
-            // }, {
-            //     src: "https://d2dcan0armyq93.cloudfront.net/photo/odai/600/ac25d96925da8be29b71724ca780491c_600.jpg",
-            //     link: "http://bokete.jp/boke/39973578",
-            //     title: "銀のエンゼルがなかなか当たらないので直接狩りにきたら結構強かった"
-            // }]
         }
 
+        //上传文件
         var uploader = $scope.uploader = new FileUploader({
 
         });
@@ -544,6 +501,7 @@
     //         };
     //     }]);
 
+    //将点击的部分背景换成黄色
     app.directive('ngToYellow', function() {
         return {
             restrict: 'AE',
@@ -571,6 +529,13 @@
         }
     }]);
 
+
+    app.config(['tooltipsConfProvider', function configConf(tooltipsConfProvider) {
+        tooltipsConfProvider.configure({
+            'smart': true
+        });
+    }]);
+
     app.config(function(toastrConfig) {
         angular.extend(toastrConfig, {
             autoDismiss: true,
@@ -584,6 +549,7 @@
             timeOut: 1000,
         });
     });
+
 
     /**
      * 带筛选功能的下拉框
@@ -680,8 +646,48 @@
 
                         if (isNaN(currentKey) || !currentKey) {
                             currentKey = '';
-                            choseNode.find('.j-view:first').text('请选择');
-                            choseNode.find('i').addClass('chose-hide');
+
+                            swal({
+                                title: '确认删除吗?',
+                                text: '你将会删除笔记本中的所有文件!',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: '删除!',
+                                cancelButtonText: '取消'
+                            }).then(function(isConfirm) {
+                                console.log('notebookid');
+                                console.log(scope.prod.notebookid);
+                                //确认删除
+                                if (isConfirm.value == true) {
+                                    $http.get('/api/notebook/delete', {params: {notebook_id: scope.prod.notebookid}})
+                                        .then(function (response) {
+                                            if (response.data.status) {//删除操作的结果
+                                                for(i=0;i<scope.notebooks.length;i++){
+                                                    if(scope.notebooks[i].id== scope.prod.notebookid){
+                                                        scope.notebooks.splice(i,1);
+                                                    }
+                                                }
+                                                scope.prod.notebookid = '';
+                                                swal(
+                                                    '删除成功',
+                                                    '你的笔记本已删除',
+                                                    'success'
+                                                );
+                                            } else {
+                                                swal(
+                                                    '删除失败',
+                                                    response.data.msg,
+                                                    'error'
+                                                );
+                                            }
+                                        }), function () {
+                                        toastr.error("网络故障，请重试");
+                                    }
+
+                                    choseNode.find('.j-view:first').text('请选择笔记本');
+                                    choseNode.find('i').addClass('chose-hide');
+                                }
+                            });
 
                             //显示所有笔记
                             scope.selectUserArticles();
@@ -732,7 +738,7 @@
                         return false;
                     }).on('click', function () {
                         choseNode.find('.j-drop').removeClass('chose-hide');
-                        if (choseNode.find('.j-view:first').text() != '请选择') {
+                        if (choseNode.find('.j-view:first').text() != '请选择笔记本') {
                             choseNode.find('i').removeClass('chose-hide');
                         }
                         choseNode.find('ul:first').empty().append(getListNodes(choseNode.find('.j-key').val()));
@@ -747,7 +753,7 @@
                     }).on('click', 'i', function () {
                         ngModelCtrl.$setViewValue('');
                         ngModelCtrl.$render();
-                        choseNode.find('.j-view:first').text('请选择');
+                        choseNode.find('.j-view:first').text('请选择笔记本');
                         return false;
 
                     });

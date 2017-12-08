@@ -12,6 +12,7 @@ use Request;
 use DB;
 use App\User;
 use Hash;
+use Session;
 
 class AdminController
 {
@@ -21,7 +22,11 @@ class AdminController
      */
     public function index()
     {
-        return view('admin');
+        if(Session::has('admin')) {
+            return view('admin');
+        }else{
+            return view('adminLogin');
+        }
     }
 
     /**
@@ -44,6 +49,7 @@ class AdminController
         $user = DB::table('admins')->where('username',$username)->get();
         if(!$user->isEmpty()){//账号存在
             if(Hash::check($password,$user->first()->password)){//密码正确
+                Session::put('admin','admin');
                 return ['status' => 1,'msg' => '/api/admin/index'];
             }else{
                 return ['status' => 0, 'msg' => '账号或密码错误'];

@@ -11,13 +11,18 @@ namespace App\Http\Controllers;
 use Request;
 use App\Article;
 use DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Pagination\Paginator;
 
 class ArticleController
 {
     public function index()
     {
-        return view('article');
+        if(Session::has('id')) {
+            return view('article');
+        }else{
+            return view('welcome');
+        }
     }
 
     /**
@@ -115,6 +120,7 @@ class ArticleController
             return ['status' => 0, 'msg' => '查询失败'];
         }
     }
+
 
         public function deleteArticle(){
             $id=Request::get('article_id');
