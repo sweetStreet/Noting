@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.css">
    <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.bootstrap.css">
     <link href="/node_modules/angular-tooltips/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css" />
-
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-tagsinput.css">
 
     <script src="/node_modules/jquery/dist/jquery.js"></script>
     <script src="/node_modules/angular/angular.js"></script>
@@ -43,10 +43,11 @@
     <!--提示-->
     <script type="text/javascript" src="/node_modules/angular-animate/angular-animate.js"></script>
     <script type="text/javascript" src="/node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <script src="/node_modules/angular-tooltips/dist/angular-tooltips.min.js"></script>
     <!--标签-->
     <script type="text/javascript" src="/node_modules/ng-tags-input/build/ng-tags-input.js"></script>
-    <!--提示-->
-    <script src="/node_modules/angular-tooltips/dist/angular-tooltips.min.js"></script>
+    <script src="/js/bootstrap-tagsinput.js"></script>
+
 </head>
 <body class="cbp-spmenu-push" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter" >
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
@@ -80,7 +81,6 @@
                     <form id="search-form">
                         <div>
                             <input id="search_article" class="form-control" type="text" ng-model="key" placeholder="搜索笔记" ng-change="searchKeyWord()"/>
-<!--                            <button id="btn_search_article"><i class="fa fa-search" aria-hidden="true"></i></button>-->
                         </div>
                     </form>
                 </div>
@@ -88,10 +88,11 @@
 
 <div id="container">
 
-    <tags-input ng-model="tags">
+<!--    <tags-input ng-model="tags">-->
 <!--        <auto-complete source="loadTags($query)"></auto-complete>-->
-    </tags-input>
-
+<!--    </tags-input>-->
+<!--    标签-->
+    <input type="text" bootstrap-tagsinput ng-model="tags" data-role="tagsinput"/>
 
     <div id="article" >
         <label>
