@@ -21,7 +21,6 @@
     <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.css">
    <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.bootstrap.css">
     <link href="/node_modules/angular-tooltips/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap-tagsinput.css">
 
     <script src="/node_modules/jquery/dist/jquery.js"></script>
     <script src="/node_modules/angular/angular.js"></script>
@@ -45,8 +44,8 @@
     <script type="text/javascript" src="/node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
     <script src="/node_modules/angular-tooltips/dist/angular-tooltips.min.js"></script>
     <!--标签-->
-    <script type="text/javascript" src="/node_modules/ng-tags-input/build/ng-tags-input.js"></script>
-    <script src="/js/bootstrap-tagsinput.js"></script>
+    <script type="text/javascript" src="/node_modules/angularjs-bootstrap-tagsinput/dist/angularjs-bootstrap-tagsinput.js"></script>
+    <link rel="stylesheet" type="text/css" href="/node_modules/angularjs-bootstrap-tagsinput/dist/angularjs-bootstrap-tagsinput.css">
 
 </head>
 <body class="cbp-spmenu-push" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter" >
@@ -92,7 +91,25 @@
 <!--        <auto-complete source="loadTags($query)"></auto-complete>-->
 <!--    </tags-input>-->
 <!--    标签-->
-    <input placeholder="标签" type="text" bootstrap-tagsinput ng-model="tags" data-role="tagsinput"/>
+<!--    <input placeholder="标签" type="text" bootstrap-tagsinput ng-model="tags" data-role="tagsinput"/>-->
+    <div tagsinput
+         tagsinput-id="tagsProperties.tagsinputId"
+         init-tags="tagsProperties.initTags"
+         onchanged="onTagsChange(data)"
+    ></div>
+
+<!--    <div class="angularjs-bootstrap-tagsinput">-->
+<!--        <div data-role="tags">-->
+<!--        <span data-role="tag" class="label label-error">-->
+<!--            <span data-role="value"></span>-->
+<!--            <span data-role="remove"></span>-->
+<!--        </span>-->
+<!--        </div>-->
+<!--        <div class="tagsinput">-->
+<!--            <input data-role="tagsinput" class="form-control" type="text">-->
+<!--        </div>-->
+<!--    </div>-->
+
 
     <div id="article" >
         <label>

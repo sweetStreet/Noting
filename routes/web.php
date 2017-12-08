@@ -38,6 +38,7 @@ Route::any('/api/notebook/create','NotebookController@create');
 Route::get('/api/notebook/delete','NotebookController@deleteNotebook');
     //笔记编辑模块
     Route::any('/api/article', 'ArticleController@index');
+
     //图片上传
     Route::any('/api/article/img/upload', 'ArticleController@imgUpload');
     //新增文章
@@ -50,8 +51,10 @@ Route::get('/api/notebook/delete','NotebookController@deleteNotebook');
     Route::any('/api/article/getArticlesByUserID','ArticleController@getArticlesByUserID');
     //删除文章
     Route::any('/api/article/deleteArticle','ArticleController@deleteArticle');
-    //搜索文章
+    //搜索关键字文章
     Route::any('/api/article/searchContent','ArticleController@searchContent');
+    //根据tag搜索笔记
+    Route::any('/api/searchByTag','ArticleController@searchByTag');
     //获得文件
     Route::any('/api/article/getFile','ArticleController@getFile');
     //日志模块

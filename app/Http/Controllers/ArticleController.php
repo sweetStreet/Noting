@@ -42,6 +42,10 @@ class ArticleController
     }
 
 
+    /**
+     * 新增一篇笔记
+     * @return array
+     */
     public function insertArticle(){
         $user_id = Request::get('user_id');
         $notebook_id = Request::get('notebook_id');
@@ -55,16 +59,36 @@ class ArticleController
         }
     }
 
+    /**
+     * 更新笔记
+     * @return array
+     */
     public function updateArticle(){
         $id = Request::get('article_id');
         $user_id = Request::get('user_id');
         $content = Request::get('content');
-        $result = DB::update('update articles set content=?,content_text=? where id=? and user_id=?',[$content,$this->html2text($content),$id,$user_id]);
+        $tag = Request::get('tag');
+        $article = new Article();
+        $article->id = $id;
+        $article->user_id = $user_id;
+        $article->content = $content;
+        $article->retag($tag);
+        $result = $article->save();
         if($result){
             return ['status'=>1, 'msg'=>'保存成功'];
         }else{
             return ['status'=>0, 'msg'=>'保存失败'];
         }
+
+//        $id = Request::get('article_id');
+//        $user_id = Request::get('user_id');
+//        $content = Request::get('content');
+//        $result = DB::update('update articles set content=?,content_text=? where id=? and user_id=?',[$content,$this->html2text($content),$id,$user_id]);
+//        if($result){
+//            return ['status'=>1, 'msg'=>'保存成功'];
+//        }else{
+//            return ['status'=>0, 'msg'=>'保存失败'];
+//        }
 
     }
 
@@ -146,6 +170,23 @@ class ArticleController
                 ['content_text', 'like', "%".$keyword."%"]
             ])->orderBy('created_at', 'desc')
                 ->get();
+
+            if ($articles) {
+                return ['status' => 1, 'data' => $articles,'msg'=>'查询成功'];
+            } else {
+                return ['status' => 0, 'msg' => '查询失败'];
+            }
+        }
+
+    /**
+     * 根据标签搜索文章
+     * @return array
+     */
+        public function searchByTag(){
+            $user_id = Request::get('user_id');
+            $tag = Request::get('tag');
+
+            $articles = Article::withAnyTag($tag)->where('user_id',$user_id)->get();
 
             if ($articles) {
                 return ['status' => 1, 'data' => $articles,'msg'=>'查询成功'];
