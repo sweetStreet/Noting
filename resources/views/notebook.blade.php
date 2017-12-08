@@ -92,7 +92,7 @@
 <!--        <auto-complete source="loadTags($query)"></auto-complete>-->
 <!--    </tags-input>-->
 <!--    标签-->
-    <input type="text" bootstrap-tagsinput ng-model="tags" data-role="tagsinput"/>
+    <input placeholder="标签" type="text" bootstrap-tagsinput ng-model="tags" data-role="tagsinput"/>
 
     <div id="article" >
         <label>
