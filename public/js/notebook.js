@@ -626,6 +626,7 @@
                     var modelName = attr.ngModel,
                         name = attr.name ? attr.name : ('def' + Date.now());
                     tmplNode.attr('id', name + '_chosecontianer');
+                    tmplNode.find('.j-view:first').text('请选择笔记本');
 
                     $animate.enter(tmplNode, element.parent(), element);
                 },
@@ -646,49 +647,51 @@
 
                         if (isNaN(currentKey) || !currentKey) {
                             currentKey = '';
-
-                            swal({
-                                title: '确认删除吗?',
-                                text: '你将会删除笔记本中的所有文件!',
-                                type: 'warning',
-                                showCancelButton: true,
-                                confirmButtonText: '删除!',
-                                cancelButtonText: '取消'
-                            }).then(function(isConfirm) {
-                                console.log('notebookid');
-                                console.log(scope.prod.notebookid);
-                                //确认删除
-                                if (isConfirm.value == true) {
-                                    $http.get('/api/notebook/delete', {params: {notebook_id: scope.prod.notebookid}})
-                                        .then(function (response) {
-                                            if (response.data.status) {//删除操作的结果
-                                                for(i=0;i<scope.notebooks.length;i++){
-                                                    if(scope.notebooks[i].id== scope.prod.notebookid){
-                                                        scope.notebooks.splice(i,1);
+                            if (choseNode.find('.j-view:first').text() != '请选择笔记本'
+                            &&(choseNode.find('.j-view:first').text() != '')
+                            ) {
+                                swal({
+                                    title: '确认删除吗?',
+                                    text: '你将会删除笔记本中的所有文件!',
+                                    type: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonText: '删除!',
+                                    cancelButtonText: '取消'
+                                }).then(function (isConfirm) {
+                                    console.log('notebookid');
+                                    console.log(scope.prod.notebookid);
+                                    //确认删除
+                                    if (isConfirm.value == true) {
+                                        $http.get('/api/notebook/delete', {params: {notebook_id: scope.prod.notebookid}})
+                                            .then(function (response) {
+                                                if (response.data.status) {//删除操作的结果
+                                                    for (i = 0; i < scope.notebooks.length; i++) {
+                                                        if (scope.notebooks[i].id == scope.prod.notebookid) {
+                                                            scope.notebooks.splice(i, 1);
+                                                        }
                                                     }
+                                                    scope.prod.notebookid = '';
+                                                    swal(
+                                                        '删除成功',
+                                                        '你的笔记本已删除',
+                                                        'success'
+                                                    );
+                                                } else {
+                                                    swal(
+                                                        '删除失败',
+                                                        response.data.msg,
+                                                        'error'
+                                                    );
                                                 }
-                                                scope.prod.notebookid = '';
-                                                swal(
-                                                    '删除成功',
-                                                    '你的笔记本已删除',
-                                                    'success'
-                                                );
-                                            } else {
-                                                swal(
-                                                    '删除失败',
-                                                    response.data.msg,
-                                                    'error'
-                                                );
-                                            }
-                                        }), function () {
-                                        toastr.error("网络故障，请重试");
+                                            }), function () {
+                                            toastr.error("网络故障，请重试");
+                                        }
+
+                                        choseNode.find('.j-view:first').text('请选择笔记本');
+                                        choseNode.find('i').addClass('chose-hide');
                                     }
-
-                                    choseNode.find('.j-view:first').text('请选择笔记本');
-                                    choseNode.find('i').addClass('chose-hide');
-                                }
-                            });
-
+                                });
+                            }
                             //显示所有笔记
                             scope.selectUserArticles();
                         }

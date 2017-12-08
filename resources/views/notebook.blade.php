@@ -97,7 +97,7 @@
         <label>
             <select ngc-select-search class="common-select" ng-model="notebookSelected" ng-options="notebook.id as notebook.title for notebook in notebooks" name="notebook">
                 <option value=""></option></select>
-            <button id="btn_addnotebook" ng-click="addNotebook()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <button id="btn_addnotebook" ng-click="addNotebook()"><i tooltips tooltip-template="新建笔记"  class="fa fa-plus" aria-hidden="true"></i></button>
         </label>
 
         <div id="article-list">
