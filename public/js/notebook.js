@@ -2,7 +2,8 @@
     'user strict';
 
     var app = angular.module('notebook',['ui.router','ngCookies','htmlToPdfSave','socialbase.sweetAlert',
-        'angularFileUpload','ngAnimate', 'toastr','720kb.tooltips','angularjs.bootstrap.tagsinput.template','angularjs.bootstrap.tagsinput']);
+        'angularFileUpload','ngAnimate', 'toastr','720kb.tooltips','angularjs.bootstrap.tagsinput.template',
+        'angularjs.bootstrap.tagsinput',"angucomplete"]);
 
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
         function($interpolateProvider,$stateProvider,$urlRouterProvider) {
@@ -108,6 +109,12 @@
                 toastr.error('网络故障，请重试');
             }
         }
+
+        $scope.result2 = '';
+        $scope.options2 = {
+            country: 'ca',
+            types: '(cities)'
+        };    $scope.details2 = '';
 
         $scope.friends = [
             { imgsrc:'/images/avator1.png', name:'muse',email:"151250101@smail.nju.edu.cn"},
@@ -356,11 +363,18 @@
             }
         }
 
-        //todo
-        //共享笔记本
-        $scope.shareNotebook=function (notebook) {
-            console.log()
-
+        //共享笔记
+        $scope.share=function(toUserId, content) {
+            var user_id = $cookieStore.get('userid');
+            $http.post('/api/user/invite', {from_user_id:user_id, to_user_id:toUserId, content:content})
+                .then(function(response){
+                    swal({
+                        type: 'success',
+                        html: '发送成功'
+                    })
+                }), function () {
+                console.log('网络故障，请重试');
+            }
         }
 
         //修改用户名

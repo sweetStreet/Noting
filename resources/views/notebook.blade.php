@@ -84,6 +84,18 @@
          placeholder="增加一个标签"
     ></div>
 
+        <div class="large-padded-row">
+            <h3>输入对方邮箱</h3>
+            <div class="padded-row">
+                <angucomplete id="ex2" placeholder="Search people" pause="300" selectedobject="selectedPerson" localdata="people" searchfields="firstName,surname" titlefield="firstName,surname" descriptionfield="twitter" imagefield="pic" minlength="1" inputclass="form-control form-control-small" matchclass="highlight" />
+            </div>
+            <div class="" ng-show="selectedPerson">
+                You selected <span class="bold-span">[:selectedPerson.originalObject.firstName:] [:selectedPerson.originalObject.surname:]</span>
+            </div>
+        </div>
+
+
+
     <div id="article" >
         <label>
             <select ngc-select-search class="common-select" ng-model="notebookSelected" ng-options="notebook.id as notebook.title for notebook in notebooks" name="notebook">

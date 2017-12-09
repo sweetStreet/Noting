@@ -28,8 +28,8 @@ Route::get('/', function () {
     Route::any('/api/user/info','UserController@info');
 //修改个人信息
     Route::any('/api/user/revise','UserController@revise');
-
-
+//共享笔记
+    Route::post('/api/user/invite','UserController@invite');
 
 //笔记本模块
 //默认界面
@@ -65,7 +65,6 @@ Route::get('/api/notebook/delete','NotebookController@deleteNotebook');
     Route::any('/api/searchByTag','ArticleController@searchByTag');
     //日志模块
     Route::get('/api/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
-
 
 //管理员模块
 //默认登录界面

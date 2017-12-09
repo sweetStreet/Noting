@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Request;
 use Hash;
 use DB;
+use App\Notifications\Invitation;
 
 class UserController extends Controller
 {
@@ -103,5 +104,15 @@ class UserController extends Controller
         }else{
             return ['status'=>0, 'msg'=>'修改失败'];
         }
+    }
+
+    //用户发送邀请
+    public function invite(){
+        $from_user_id = Request::get('from_user_id');
+        $to_user_id = Request::get('to_user_id');
+        $content = Request::get('content');
+        $to_user = User::find($to_user_id);
+        $from_user = User::find($from_user_id);
+        $to_user->notify(new Invitation($from_user->email,$from_user->name,$content));
     }
 }

@@ -6,6 +6,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use DB;
+use App\Notifications\Invitation;
+use App\User;
 
 class ExampleTest extends TestCase
 {
@@ -31,29 +33,39 @@ class ExampleTest extends TestCase
 //        }
 //    }
 
+//    public function testBasicTest(){
+//        //获取当前的url
+//        echo(storage_path()."/app/public/1/");
+//        $path = storage_path() . "/app/public/1/";
+//        echo("\n");
+//        if(!file_exists($path)){
+//            echo('no path');
+//            exit;
+//        }
+//        //PHP遍历文件夹下所有文件
+//        $handle=opendir($path.".");
+//        //定义用于存储文件名的数组
+//        $array_file = array();
+//        while (false !== ($file = readdir($handle)))
+//        {
+//            if ($file != "." && $file != "..") {
+//                $array_file[] = $file; //输出文件名
+//            }
+//        }
+//        closedir($handle);
+//        print_r($array_file);
+//
+//        exit;
+//
+//    }
+
     public function testBasicTest(){
-        //获取当前的url
-        echo(storage_path()."/app/public/1/");
-        $path = storage_path() . "/app/public/1/";
-        echo("\n");
-        if(!file_exists($path)){
-            echo('no path');
-            exit;
-        }
-        //PHP遍历文件夹下所有文件
-        $handle=opendir($path.".");
-        //定义用于存储文件名的数组
-        $array_file = array();
-        while (false !== ($file = readdir($handle)))
-        {
-            if ($file != "." && $file != "..") {
-                $array_file[] = $file; //输出文件名
-            }
-        }
-        closedir($handle);
-        print_r($array_file);
-
-        exit;
-
+        $user = User::find('1');
+        echo 'hi';
+        echo $user->notify(new Invitation('2@2','yuki','hi'));
+//        foreach ($user->notifications as $notification) {
+//            echo 'hi';
+//            echo implode('||',$notification->data);
+//        }
     }
 }
