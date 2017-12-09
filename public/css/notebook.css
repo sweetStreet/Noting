@@ -201,12 +201,6 @@ i{
     display: block;
 }
 
-#name{
-    width: 100%;
-    color:white;
-    text-align: center;
-}
-
 #btn_edit{
     border: none;
     outline: none;
@@ -247,4 +241,14 @@ i{
 #rightpart{
     width:96%;
     float:right;
+}
+#hideLeftPush{
+    background-color: transparent;
+    border:none;
+    outline:none;
+    float: right;
+}
+
+#hideLeftPush i:hover{
+    color:red;
 }

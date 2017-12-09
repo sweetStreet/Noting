@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Support\Facades\Session;
 use Request;
 use Hash;
@@ -10,13 +11,7 @@ use DB;
 class UserController extends Controller
 {
 
-    public function index()
-    {
-        return view('profile');
-    }
-
-    //表名
-    //public $table = 'user_table'
+    //注册
     public function register(){
         $email = Request::get('email');
         $username = Request::get('username');
@@ -54,6 +49,7 @@ class UserController extends Controller
         }
     }
 
+    //登录
     public function login(){
         $email = Request::get('email');
         $password = Request::get('password');
@@ -70,10 +66,42 @@ class UserController extends Controller
         }
     }
 
+    //登出
     public function logout(){
 //        if(session('USERID','null')){//如果有userid
 //            session()->flush();//清空session
 //        }
         return ['status' => 1];
+    }
+
+    //根据id获得用户信息
+    public function info(){
+        $id = Request::get('id');
+        $user = User::find($id);
+        if($user){
+            return ['status'=>1, 'data'=>$user, 'msg'=>'查询成功'];
+        }else{
+            return ['status'=>0, 'msg'=>'查询失败，用户不存在'];
+        }
+    }
+
+    //修改用户信息
+    public function revise(){
+        $id = Request::get('id');
+        $name = Request::get('name');
+        $password = Request::get('password');
+        $user = User::find($id);
+        if(!empty($name)){
+            $user->name = $name;
+        }
+        if(!empty($password)){
+            $user->password = bcrypt($password);
+        }
+        $result = $user->save();
+        if($result){
+            return ['status'=>1, 'msg'=>'修改成功'];
+        }else{
+            return ['status'=>0, 'msg'=>'修改失败'];
+        }
     }
 }

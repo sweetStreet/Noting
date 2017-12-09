@@ -47,6 +47,7 @@
             $scope.showTag = false;
             $scope.selectUserNotebooks();
             $scope.selectUserArticles();
+            $scope.getUserInfo();
         };
 
             //获得属于某个用户的所有笔记本
@@ -69,6 +70,22 @@
                     toastr.error('网络故障，请重试');
                 }
             }
+
+            //获得用户信息
+            $scope.getUserInfo = function(){
+                $http.get('/api/user/info', {
+                    params: {
+                        id:$cookieStore.get('userid')
+                    }
+                }).then(function(response){
+                    if (response.data.status) {//查找用户信息成功
+                        $scope.user = response.data.data;
+                    } else {
+                        console.log('查找用户信息失败');
+                    }
+                }), function () {
+                };
+            };
 
             //获得属于某个用户的所有文章
             $scope.selectUserArticles = function () {
@@ -275,9 +292,11 @@
                         console.log('e');
                     }
                 }else {
-                    //没有填写内容
+                    swal({
+                        title: '已取消',
+                        timer: 1000
+                    })
                 }
-
             })
         }
 
@@ -324,6 +343,105 @@
 
         }
 
+        $scope.reviseUsername = function(){
+            swal({
+                title: '新的用户名',
+                input: 'text',
+                showCancelButton: true,
+                inputValidator: function (value) {
+                    return new Promise(function (resolve, reject) {
+                        if (value) {
+                            resolve()
+                        } else {
+                            reject('你需要输入一些东西')
+                        }
+                    })
+                }
+            }).then(function (result) {
+                if(result.value) {
+                    $http.post('/api/user/revise', {id: $scope.user.id, name: result.value})
+                        .then(function (response) {
+                            if (response.data.status) {//修改成功
+                                $scope.user.name = result.value
+                                swal({
+                                    type: 'success',
+                                    html: '修改成功'
+                                })
+                            } else {
+                                swal({
+                                    type: 'error',
+                                    html: response.data.msg
+                                })
+                            }
+                        }), function () {
+                        swal({
+                            type: 'error',
+                            html: '网络故障请重试'
+                        })
+                    }
+                }else{
+                    swal({
+                        title: '已取消',
+                        timer: 1000
+                    })
+                }
+            })
+
+
+
+        }
+
+        $scope.revisePassword = function(){
+            swal({
+                title: '新的密码',
+                input: 'password',
+                inputAttributes: {
+                    'maxlength': 15,
+                    'autocapitalize': 'off',
+                    'autocorrect': 'off'
+                },
+                showCancelButton: true,
+                inputValidator: function (value) {
+                    return new Promise(function (resolve, reject) {
+                        if (value) {
+                            resolve()
+                        } else {
+                            reject('你需要输入一些东西')
+                        }
+                    })
+                }
+            }).then(function (password) {
+                if(password.value) {
+                    console.log('password');
+                    console.log(password.value);
+                    $http.post('/api/user/revise', {id: $scope.user.id, password: password.value})
+                        .then(function (response) {
+                            if (response.data.status) {//修改成功
+                                swal({
+                                    type: 'success',
+                                    html: '修改成功'
+                                })
+                            } else {
+                                swal({
+                                    type: 'error',
+                                    html: response.data.msg
+                                })
+                            }
+                        }), function () {
+                        swal({
+                            type: 'error',
+                            html: '网络故障请重试'
+                        })
+                    }
+                }else{
+                    swal({
+                        title: '已取消',
+                        timer: 1000
+                    })
+                }
+            })
+        }
+
 
         //修改个人信息
         $scope.reviseProfile=function(){
@@ -331,7 +449,7 @@
                 title: '个人信息',
                 html:
                 '用户名<input id="swal-input1" class="swal2-input">' +
-                '密码<input id="swal-input2" class="swal2-input">',
+                '密码<input type="password" id="swal-input2" class="swal2-input">',
                 preConfirm: function () {
                     return new Promise(function (resolve) {
                         resolve([
@@ -347,6 +465,7 @@
                 swal(JSON.stringify(result))
             }).catch(swal.noop)
         }
+
 
         //左侧弹出框
         $scope.popLeft = function(){

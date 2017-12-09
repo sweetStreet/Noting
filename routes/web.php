@@ -24,6 +24,10 @@ Route::get('/', function () {
     Route::post('/api/user/login', 'UserController@login');
 //登出
     Route::any('/api/user/logout', 'UserController@logout');
+//获得个人信息
+    Route::any('/api/user/info','UserController@info');
+//修改个人信息
+    Route::any('/api/user/revise','UserController@revise');
 
 
 

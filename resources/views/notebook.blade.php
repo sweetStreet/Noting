@@ -45,18 +45,7 @@
 </head>
 <body class="cbp-spmenu-push" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter" >
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
-                <div id="profile">
-                    <img id="avator" src="/images/avator.jpeg"/>
-                    <button id="btn_edit" ng-click="reviseProfile()"><i class="fa fa-pencil" aria-hidden="true"></i>修改</button>
-                    <label id="name">yuki</label>
-                </div>
-
-                    <ul class="nav nav-tabs">
-                        <li><a  ui-sref="friends" data-toggle="tab">好友列表</a></li>
-                        <li><a  ui-sref="file" data-toggle="tab">我的文件</a></li>
-                        <li><a  ui-sref="garbage" data-toggle="tab">回收站</a></li>
-                    </ul>
-
+                <button id="hideLeftPush"><i class="fa fa-times fa-2x" aria-hidden="true"></i></button>
                 <div ui-view></div>
             </nav>
 
@@ -135,19 +124,45 @@
 
                 for (var i = 0; i < showLeftPushs.length; i++) {
                     showLeftPushs[i].onclick = function () {
-                        classie.toggle(this, 'active');
-                        classie.toggle(body, 'cbp-spmenu-push-toright');
-                        classie.toggle(menuLeft, 'cbp-spmenu-open');
-                        console.log('hi clicked');
-                        console.log(showLeftPushs.length+i);
+                        classie.add(this, 'active');
+                        classie.add(body, 'cbp-spmenu-push-toright');
+                        classie.add(menuLeft, 'cbp-spmenu-open');
+                    }
                 }
 
-
+            var back = document.getElementById('hideLeftPush');
+                back.onclick = function(){
+                    classie.remove(this, 'active');
+                    classie.remove(body, 'cbp-spmenu-push-toright');
+                    classie.remove(menuLeft, 'cbp-spmenu-open');
+                }
 
             </script>
 
-
+<!--            个人信息-->
             <script type="text/ng-template" id="profile.tpl">
+                <div id="profile">
+                    <img id="avator" src="/images/avator.jpeg"/>
+                </div>
+
+                <form class="form-horizontal" role="form" style="color:white; padding-top: 2%;">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">邮箱</label>
+                        <div class="col-sm-8">
+                            <p ng-bind="user.email" class="form-control-static" style="align-self: center"></p>
+                        </div>
+                        <label class="col-sm-3 control-label">用户名</label>
+                        <div class="col-sm-8">
+                            <p ng-bind="user.name" class="form-control-static"></p>
+                        </div>
+                    </div>
+                </form>
+
+                <button id="btn_edit" ng-click="reviseUsername()"><i class="fa fa-pencil" aria-hidden="true"></i>修改用户名</button>
+                <button id="btn_edit" ng-click="revisePassword()"><i class="fa fa-pencil" aria-hidden="true"></i>修改密码</button>
+            </script>
+
+            <script type="text/ng-template" id="tags.tpl">
                 <div class="input-group">
                     <input type="text" class="form-control">
                     <span class="input-group-btn">
@@ -158,15 +173,9 @@
                     <img id="friend_avator" ng-src=[:friend.imgsrc:] />
                     <label id="friend_email">[:friend.email:]</label>
                     <label id="friend_name">[:friend.name:]</label>
-                </div>
-            </script>
-
-            <script type="text/ng-template" id="tags.tpl">
-
-            </script>
+                </div></script>
 
             <script type="text/ng-template" id="file.tpl">
-
                 <div ng-repeat="photo in photos">
                     <img class="photo" ng-src="[:photo:]" enlarge-pic/>
                 </div>
