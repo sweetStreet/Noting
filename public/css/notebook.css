@@ -4,7 +4,6 @@
 /*}*/
 
 #container{
-    margin-left: 3%;
     margin-right: 3%;
 }
 
@@ -22,6 +21,8 @@
     background: linear-gradient(#1f2124, #27292c);
     height:5%;
     padding-bottom: 10px;
+    padding-left: 3%;
+    padding-top: 10px;
 }
 
 i{
@@ -56,7 +57,6 @@ i{
 #search_article{
     float:right;
     margin-right: 3%;
-    margin-top: 0.3%;
 }
 
 #btn_search_article:hover{
@@ -94,7 +94,6 @@ i{
     width: 80%;
     float:right;
     height: 598px;
-    margin-top: 12px;
 }
 .article_item{
     background-color: white;
@@ -242,4 +241,12 @@ i{
 
 #friend_name{
     color: white;
+}
+#leftnav{
+    width:4%;
+    float:left;
+}
+#rightpart{
+    width:96%;
+    float:right;
 }
