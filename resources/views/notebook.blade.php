@@ -70,7 +70,7 @@
 
 <div id="container">
     <ul id="leftnav" class="nav nav-pills nav-stacked">
-        <li><a class="showLeftPush" ui-sref="byTags"><i tooltips tooltip-template="搜索标签" tooltip-side="right"  class="fa fa-tag" aria-hidden="true"></i></a></li>
+        <li><a class="showLeftPush" ui-sref="byTags" ng-click="getTags()"><i tooltips tooltip-template="搜索标签" tooltip-side="right"  class="fa fa-tag" aria-hidden="true"></i></a></li>
         <li><a class="showLeftPush" ui-sref="file" ng-click="getFile()"><i tooltips tooltip-template="我的文件"  tooltip-side="right" class="fa fa-file-text" aria-hidden="true"></i></a></li>
         <li><a class="showLeftPush" ui-sref="profile"><i tooltips tooltip-template="个人信息" tooltip-side="right"  class="fa fa-user" aria-hidden="true"></i></a></li>
     </ul>
@@ -162,19 +162,19 @@
                 <button id="btn_edit" ng-click="revisePassword()"><i class="fa fa-pencil" aria-hidden="true"></i>修改密码</button>
             </script>
 
-<!--            根据标签搜索-->
+<!--  根据标签搜索-->
             <script type="text/ng-template" id="tags.tpl">
-                <div class="input-group">
+                <div class="input-group" style="margin-top: 10%">
                     <input type="text" class="form-control">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button"><i class="fa fa-search" aria-hidden="true" style="color:black"></i></button>
                     </span>
-                </div><!-- /input-group -->
-                <div id="frienditem" ng-repeat="friend in friends">
-                    <img id="friend_avator" ng-src=[:friend.imgsrc:] />
-                    <label id="friend_email">[:friend.email:]</label>
-                    <label id="friend_name">[:friend.name:]</label>
-                </div></script>
+                </div>
+
+                <div ng-repeat="tagSearch in tagsSearch">
+                    <button type="button" class="btn btn-warning" ng-click="searchByTag(tagSearch.id)">[:tagSearch.name:]</button>
+                </div>
+            </script>
 
 <!--查看文件-->
             <script type="text/ng-template" id="file.tpl">
@@ -189,6 +189,15 @@
                         <img src="" alt="" class="bigPic" />
                         <span class="close-pic"><i class="fa fa-close"></i></span>
                     </div>
+                </div>
+            </script>
+
+
+            <script type="text/ng-template" id="friends.tpl">
+                <div id="frienditem" ng-repeat="friend in friends">
+                    <img id="friend_avator" ng-src=[:friend.imgsrc:] />
+                    <label id="friend_email">[:friend.email:]</label>
+                    <label id="friend_name">[:friend.name:]</label>
                 </div>
             </script>
 

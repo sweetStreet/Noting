@@ -57,10 +57,12 @@ Route::get('/api/notebook/delete','NotebookController@deleteNotebook');
     Route::any('/api/article/deleteArticle','ArticleController@deleteArticle');
     //搜索关键字文章
     Route::any('/api/article/searchContent','ArticleController@searchContent');
-    //根据tag搜索笔记
-    Route::any('/api/searchByTag','ArticleController@searchByTag');
     //获得文件
     Route::any('/api/article/getFile','ArticleController@getFile');
+    //获得所有标签
+    Route::any('/api/tag','ArticleController@getTags');
+    //根据标签显示笔记列表
+    Route::any('/api/searchByTag','ArticleController@searchByTag');
     //日志模块
     Route::get('/api/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 

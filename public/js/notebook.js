@@ -42,70 +42,72 @@
             $scope.notebooks = [];
             $scope.notebookSelected = [];
             $scope.articles = [];
-            $scope.photos = []; $scope.tags = [];
+            $scope.photos = [];
+            $scope.tags = [];
             $scope.tagsinputId="$$$";
             $scope.showTag = false;
+            $scope.tagsSearch = [];
             $scope.selectUserNotebooks();
             $scope.selectUserArticles();
             $scope.getUserInfo();
         };
 
-            //获得属于某个用户的所有笔记本
-            $scope.selectUserNotebooks = function(){
-                var userid = $cookieStore.get('userid');
-                console.log("selseUserNotebooks");
-                console.log(userid);
-                $http.get('/api/notebook/getAll', {
-                    params: {
-                        userid: userid
-                    }
-                })
-                    .then(function (response) {
-                        if (response.data.status) {//有笔记本
-                            $scope.notebooks = response.data.notebooks;
-                        } else {
-                            console.log('没有数据');
-                        }
-                    }), function () {
-                    toastr.error('网络故障，请重试');
+        //获得属于某个用户的所有笔记本
+        $scope.selectUserNotebooks = function(){
+            var userid = $cookieStore.get('userid');
+            console.log("selseUserNotebooks");
+            console.log(userid);
+            $http.get('/api/notebook/getAll', {
+                params: {
+                    userid: userid
                 }
-            }
-
-            //获得用户信息
-            $scope.getUserInfo = function(){
-                $http.get('/api/user/info', {
-                    params: {
-                        id:$cookieStore.get('userid')
-                    }
-                }).then(function(response){
-                    if (response.data.status) {//查找用户信息成功
-                        $scope.user = response.data.data;
+            })
+                .then(function (response) {
+                    if (response.data.status) {//有笔记本
+                        $scope.notebooks = response.data.notebooks;
                     } else {
-                        console.log('查找用户信息失败');
+                        console.log('没有数据');
                     }
                 }), function () {
-                };
-            };
-
-            //获得属于某个用户的所有文章
-            $scope.selectUserArticles = function () {
-                var userid = $cookieStore.get('userid');
-                $http.get('/api/article/getArticlesByUserID', {
-                    params: {
-                        user_id: userid
-                    }
-                })
-                    .then(function(response){
-                        if (response.data.status) {//有文章
-                            $scope.articles = response.data.data;
-                            editor.txt.html('<p><br></p>');
-                        } else {
-                            console.log('没有文章');
-                        }
-                    }), function () {
-                    toastr.error('网络故障，请重试');
-                }
+                toastr.error('网络故障，请重试');
             }
+        }
+
+        //获得用户信息
+        $scope.getUserInfo = function(){
+            $http.get('/api/user/info', {
+                params: {
+                    id:$cookieStore.get('userid')
+                }
+            }).then(function(response){
+                if (response.data.status) {//查找用户信息成功
+                    $scope.user = response.data.data;
+                } else {
+                    console.log('查找用户信息失败');
+                }
+            }), function () {
+            };
+        };
+
+        //获得属于某个用户的所有文章
+        $scope.selectUserArticles = function () {
+            var userid = $cookieStore.get('userid');
+            $http.get('/api/article/getArticlesByUserID', {
+                params: {
+                    user_id: userid
+                }
+            })
+                .then(function(response){
+                    if (response.data.status) {//有文章
+                        $scope.articles = response.data.data;
+                        editor.txt.html('<p><br></p>');
+                    } else {
+                        console.log('没有文章');
+                    }
+                }), function () {
+                toastr.error('网络故障，请重试');
+            }
+        }
 
         $scope.friends = [
             { imgsrc:'/images/avator1.png', name:'muse',email:"151250101@smail.nju.edu.cn"},
@@ -167,7 +169,8 @@
         $scope.showInEditor = function ($index) {
             editor.txt.html($scope.articles[$index].content);
             $scope.prod.article = $scope.articles[$index];
-            if($scope.tags!=null) {
+            $scope.$broadcast('tagsinput:clear', $scope.tagsinputId);
+            if($scope.tags!=null){
                 $scope.tags = $scope.prod.article.tag.split(',');
                 $scope.$broadcast('tagsinput:add', $scope.tags, $scope.tagsinputId);
             }
@@ -319,23 +322,39 @@
             }
         }
 
-        // //按标签搜索文章
-        // $scope.searchKeyWord = function(){
-        //     var user_id = $cookieStore.get('userid');
-        //     if(typeof($scope.key)!="undefined"||$scope.key!=null||$scope.key!="") {
-        //         $http.post('/api/searchByTag', {user_id:user_id, keyword:})
-        //             .then(function(response){
-        //                 if (response.data.status) {//查询成功
-        //                     $scope.articles = response.data.data;
-        //                     console.log($scope.articles);
-        //                 } else {
-        //
-        //                 }
-        //             }), function () {
-        //             console.log('e');
-        //         }
-        //     }
-        // }
+        //按标签搜索文章
+        $scope.searchByTag = function(tag_id){
+            var user_id = $cookieStore.get('userid');
+            $http.get('/api/searchByTag', {params: {user_id: user_id, tag_id: tag_id}})
+                .then(function (response) {
+                    if (response.data.status) {//获得文章列表
+                        $scope.articles = response.data.data;
+                        console.log("articles");
+                        console.log($scope.articles);
+                    } else {
+                        toastr.error(response.data.msg);
+                    }
+                }), function () {
+                toastr.error("网络故障，请重试");
+            }
+        }
+
+        //根据用户id获得所有标签名
+        $scope.getTags = function(){
+            var user_id = $cookieStore.get('userid');
+            $http.get('/api/tag', {params: {user_id: user_id}})
+                .then(function (response) {
+                    if (response.data.status) {//获得标签的id和名称
+                        $scope.tagsSearch = response.data.data;
+                        console.log("test here");
+                        console.log($scope.tagsSearch);
+                    } else {
+                        toastr.error(response.data.msg);
+                    }
+                }), function () {
+                toastr.error("网络故障，请重试");
+            }
+        }
 
         //todo
         //共享笔记本

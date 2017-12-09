@@ -190,20 +190,35 @@ class ArticleController
         }
 
     /**
+     * 获得所有标签
+     * @return array
+     */
+    public function getTags(){
+        $user_id = Request::get('user_id');
+        $tag_ids = DB::table('tagmaps')->where('user_id', $user_id)->groupBy('tag_id')->pluck('tag_id');
+        $result = [];
+        foreach($tag_ids as $tag_id){
+            array_push($result,Tag::find($tag_id));
+        }
+        return ['status'=>1, 'data'=>$result];
+    }
+
+    /**
      * 根据标签搜索文章
      * @return array
      */
         public function searchByTag(){
             $user_id = Request::get('user_id');
-            $tag = Request::get('tag');
-
-            $articles = Article::withAnyTag($tag)->where('user_id',$user_id)->get();
-
-            if ($articles) {
-                return ['status' => 1, 'data' => $articles,'msg'=>'查询成功'];
-            } else {
-                return ['status' => 0, 'msg' => '查询失败'];
+            $tag_id = Request::get('tag_id');
+            $articles = [];
+            $article_ids = DB::table('tagmaps')->where([
+                ['user_id',$user_id],
+                ['tag_id',$tag_id]
+            ])->pluck('a_id');
+            foreach($article_ids as $article_id){
+                array_push($articles,Article::find($article_id));
             }
+            return ['status'=>1, 'data'=>$articles];
         }
 
     /**
