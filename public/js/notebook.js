@@ -13,9 +13,9 @@
 
             //定义了路由规则
             $stateProvider
-                .state('friends', {
-                    url: '/friends',
-                    templateUrl: "friends.tpl"
+                .state('byTags', {
+                    url: '/tags',
+                    templateUrl: "tags.tpl"
                 })
 
                 .state("file", {
@@ -23,12 +23,12 @@
                     templateUrl: "file.tpl"
                 })
 
-                .state("garbage", {
-                    url: '/garbage',
-                    templateUrl: "garbage.tpl"
+                .state("profile", {
+                    url: '/profile',
+                    templateUrl: "profile.tpl"
                 })
             //没有满足上面的所有规则
-            $urlRouterProvider.otherwise('/login');
+            $urlRouterProvider.otherwise('/');
 
         }]);
 
@@ -479,12 +479,6 @@
         }
     }]);
 
-
-    // app.config(['tooltipsConfProvider', function configConf(tooltipsConfProvider) {
-    //     tooltipsConfProvider.configure({
-    //         'smart': true
-    //     });
-    // }]);
 
     app.config(function(toastrConfig) {
         angular.extend(toastrConfig, {

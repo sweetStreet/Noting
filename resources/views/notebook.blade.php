@@ -26,7 +26,6 @@
     <script src="/js/nav/modernizr.custom.js"></script>
     <script src="/js/nav/classie.js"></script>
     <script src="/js/notebook.js"></script>
-    <script src="/js/book/modernizr.custom.js"></script>
     <script src="/node_modules/sweetalert2/dist/sweetalert2.js"></script>
     <script src="/node_modules/angular-sweetalert-2/dist/angular-sweetalert2.min.js"></script>
     <!--上传文件-->
@@ -82,9 +81,9 @@
 
 <div id="container">
     <ul id="leftnav" class="nav nav-pills nav-stacked">
-        <li><a  ui-sref="profile"><i tooltips tooltip-template="个人信息" tooltip-side="right"  class="fa fa-user-o" aria-hidden="true"></i></a></li>
-        <li><a  ui-sref="byTags"><i tooltips tooltip-template="搜索标签" tooltip-side="right"  class="fa fa-tag" aria-hidden="true"></i></a></li>
-        <li><a  ui-sref="file"><i tooltips tooltip-template="我的文件"  tooltip-side="right" class="fa fa-file-text-o" aria-hidden="true"></i></a></li>
+        <li><a class="showLeftPush" ui-sref="byTags"><i tooltips tooltip-template="搜索标签" tooltip-side="right"  class="fa fa-tag" aria-hidden="true"></i></a></li>
+        <li><a class="showLeftPush" ui-sref="file"><i tooltips tooltip-template="我的文件"  tooltip-side="right" class="fa fa-file-text" aria-hidden="true"></i></a></li>
+        <li><a class="showLeftPush" ui-sref="profile"><i tooltips tooltip-template="个人信息" tooltip-side="right"  class="fa fa-user" aria-hidden="true"></i></a></li>
     </ul>
 
     <div id="rightpart">
@@ -127,21 +126,28 @@
             <script type="text/javascript" src="/node_modules/wangeditor/release/wangEditor.js"></script>
             <script type="text/javascript" src="/js/article.js"></script>
 
-<!--            <script>-->
-<!--            var showLeftPush = document.getElementById( 'showLeftPush' ),-->
-<!--            body = document.body;-->
-<!--            menuLeft = document.getElementById( 'cbp-spmenu-s1' ),-->
-<!---->
-<!--            showLeftPush.onclick = function() {-->
-<!--            classie.toggle( this, 'active' );-->
-<!--            classie.toggle( body, 'cbp-spmenu-push-toright' );-->
-<!--            classie.toggle( menuLeft, 'cbp-spmenu-open' );-->
-<!--            };-->
-<!---->
-<!--            </script>-->
+            <script>
+            var showLeftPushs = document.getElementsByClassName( 'showLeftPush' );
+            body = document.body;
+            menuLeft = document.getElementById( 'cbp-spmenu-s1' );
+
+            console.log('test clicked');
+
+                for (var i = 0; i < showLeftPushs.length; i++) {
+                    showLeftPushs[i].onclick = function () {
+                        classie.toggle(this, 'active');
+                        classie.toggle(body, 'cbp-spmenu-push-toright');
+                        classie.toggle(menuLeft, 'cbp-spmenu-open');
+                        console.log('hi clicked');
+                        console.log(showLeftPushs.length+i);
+                }
 
 
-            <script type="text/ng-template" id="friends.tpl">
+
+            </script>
+
+
+            <script type="text/ng-template" id="profile.tpl">
                 <div class="input-group">
                     <input type="text" class="form-control">
                     <span class="input-group-btn">
@@ -153,10 +159,9 @@
                     <label id="friend_email">[:friend.email:]</label>
                     <label id="friend_name">[:friend.name:]</label>
                 </div>
-
             </script>
 
-            <script type="text/ng-template" id="garbage.tpl">
+            <script type="text/ng-template" id="tags.tpl">
 
             </script>
 

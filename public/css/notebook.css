@@ -29,13 +29,11 @@ i{
     color: #F8F2E2;
 }
 
-#showLeftPush{
-    background-color: #333333;
-    outline:none;
-    border:none;
+.showLeftPush i{
+    color:black;
 }
-#showLeftPush:hover{
-    background-color: black;
+.showLeftPush:hover{
+    background-color: lightgrey;
 }
 
 .header_button{
