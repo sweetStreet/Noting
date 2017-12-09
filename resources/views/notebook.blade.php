@@ -45,7 +45,7 @@
 </head>
 <body class="cbp-spmenu-push" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter" >
             <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
-                <button id="hideLeftPush"><i class="fa fa-times fa-2x" aria-hidden="true"></i></button>
+                <button id="hideLeftPush"><i tooltips tooltip-template="关闭" tooltip-side="bottom" class="fa fa-times fa-2x" aria-hidden="true"></i></button>
                 <div ui-view></div>
             </nav>
 
@@ -71,7 +71,7 @@
 <div id="container">
     <ul id="leftnav" class="nav nav-pills nav-stacked">
         <li><a class="showLeftPush" ui-sref="byTags"><i tooltips tooltip-template="搜索标签" tooltip-side="right"  class="fa fa-tag" aria-hidden="true"></i></a></li>
-        <li><a class="showLeftPush" ui-sref="file"><i tooltips tooltip-template="我的文件"  tooltip-side="right" class="fa fa-file-text" aria-hidden="true"></i></a></li>
+        <li><a class="showLeftPush" ui-sref="file" ng-click="getFile()"><i tooltips tooltip-template="我的文件"  tooltip-side="right" class="fa fa-file-text" aria-hidden="true"></i></a></li>
         <li><a class="showLeftPush" ui-sref="profile"><i tooltips tooltip-template="个人信息" tooltip-side="right"  class="fa fa-user" aria-hidden="true"></i></a></li>
     </ul>
 
@@ -141,7 +141,7 @@
 
 <!--            个人信息-->
             <script type="text/ng-template" id="profile.tpl">
-                <div id="profile">
+                <div id="profile" style="margin-top:10px">
                     <img id="avator" src="/images/avator.jpeg"/>
                 </div>
 
@@ -162,6 +162,7 @@
                 <button id="btn_edit" ng-click="revisePassword()"><i class="fa fa-pencil" aria-hidden="true"></i>修改密码</button>
             </script>
 
+<!--            根据标签搜索-->
             <script type="text/ng-template" id="tags.tpl">
                 <div class="input-group">
                     <input type="text" class="form-control">
@@ -175,6 +176,7 @@
                     <label id="friend_name">[:friend.name:]</label>
                 </div></script>
 
+<!--查看文件-->
             <script type="text/ng-template" id="file.tpl">
                 <div ng-repeat="photo in photos">
                     <img class="photo" ng-src="[:photo:]" enlarge-pic/>

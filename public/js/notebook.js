@@ -337,12 +337,14 @@
         //     }
         // }
 
-
+        //todo
+        //共享笔记本
         $scope.shareNotebook=function (notebook) {
             console.log()
 
         }
 
+        //修改用户名
         $scope.reviseUsername = function(){
             swal({
                 title: '新的用户名',
@@ -386,11 +388,9 @@
                     })
                 }
             })
-
-
-
         }
 
+        //修改密码
         $scope.revisePassword = function(){
             swal({
                 title: '新的密码',
@@ -443,39 +443,13 @@
         }
 
 
-        //修改个人信息
-        $scope.reviseProfile=function(){
-            swal({
-                title: '个人信息',
-                html:
-                '用户名<input id="swal-input1" class="swal2-input">' +
-                '密码<input type="password" id="swal-input2" class="swal2-input">',
-                preConfirm: function () {
-                    return new Promise(function (resolve) {
-                        resolve([
-                            $('#swal-input1').val(),
-                            $('#swal-input2').val()
-                        ])
-                    })
-                },
-                onOpen: function () {
-                    $('#swal-input1').focus()
-                }
-            }).then(function (result) {
-                swal(JSON.stringify(result))
-            }).catch(swal.noop)
-        }
-
-
-        //左侧弹出框
-        $scope.popLeft = function(){
+        //获得文件
+        $scope.getFile = function(){
             var userid = $cookieStore.get('userid');
             $http.get('/api/article/getFile', {params: {user_id: userid}})
                 .then(function (response) {
                     if (response.data.status) {//获得所有文件
                         $scope.photos = response.data.data;
-                        // console.log(response.data.data);
-                        // console.log('获取成功');
                     } else {
 
                     }
@@ -559,7 +533,8 @@
             }
         }
     })
-        .directive('closePic',function(){
+
+    app.directive('closePic',function(){
             return{
                 restrict: "AE",
                 link: function(scope,elem){
