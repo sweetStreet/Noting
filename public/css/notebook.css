@@ -242,6 +242,7 @@ i{
     width:96%;
     float:right;
 }
+
 #hideLeftPush{
     background-color: transparent;
     border:none;
@@ -256,5 +257,9 @@ i{
 .angucomplete-dropdown {
     overflow-y: auto;
     max-height: 200px;
+}
+
+.highlight{
+    color:orange;
 }
 

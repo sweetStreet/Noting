@@ -58,7 +58,7 @@
                 <button id="btn_delete_article" class="header_button" ng-click="deleteArticle()"><i tooltips tooltip-template="删除笔记" tooltip-side="bottom"  class="fa fa-trash" aria-hidden="true"></i></button>
                 <button id="btn_save_article"class="header_button" ng-click="saveArticle()"><i tooltips tooltip-template="保存笔记" tooltip-side="bottom"  class="fa fa-check-circle" aria-hidden="true"></i></button>
                 <button id="btn_tag" class="header_button" ng-click="changeTagFlag()"><i tooltips tooltip-template="标签" tooltip-side="bottom"   class="fa fa-bookmark" aria-hidden="true"></i></button>
-                <button id="btn_share" class="header_button"><i tooltips tooltip-template="分享"  tooltip-side="bottom" class="fa fa-user-plus" ng-click="invite()" aria-hidden="true"></i></button>
+                <button id="btn_share" class="header_button" ng-click="changeShareFlag()"><i tooltips tooltip-template="分享"  tooltip-side="bottom" class="fa fa-user-plus" aria-hidden="true"></i></button>
                 <button id="btn_export" class="header_button" pdf-save-button="idOneGraph" pdf-name="noting.pdf"><i tooltips tooltip-template="保存到本地"  tooltip-side="bottom" class="fa fa-download" aria-hidden="true"></i></button>
 
                 <div id="search_article" >
@@ -86,12 +86,13 @@
          placeholder="增加一个标签"
     ></div>
 
-        <div class="padded-row">
+        <div class="padded-row" ng-if="showShare">
+<!--            selectedPerson.originalObject-->
             <div angucomplete-alt
                  id="ex2"
                  placeholder="输入对方邮箱/用户名"
                  pause="300"
-                 selected-object="selectedPerson"
+                 selected-object="selectedPersonFn"
                  local-data="userList"
                  title-field="email"
                  description-field="name"
@@ -99,15 +100,14 @@
                  minlength="1"
                  input-class="form-control form-control-small"
                  match-class="highlight"
-                 local-search="localSearch">
+                 local-search="localSearch"
+                 initial-value="selectedPerson"
+                 >
             </div>
+
+            <button class="btn btn-default" type="button" ng-click="shareConfirmed()">
+                <i class="fa fa-check" aria-hidden="true" style="color:black"></i>确认发送</button>
         </div>
-
-    </div>
-
-</div>
-
-        <div>[:selectedPerson:]</div>
 
 
     <div id="article" >
@@ -135,6 +135,7 @@
             <p>请输入内容</p>
         </div>
     </div>
+
     </div>
 
 </div>

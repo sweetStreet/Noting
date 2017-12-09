@@ -47,21 +47,12 @@
             $scope.tags = [];
             $scope.tagsinputId="$$$";
             $scope.showTag = false;
-            $scope.tagsSearch = [];
+            $scope.showShare = false;
+            $scope.tagsSearch = [];//根据标签进行搜索时获得所有标签
             $scope.selectUserNotebooks();
             $scope.selectUserArticles();
             $scope.getUserInfo();
-            $http.get('/api/admin/adminUserList', {
-                params: {
-                }
-            }).then(function(response){
-                if (response.data.status) {//查找用户信息成功
-                    $scope.userList = response.data.data;
-                } else {
-                    console.log('查找用户信息失败');
-                }
-            }), function () {
-            };
+            $scope.getAllUserInfo();
         };
 
         //获得属于某个用户的所有笔记本
@@ -85,8 +76,22 @@
             }
         }
 
+        //获得所有的用户信息
+        $scope.getAllUserInfo=function(){
+            $http.get('/api/admin/adminUserList', {
+                params: {
+                }
+            }).then(function(response){
+                if (response.data.status) {//查找用户信息成功
+                    $scope.userList = response.data.data;
+                } else {
+                    console.log('查找用户信息失败');
+                }
+            }), function () {
+            };
+        };
 
-        //获得用户信息
+        //根据id获得用户信息
         $scope.getUserInfo = function(){
             $http.get('/api/user/info', {
                 params: {
@@ -120,9 +125,9 @@
                 }), function () {
                 toastr.error('网络故障，请重试');
             }
-        }
+        };
 
-
+        //分享给其他用户时搜索用户
         $scope.localSearch = function(str, userList) {
             var matches = [];
             userList.forEach(function(person) {
@@ -134,19 +139,58 @@
             return matches;
         };
 
-
-
-        $scope.changeTagFlag = function(){
-            $scope.showtag = !$scope.showtag;
+        //回调函数获得输入值
+        $scope.selectedPersonFn = function(selected) {
+            if (selected) {
+                $scope.selectedPerson = selected.originalObject;
+            } else {
+                $scope.selectedPerson = null;
+            }
         }
 
+        //确认发出发送请求
+        $scope.shareConfirmed = function(){
+            $scope.showShare = false;
+            console.log("person");
+            console.log($scope.selectedPerson);
+            if($scope.prod.article == null){
+                //提示：还没有选择笔记
+                toastr.error('还没有选择笔记');
+            }else {
+                if ($scope.selectedPerson != null) {
+                    var userid = $cookieStore.get('userid');
+                    $http.post('/api/user/invite', {
+                        from_user_id: userid,
+                        to_user_id: $scope.selectedPerson.id,
+                        content: $scope.prod.article.content
+                    }).then(function (response) {
+                            //提示：消息已经发送
+                            toastr.success('发送成功');
+                        }), function () {
+                        toastr.error('网络故障，请重试');
+                    }
+                }
+            }
+        };
+
+        //是否显示分享框
+        $scope.changeShareFlag = function(){
+            $scope.showShare = !$scope.showShare;
+        };
+
+        //是否显示标签
+        $scope.changeTagFlag = function(){
+            $scope.showtag = !$scope.showtag;
+        };
+
+        //标签改变触发事件
         $scope.onTagsChange = function(data){
             if(typeof($scope.prod.article)!= "undefined"){
                 $scope.prod.article.tag = data.tags.toString();
                 console.log('onTagsChange');
                 console.log(data);
             }
-        }
+        };
 
         //保存文章
         $scope.saveArticle = function () {
@@ -191,7 +235,7 @@
             editor.txt.html($scope.articles[$index].content);
             $scope.prod.article = $scope.articles[$index];
             $scope.$broadcast('tagsinput:clear', $scope.tagsinputId);
-            if($scope.tags!=null){
+            if($scope.prod.article.tag!=null){
                 $scope.tags = $scope.prod.article.tag.split(',');
                 $scope.$broadcast('tagsinput:add', $scope.tags, $scope.tagsinputId);
             }
@@ -367,8 +411,6 @@
                 .then(function (response) {
                     if (response.data.status) {//获得标签的id和名称
                         $scope.tagsSearch = response.data.data;
-                        console.log("test here");
-                        console.log($scope.tagsSearch);
                     } else {
                         toastr.error(response.data.msg);
                     }
