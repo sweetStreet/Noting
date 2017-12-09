@@ -12,14 +12,10 @@
     <!--notebook的css-->
     <link rel="stylesheet" type="text/css" href="/css/notebook.css">
     <!--笔记-->
-    <link rel="stylesheet" type="text/css" href="/css/book/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="/css/book/book2.css" />
     <link rel="stylesheet" type="text/css" href="/css/select.css" />
     <link rel="stylesheet" href="/node_modules/sweetalert2/dist/sweetalert2.css">
     <link rel="stylesheet" type="text/css" href="/node_modules/angular-toastr/dist/angular-toastr.css" />
 
-    <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.css">
-   <link rel="stylesheet" type="text/css" href="/node_modules/ng-tags-input/build/ng-tags-input.bootstrap.css">
     <link href="/node_modules/angular-tooltips/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css" />
 
     <script src="/node_modules/jquery/dist/jquery.js"></script>
@@ -96,6 +92,7 @@
          tagsinput-id="tagsinputId"
          init-tags="tags"
          onchanged="onTagsChange(data)"
+         placeholder="增加一个标签"
     ></div>
 
 
