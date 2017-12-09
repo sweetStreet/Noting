@@ -49,6 +49,7 @@
             $scope.showTag = false;
             $scope.showShare = false;
             $scope.tagsSearch = [];//根据标签进行搜索时获得所有标签
+            $scope.notifications = [];
             $scope.selectUserNotebooks();
             $scope.selectUserArticles();
             $scope.getUserInfo();
@@ -189,6 +190,18 @@
                 $scope.prod.article.tag = data.tags.toString();
                 console.log('onTagsChange');
                 console.log(data);
+            }
+        };
+
+        $scope.getNotification = function () {
+            var userid = $cookieStore.get('userid');
+            $http.get('/api/user/getInvitation', {params:{
+                user_id: userid
+            }}).then(function (response) {
+                //提示：消息已经发送
+                $scope.notifications = response.data.data;
+            }), function () {
+
             }
         };
 
@@ -851,9 +864,12 @@
                     function getListNodes(value) {
                         var nodes = [];
                         value = $.trim(value);
-                        for (var i = 0, l = rs.labelArray.length; i < l; i++) {
-                            if (rs.labelArray[i].indexOf(value) > -1) {
-                                nodes.push($('<li>').data('id', rs.idArray[i]).text(rs.labelArray[i]))
+
+                        if(rs.labelArray != null) {
+                            for (var i = 0, l = rs.labelArray.length; i < l; i++) {
+                                if (rs.labelArray[i].indexOf(value) > -1) {
+                                    nodes.push($('<li>').data('id', rs.idArray[i]).text(rs.labelArray[i]))
+                                }
                             }
                         }
 

@@ -74,7 +74,7 @@
     <ul id="leftnav" class="nav nav-pills nav-stacked">
         <li><a class="showLeftPush" ui-sref="byTags" ng-click="getTags()"><i tooltips tooltip-template="搜索标签" tooltip-side="right"  class="fa fa-tag" aria-hidden="true"></i></a></li>
         <li><a class="showLeftPush" ui-sref="file" ng-click="getFile()"><i tooltips tooltip-template="我的文件"  tooltip-side="right" class="fa fa-file-text" aria-hidden="true"></i></a></li>
-        <li><a class="showLeftPush" ui-sref="profile"><i tooltips tooltip-template="个人信息" tooltip-side="right"  class="fa fa-user" aria-hidden="true"></i></a></li>
+        <li><a class="showLeftPush" ui-sref="profile" ng-click="getNotification()"><i tooltips tooltip-template="个人信息" tooltip-side="right"  class="fa fa-user" aria-hidden="true"></i></a></li>
     </ul>
 
     <div id="rightpart">
@@ -86,8 +86,7 @@
          placeholder="增加一个标签"
     ></div>
 
-        <div class="padded-row" ng-if="showShare">
-<!--            selectedPerson.originalObject-->
+        <div class="padded-row" ng-if="showShare" style="margin-bottom: 10px">
             <div angucomplete-alt
                  id="ex2"
                  placeholder="输入对方邮箱/用户名"
@@ -184,9 +183,12 @@
                         </div>
                     </div>
                 </form>
-
                 <button id="btn_edit" ng-click="reviseUsername()"><i class="fa fa-pencil" aria-hidden="true"></i>修改用户名</button>
                 <button id="btn_edit" ng-click="revisePassword()"><i class="fa fa-pencil" aria-hidden="true"></i>修改密码</button>
+
+                <div ng-repeat="notification in notifications" style="background-color: white">
+                    <label>[:notification.from_user_name:]<[:notification.from_user_email:]>分享了一份笔记给你</label>
+                </div>
             </script>
 
 <!--  根据标签搜索-->

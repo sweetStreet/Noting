@@ -30,6 +30,8 @@ Route::get('/', function () {
     Route::any('/api/user/revise','UserController@revise');
 //共享笔记
     Route::post('/api/user/invite','UserController@invite');
+//收到通知
+    Route::get('/api/user/getInvitation','UserController@getInvitation');
 
 //笔记本模块
 //默认界面

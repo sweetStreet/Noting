@@ -115,4 +115,18 @@ class UserController extends Controller
         $from_user = User::find($from_user_id);
         $to_user->notify(new Invitation($from_user->email,$from_user->name,$content));
     }
+
+    //用户查看邀请
+    public function getInvitation(){
+        $user_id = Request::get('user_id');
+        $user = User::find($user_id);
+        $result = [];
+        //所有邀请，不区分已读和未读
+        if($user) {
+            foreach ($user->notifications as $notification) {
+                $result[] = $notification->data;
+            }
+        }
+        return ['status'=>1,'data'=>$result];
+    }
 }
