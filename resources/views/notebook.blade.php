@@ -93,22 +93,11 @@
 <!--    标签-->
 <!--    <input placeholder="标签" type="text" bootstrap-tagsinput ng-model="tags" data-role="tagsinput"/>-->
     <div tagsinput
-         tagsinput-id="tagsProperties.tagsinputId"
-         init-tags="tagsProperties.initTags"
+         tagsinput-id="tagsinputId"
+         init-tags="tags"
          onchanged="onTagsChange(data)"
     ></div>
 
-<!--    <div class="angularjs-bootstrap-tagsinput">-->
-<!--        <div data-role="tags">-->
-<!--        <span data-role="tag" class="label label-error">-->
-<!--            <span data-role="value"></span>-->
-<!--            <span data-role="remove"></span>-->
-<!--        </span>-->
-<!--        </div>-->
-<!--        <div class="tagsinput">-->
-<!--            <input data-role="tagsinput" class="form-control" type="text">-->
-<!--        </div>-->
-<!--    </div>-->
 
 
     <div id="article" >

@@ -10,6 +10,8 @@ namespace App\Http\Controllers;
 
 use Request;
 use App\Article;
+use App\Tag;
+use App\TagMap;
 use DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Pagination\Paginator;
@@ -67,29 +69,38 @@ class ArticleController
         $id = Request::get('article_id');
         $user_id = Request::get('user_id');
         $content = Request::get('content');
+        //暂时没有实现笔记可以换笔记本的打算
+//        $notebook_id = Request::get('notebook_id');
         $tag = Request::get('tag');
-        $article = new Article();
-        $article->id = $id;
-        $article->user_id = $user_id;
-        $article->content = $content;
-        $article->retag($tag);
+
+        $article = Article::find($id);
+        if($article) {
+            $article->user_id = $user_id;
+            $article->content = $content;
+            $article->content_text = $this->html2text($content);
+//            $article->notebook_id = $notebook_id;
+            $article->tag = $tag;
+        }
+
+        if($tag!=null){
+            $tag_array = explode(',',$tag);
+
+            //每次修改需要前需要将tagmaps中的标签对应关系删除
+            DB::table('tagmaps')->where('a_id','=',$id)->delete();
+
+            foreach($tag_array as $t){
+                //如果没有则新建相应的标签
+                $tagDB = Tag::firstOrCreate(['name'=>$t]);
+                TagMap::create(['tag_id'=>$tagDB->id,'user_id'=>$user_id,'a_id'=>$id]);
+            }
+        }
+
         $result = $article->save();
         if($result){
             return ['status'=>1, 'msg'=>'保存成功'];
         }else{
             return ['status'=>0, 'msg'=>'保存失败'];
         }
-
-//        $id = Request::get('article_id');
-//        $user_id = Request::get('user_id');
-//        $content = Request::get('content');
-//        $result = DB::update('update articles set content=?,content_text=? where id=? and user_id=?',[$content,$this->html2text($content),$id,$user_id]);
-//        if($result){
-//            return ['status'=>1, 'msg'=>'保存成功'];
-//        }else{
-//            return ['status'=>0, 'msg'=>'保存失败'];
-//        }
-
     }
 
     /**

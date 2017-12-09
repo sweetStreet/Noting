@@ -42,7 +42,8 @@
             $scope.notebooks = [];
             $scope.notebookSelected = [];
             $scope.articles = [];
-            $scope.photos = [];
+            $scope.photos = []; $scope.tags = [];
+            $scope.tagsinputId="$$$";
             $scope.selectUserNotebooks();
             $scope.selectUserArticles();
         };
@@ -88,16 +89,6 @@
                 }
             }
 
-        $scope.tags = ['hiho','hohi'];
-
-        $scope.tagsProperties = {
-            tagsinputId: '$$$',
-            initTags: ['+84111111111', '+84222222222', '+84333333333', '+84444444444', '+84555555555'],
-            maxTags: 10,
-            maxLength: 15,
-            placeholder: 'Please input the phone number'
-        };
-
         $scope.friends = [
             { imgsrc:'/images/avator1.png', name:'muse',email:"151250101@smail.nju.edu.cn"},
             { imgsrc:'/images/avator2.jpeg', name:'大美女',email:"942290857@qq.com"},
@@ -110,9 +101,12 @@
 
         $scope.onTagsChange = function(data){
             if(typeof($scope.prod.article)!= "undefined"){
-                $scope.prod.article.tag = data;
+                $scope.prod.article.tag = data.tags.toString();
+                console.log('onTagsChange');
+                console.log(data);
             }
         }
+
         //保存文章
         $scope.saveArticle = function () {
             if(typeof($scope.prod.article)=="undefined"){
@@ -122,16 +116,17 @@
                     toastr.error("请先选择文章");
                 }
             }else {
-                var notebookid = $scope.prod.article.notebook_id;
+                // var notebookid = $scope.prod.article.notebook_id;
                 var articleid = $scope.prod.article.id;
                 var userid = $cookieStore.get('userid');
                 var content = editor.txt.html();
                 var tag = $scope.prod.article.tag;
-                console.log('when save article', notebookid);
+                console.log("saveArticle tag");
+                console.log(tag);
                 $http.post('/api/article/saveArticle', {
                     article_id: articleid,
                     user_id: userid,
-                    notebook_id: notebookid,
+                    // notebook_id: notebookid,
                     content: content,
                     tag:tag
                 })
@@ -154,6 +149,10 @@
         $scope.showInEditor = function ($index) {
             editor.txt.html($scope.articles[$index].content);
             $scope.prod.article = $scope.articles[$index];
+            $scope.tags = $scope.prod.article.tag.split(',');
+            $scope.$broadcast('tagsinput:add', $scope.tags, $scope.tagsinputId);
+            console.log("tags");
+            console.log($scope.tags);
         }
 
         //新增文章
