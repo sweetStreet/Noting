@@ -64,12 +64,12 @@
             <header id="header">
                 <!--打开侧边栏-->
 <!--                <button id="showLeftPush"><i tooltips tooltip-template="个人中心" class="fa fa-bars fa-2x" aria-hidden="true" ng-click="popLeft()"></i></button>-->
-                <button id="btn_add_article"  class="header_button" ng-click="addArticle()"><i tooltips tooltip-template="新建笔记" class="fa fa-plus-circle" aria-hidden="true"></i></button>
-                <button id="btn_delete_article" class="header_button" ng-click="deleteArticle()"><i tooltips tooltip-template="删除笔记" class="fa fa-trash" aria-hidden="true"></i></button>
-                <button id="btn_save_article"class="header_button" ng-click="saveArticle()"><i tooltips tooltip-template="保存笔记" class="fa fa-check-circle" aria-hidden="true"></i></button>
-<!--                <button id="btn_tag" class="header_button"><i class="fa fa-bookmark" aria-hidden="true"></i></button>-->
-                <button id="btn_share" class="header_button"><i tooltips tooltip-template="分享" class="fa fa-user-plus" ng-click="invite()" aria-hidden="true"></i></button>
-                <button id="btn_export" class="header_button" pdf-save-button="idOneGraph" pdf-name="noting.pdf"><i tooltips tooltip-template="保存到本地" class="fa fa-download" aria-hidden="true"></i></button>
+                <button id="btn_add_article"  class="header_button" ng-click="addArticle()"><i tooltips tooltip-template="新建笔记" tooltip-side="bottom" class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                <button id="btn_delete_article" class="header_button" ng-click="deleteArticle()"><i tooltips tooltip-template="删除笔记" tooltip-side="bottom"  class="fa fa-trash" aria-hidden="true"></i></button>
+                <button id="btn_save_article"class="header_button" ng-click="saveArticle()"><i tooltips tooltip-template="保存笔记" tooltip-side="bottom"  class="fa fa-check-circle" aria-hidden="true"></i></button>
+                <button id="btn_tag" class="header_button" ng-click="changeTagFlag()"><i tooltips tooltip-template="标签" tooltip-side="bottom"   class="fa fa-bookmark" aria-hidden="true"></i></button>
+                <button id="btn_share" class="header_button"><i tooltips tooltip-template="分享"  tooltip-side="bottom" class="fa fa-user-plus" ng-click="invite()" aria-hidden="true"></i></button>
+                <button id="btn_export" class="header_button" pdf-save-button="idOneGraph" pdf-name="noting.pdf"><i tooltips tooltip-template="保存到本地"  tooltip-side="bottom" class="fa fa-download" aria-hidden="true"></i></button>
 
                 <div id="search_article" >
                     <form id="search-form">
@@ -82,22 +82,19 @@
 
 <div id="container">
     <ul id="leftnav" class="nav nav-pills nav-stacked">
-        <li><a href="#">SVN</a></li>
-        <li><a href="#">iOS</a></li>
-        <li><a href="#">VB.Net</a></li>
-        <li><a href="#">Java</a></li>
-        <li><a href="#">PHP</a></li>
+        <li><a  ui-sref="profile"><i tooltips tooltip-template="个人信息" tooltip-side="right"  class="fa fa-user-o" aria-hidden="true"></i></a></li>
+        <li><a  ui-sref="byTags"><i tooltips tooltip-template="搜索标签" tooltip-side="right"  class="fa fa-tag" aria-hidden="true"></i></a></li>
+        <li><a  ui-sref="file"><i tooltips tooltip-template="我的文件"  tooltip-side="right" class="fa fa-file-text-o" aria-hidden="true"></i></a></li>
     </ul>
 
     <div id="rightpart">
-    <div tagsinput
+    <div ng-if = "showtag"
+         tagsinput
          tagsinput-id="tagsinputId"
          init-tags="tags"
          onchanged="onTagsChange(data)"
          placeholder="增加一个标签"
     ></div>
-
-
 
     <div id="article" >
         <label>
@@ -130,18 +127,18 @@
             <script type="text/javascript" src="/node_modules/wangeditor/release/wangEditor.js"></script>
             <script type="text/javascript" src="/js/article.js"></script>
 
-            <script>
-            var showLeftPush = document.getElementById( 'showLeftPush' ),
-            body = document.body;
-            menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
-
-            showLeftPush.onclick = function() {
-            classie.toggle( this, 'active' );
-            classie.toggle( body, 'cbp-spmenu-push-toright' );
-            classie.toggle( menuLeft, 'cbp-spmenu-open' );
-            };
-
-            </script>
+<!--            <script>-->
+<!--            var showLeftPush = document.getElementById( 'showLeftPush' ),-->
+<!--            body = document.body;-->
+<!--            menuLeft = document.getElementById( 'cbp-spmenu-s1' ),-->
+<!---->
+<!--            showLeftPush.onclick = function() {-->
+<!--            classie.toggle( this, 'active' );-->
+<!--            classie.toggle( body, 'cbp-spmenu-push-toright' );-->
+<!--            classie.toggle( menuLeft, 'cbp-spmenu-open' );-->
+<!--            };-->
+<!---->
+<!--            </script>-->
 
 
             <script type="text/ng-template" id="friends.tpl">
