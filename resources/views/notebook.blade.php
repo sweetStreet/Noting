@@ -15,8 +15,9 @@
     <link rel="stylesheet" type="text/css" href="/css/select.css" />
     <link rel="stylesheet" href="/node_modules/sweetalert2/dist/sweetalert2.css">
     <link rel="stylesheet" type="text/css" href="/node_modules/angular-toastr/dist/angular-toastr.css" />
-
+    <link rel="stylesheet" type="text/css" href="/node_modules/angularjs-bootstrap-tagsinput/dist/angularjs-bootstrap-tagsinput.css">
     <link href="/node_modules/angular-tooltips/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/node_modules/angucomplete-alt/angucomplete-alt.css"/>
 
     <script src="/node_modules/jquery/dist/jquery.js"></script>
     <script src="/node_modules/angular/angular.js"></script>
@@ -40,7 +41,8 @@
     <script src="/node_modules/angular-tooltips/dist/angular-tooltips.min.js"></script>
     <!--标签-->
     <script type="text/javascript" src="/node_modules/angularjs-bootstrap-tagsinput/dist/angularjs-bootstrap-tagsinput.js"></script>
-    <link rel="stylesheet" type="text/css" href="/node_modules/angularjs-bootstrap-tagsinput/dist/angularjs-bootstrap-tagsinput.css">
+    <!--自动补全-->
+    <script type="text/javascript" src="/node_modules/angucomplete-alt/angucomplete-alt.js"></script>
 
 </head>
 <body class="cbp-spmenu-push" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter" >
@@ -84,16 +86,28 @@
          placeholder="增加一个标签"
     ></div>
 
-        <div class="large-padded-row">
-            <h3>输入对方邮箱</h3>
-            <div class="padded-row">
-                <angucomplete id="ex2" placeholder="Search people" pause="300" selectedobject="selectedPerson" localdata="people" searchfields="firstName,surname" titlefield="firstName,surname" descriptionfield="twitter" imagefield="pic" minlength="1" inputclass="form-control form-control-small" matchclass="highlight" />
-            </div>
-            <div class="" ng-show="selectedPerson">
-                You selected <span class="bold-span">[:selectedPerson.originalObject.firstName:] [:selectedPerson.originalObject.surname:]</span>
+        <div class="padded-row">
+            <div angucomplete-alt
+                 id="ex2"
+                 placeholder="输入对方邮箱/用户名"
+                 pause="300"
+                 selected-object="selectedPerson"
+                 local-data="userList"
+                 title-field="email"
+                 description-field="name"
+                 image-field="pic"
+                 minlength="1"
+                 input-class="form-control form-control-small"
+                 match-class="highlight"
+                 local-search="localSearch">
             </div>
         </div>
 
+    </div>
+
+</div>
+
+        <div>[:selectedPerson:]</div>
 
 
     <div id="article" >

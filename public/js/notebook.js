@@ -3,7 +3,7 @@
 
     var app = angular.module('notebook',['ui.router','ngCookies','htmlToPdfSave','socialbase.sweetAlert',
         'angularFileUpload','ngAnimate', 'toastr','720kb.tooltips','angularjs.bootstrap.tagsinput.template',
-        'angularjs.bootstrap.tagsinput',"angucomplete"]);
+        'angularjs.bootstrap.tagsinput',"angucomplete-alt"]);
 
     app.config(['$interpolateProvider','$stateProvider','$urlRouterProvider',
         function($interpolateProvider,$stateProvider,$urlRouterProvider) {
@@ -51,6 +51,17 @@
             $scope.selectUserNotebooks();
             $scope.selectUserArticles();
             $scope.getUserInfo();
+            $http.get('/api/admin/adminUserList', {
+                params: {
+                }
+            }).then(function(response){
+                if (response.data.status) {//查找用户信息成功
+                    $scope.userList = response.data.data;
+                } else {
+                    console.log('查找用户信息失败');
+                }
+            }), function () {
+            };
         };
 
         //获得属于某个用户的所有笔记本
@@ -73,6 +84,7 @@
                 toastr.error('网络故障，请重试');
             }
         }
+
 
         //获得用户信息
         $scope.getUserInfo = function(){
@@ -110,17 +122,19 @@
             }
         }
 
-        $scope.result2 = '';
-        $scope.options2 = {
-            country: 'ca',
-            types: '(cities)'
-        };    $scope.details2 = '';
 
-        $scope.friends = [
-            { imgsrc:'/images/avator1.png', name:'muse',email:"151250101@smail.nju.edu.cn"},
-            { imgsrc:'/images/avator2.jpeg', name:'大美女',email:"942290857@qq.com"},
-            { imgsrc:'/images/avator3.png', name:'petty杨',email:"324345357@qq.com"}
-        ]
+        $scope.localSearch = function(str, userList) {
+            var matches = [];
+            userList.forEach(function(person) {
+                if ((person.name.toLowerCase().indexOf(str.toString().toLowerCase()) >= 0) ||
+                    (person.email.toLowerCase().indexOf(str.toString().toLowerCase()) >= 0)) {
+                    matches.push(person);
+                }
+            });
+            return matches;
+        };
+
+
 
         $scope.changeTagFlag = function(){
             $scope.showtag = !$scope.showtag;

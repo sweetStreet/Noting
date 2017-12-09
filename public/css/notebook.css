@@ -252,3 +252,9 @@ i{
 #hideLeftPush i:hover{
     color:red;
 }
+
+.angucomplete-dropdown {
+    overflow-y: auto;
+    max-height: 200px;
+}
+
