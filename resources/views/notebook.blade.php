@@ -136,6 +136,8 @@
         </div>
     </div>
 
+
+
     </div>
 
 </div>
@@ -166,7 +168,7 @@
 
             </script>
 
-<!--            个人信息-->
+<!--个人信息-->
             <script type="text/ng-template" id="profile.tpl">
                 <div id="profile" style="margin-top:10px">
                     <img id="avator" src="/images/avator.jpeg"/>
@@ -187,12 +189,22 @@
                 <button id="btn_edit" ng-click="reviseUsername()"><i class="fa fa-pencil" aria-hidden="true"></i>修改用户名</button>
                 <button id="btn_edit" ng-click="revisePassword()"><i class="fa fa-pencil" aria-hidden="true"></i>修改密码</button>
 
-                <div ng-repeat="notification in notifications">
-                    <label ng-click="showNotification = !showNotification">[:notification.from_user_name:]<[:notification.from_user_email:]>分享了一份笔记给你</label>
-                    <span ng-show="showNotification" ng-bind-html="notification.content|htmlContent"></span>
+                <br/>
+                <lable style="color:white"><i class="fa fa-comments" aria-hidden="true"></i>我的消息</lable>
+                <div id="notify_list" ng-repeat="notification in notifications">
+                    <div class="notify_title" tooltips tooltip-template="点击查看详情" tooltip-side="bottom" ng-click="showNotification = !showNotification">
+                        <img class="notify_title_pic" src="/images/avator.jpeg"/>
+                        <label>[:notification.data.from_user_name:]</label>
+                        <label><[:notification.data.from_user_email:]></label>
+                        <span>分享了一份笔记给你</span>
+                    </div>
+                    <div class="notify_detail" ng-show="showNotification" ng-bind-html="notification.data.content|htmlContent">
+                    </div>
+                    <button  tooltips tooltip-template="先选择好笔记本哦" tooltip-side="right" ng-show="showNotification" class="notify_btn btn-success" ng-click="acceptNotify($index)">保存到我的笔记本</button>
+<!--                    <button  ng-show="showNotification" class="notify_btn btn-danger" ng-click="refuseNotify($index)">拒绝</button>-->
+
+
                 </div>
-
-
             </script>
 
 <!--  根据标签搜索-->

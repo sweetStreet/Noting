@@ -156,7 +156,10 @@ class ArticleController
         }
     }
 
-
+    /**
+     * 删除笔记
+     * @return array
+     */
         public function deleteArticle(){
             $id=Request::get('article_id');
             $article = Article::find($id);
@@ -168,6 +171,28 @@ class ArticleController
             }else{
                 return ['status'=>0];
             }
+        }
+
+    /**
+     * 将从别人分享的文章保存到数据库中
+     * @return array
+     *
+     */
+        public function copyArticle(){
+           $user_id = Request::get('user_id');
+           $notebook_id = Request::get('notebook_id');
+           $content = Request::get('content');
+           $article = new Article();
+           $article->user_id = $user_id;
+           $article->notebook_id = $notebook_id;
+           $article->content = $content;
+           $article->content_text = $this->html2text($content);
+           $result = $article->save();
+           if($result){
+               return ['status'=>1,'msg'=>'保存成功'];
+           }else{
+               return ['status'=>0, 'msg'=>'保存失败'];
+           }
         }
 
     /**

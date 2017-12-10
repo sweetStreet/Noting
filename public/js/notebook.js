@@ -34,6 +34,7 @@
         }]);
 
 
+
     app.controller('notebookCrtl',function($scope,$http,$cookieStore,SweetAlert,FileUploader,toastr) {
         //定义一个空对象，用于保存和修改数据时临时存储
         $scope.prod = {};
@@ -185,6 +186,38 @@
             $scope.showtag = !$scope.showtag;
         };
 
+
+        //接收分享文件
+        $scope.acceptNotify = function($index){
+            var notebook_id = $scope.prod.notebookid;
+            if(notebook_id == null ||notebook_id == ''){
+                swal('请先在右侧选择笔记本');
+            }else{
+                $http.post('/api/article/copyArticle', {
+                    user_id: $cookieStore.get('userid'),
+                    notebook_id: notebook_id,
+                    content: $scope.notifications[$index].data.content
+                })
+                    .then(function (response) {
+                        if (response.data.status) {//保存成功
+                            $scope.selectNotebook(notebook_id);
+                            toastr.success('保存成功');
+                            //$scope.notifications.splice($index,1)
+                        } else {
+                            toastr.error(response.data.msg);
+                        }
+                    }), function () {
+                    toastr.error('网络故障，请重试');
+                }
+            }
+
+        }
+
+        //拒绝接收文件
+        $scope.refuseNotify= function($index){
+            $scope.notifications.splice($index,1)
+        }
+
         //标签改变触发事件
         $scope.onTagsChange = function(data){
             if(typeof($scope.prod.article)!= "undefined"){
@@ -213,7 +246,7 @@
                 if(typeof($scope.prod.notebookid)=="undefined"){
                     toastr.error("请先选择笔记本");
                 }else {
-                    toastr.error("请先选择文章");
+                    toastr.error("请先选择笔记");
                 }
             }else {
                 // var notebookid = $scope.prod.article.notebook_id;
@@ -298,7 +331,7 @@
         //删除文章
         $scope.deleteArticle = function () {
             if(typeof($scope.prod.article)=="undefined"){
-                toastr.error('请先选择文章');
+                toastr.error('请先选择笔记');
             }else {
                 $http.get('/api/article/deleteArticle', {params: {article_id: $scope.prod.article.id}})
                     .then(function (response) {

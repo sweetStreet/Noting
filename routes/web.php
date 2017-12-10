@@ -65,6 +65,8 @@ Route::get('/api/notebook/delete','NotebookController@deleteNotebook');
     Route::any('/api/tag','ArticleController@getTags');
     //根据标签显示笔记列表
     Route::any('/api/searchByTag','ArticleController@searchByTag');
+    //拷贝笔记
+    Route::any('/api/article/copyArticle','ArticleController@copyArticle');
     //日志模块
     Route::get('/api/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 

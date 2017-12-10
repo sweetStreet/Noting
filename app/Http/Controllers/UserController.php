@@ -124,7 +124,7 @@ class UserController extends Controller
         //所有邀请，不区分已读和未读
         if($user) {
             foreach ($user->notifications as $notification) {
-                $result[] = $notification->data;
+                $result[] = $notification;
             }
         }
         return ['status'=>1,'data'=>$result];

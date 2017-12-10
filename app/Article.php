@@ -10,6 +10,7 @@ namespace App;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class Article extends Eloquent
 {
