@@ -160,7 +160,9 @@ class ArticleController
         public function deleteArticle(){
             $id=Request::get('article_id');
             $article = Article::find($id);
-            $article->delete();
+            if($article) {
+                $article->delete();
+            }
             if($article->trashed()){
                 return ['status'=>1];
             }else{

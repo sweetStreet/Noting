@@ -300,16 +300,18 @@
             if(typeof($scope.prod.article)=="undefined"){
                 toastr.error('请先选择文章');
             }else {
-                console.log("deleteArticle");
-                console.log($scope.prod.article);
                 $http.get('/api/article/deleteArticle', {params: {article_id: $scope.prod.article.id}})
                     .then(function (response) {
                         if (response.data.status) {
                             editor.txt.html('<p><br></p>');
-                            $scope.articles.splice($scope.prod.article,1);
+                            for(var i=0;i<$scope.articles.length;i++){
+                                if($scope.articles[i].id == $scope.prod.article.id){
+                                    $scope.articles.splice(i,1);
+                                }
+                            }
                             $scope.prod.article = undefined;
                             var x = document.getElementsByClassName("article_item");
-                            for (i = 0; i < x.length; i++){
+                            for (var i = 0; i < x.length; i++){
                                 x[i].style.backgroundColor = "white";
                                 x[i].style.color="black";
                             }
