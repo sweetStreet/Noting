@@ -62,33 +62,37 @@
             }
 
             $scope.register = function (user) {
-                $http.post('/api/user/register',{email:user.email,username:user.username,password:user.password})
-                    .then(function(response){
-                        if(response.data.status){//注册成功
-                            SweetAlert.swal({
-                                    title:'注册成功',
-                                    text:'即将跳转到登录页面',
-                                    type:'success',
-                                    showConfirmButton:false
-                                }
-                            )
-                            //1.2 seconds delay
-                            $timeout( function(){
-                                window.location.href = response.data.msg;
-                            }, 1200 );
-                        }else {
-                            toastr.error(response.data.msg);
-                        }
-                    }),function(){
-                    toastr.error(responseText.data.msg);
+                if(user.password.length<6){
+                    toastr.error('密码不小于6位')
+                }else {
+
+                    $http.post('/api/user/register', {
+                        email: user.email,
+                        username: user.username,
+                        password: user.password
+                    })
+                        .then(function (response) {
+                            if (response.data.status) {//注册成功
+                                SweetAlert.swal({
+                                        title: '注册成功',
+                                        text: '即将跳转到登录页面',
+                                        type: 'success',
+                                        showConfirmButton: false
+                                    }
+                                )
+                                $timeout(function () {
+                                    window.location.href = response.data.msg;
+                                }, 1200);
+                            } else {
+                                toastr.error(response.data.msg);
+                            }
+                        }), function () {
+                        toastr.error(responseText.data.msg);
+                    }
                 }
             }
             $scope.reset = function (){
                 $cookieStore.put('userid','');
-            }
-
-            $scope.logout = function () {
-
             }
         });
 

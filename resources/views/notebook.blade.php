@@ -52,8 +52,6 @@
             </nav>
 
             <header id="header">
-                <!--打开侧边栏-->
-<!--                <button id="showLeftPush"><i tooltips tooltip-template="个人中心" class="fa fa-bars fa-2x" aria-hidden="true" ng-click="popLeft()"></i></button>-->
                 <button id="btn_add_article"  class="header_button" ng-click="addArticle()"><i tooltips tooltip-template="新建笔记" tooltip-side="bottom" class="fa fa-plus-circle" aria-hidden="true"></i></button>
                 <button id="btn_delete_article" class="header_button" ng-click="deleteArticle()"><i tooltips tooltip-template="删除笔记" tooltip-side="bottom"  class="fa fa-trash" aria-hidden="true"></i></button>
                 <button id="btn_save_article"class="header_button" ng-click="saveArticle()"><i tooltips tooltip-template="保存笔记" tooltip-side="bottom"  class="fa fa-check-circle" aria-hidden="true"></i></button>
@@ -112,12 +110,15 @@
     <div id="article" >
         <label>
             <select ngc-select-search class="common-select" ng-model="notebookSelected" ng-options="notebook.id as notebook.title for notebook in notebooks" name="notebook">
-                <option value=""></option></select>
-            <button id="btn_addnotebook" ng-click="addNotebook()"><i tooltips tooltip-template="新建笔记"  class="fa fa-plus" aria-hidden="true"></i></button>
+                <option ></option></select>
+<!--            <sapn>-->
+                <button id="btn_addnotebook" ng-click="addNotebook()"><i tooltips tooltip-template="新建笔记本"  class="fa fa-plus" aria-hidden="true"></i></button>
+<!--                <button id="btn_addnotebook" ng-click="changeNotebook()"><i tooltips tooltip-template="修改笔记本"  class="fa fa-pencil" aria-hidden="true"></i></button>-->
+<!--            </sapn>-->
         </label>
 
         <div id="article-list">
-            <div  ng-repeat="article in articles" ng-click="showInEditor($index)">
+            <div  ng-repeat="article in articles track by $index" ng-click="showInEditor($index)">
             <div class="article_item" name="article_item" ng-to-yellow>
                 <p class="article_createTime" ng-bind="article.created_at"></p>
                 <p class="article_content"><span ng-bind-html="article.content|htmlContent"></span></p>
@@ -186,9 +187,12 @@
                 <button id="btn_edit" ng-click="reviseUsername()"><i class="fa fa-pencil" aria-hidden="true"></i>修改用户名</button>
                 <button id="btn_edit" ng-click="revisePassword()"><i class="fa fa-pencil" aria-hidden="true"></i>修改密码</button>
 
-                <div ng-repeat="notification in notifications" style="background-color: white">
-                    <label>[:notification.from_user_name:]<[:notification.from_user_email:]>分享了一份笔记给你</label>
+                <div ng-repeat="notification in notifications">
+                    <label ng-click="showNotification = !showNotification">[:notification.from_user_name:]<[:notification.from_user_email:]>分享了一份笔记给你</label>
+                    <span ng-show="showNotification" ng-bind-html="notification.content|htmlContent"></span>
                 </div>
+
+
             </script>
 
 <!--  根据标签搜索-->

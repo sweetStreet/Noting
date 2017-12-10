@@ -50,6 +50,7 @@
             $scope.showShare = false;
             $scope.tagsSearch = [];//根据标签进行搜索时获得所有标签
             $scope.notifications = [];
+            $scope.showNotification = false;
             $scope.selectUserNotebooks();
             $scope.selectUserArticles();
             $scope.getUserInfo();
@@ -149,7 +150,7 @@
             }
         }
 
-        //确认发出发送请求
+        //确认发出分享的发送请求
         $scope.shareConfirmed = function(){
             $scope.showShare = false;
             console.log("person");
@@ -193,6 +194,7 @@
             }
         };
 
+        //接收消息
         $scope.getNotification = function () {
             var userid = $cookieStore.get('userid');
             $http.get('/api/user/getInvitation', {params:{
@@ -272,9 +274,13 @@
                             //刷新文章列表
                             $scope.prod.article = response.data.data;
                             $scope.articles.unshift($scope.prod.article);
+
                             var x = document.getElementsByClassName("article_item");
                             var i;
-                            for (i = 0; i < x.length; i++){
+                            if(x[0]) {
+                                x[0].style.backgroundColor = "lightgray";
+                            }
+                            for (i = 1; i < x.length; i++){
                                 x[i].style.backgroundColor = "white";
                                 x[i].style.color="black";
                             }
@@ -302,6 +308,11 @@
                             editor.txt.html('<p><br></p>');
                             $scope.articles.splice($scope.prod.article,1);
                             $scope.prod.article = undefined;
+                            var x = document.getElementsByClassName("article_item");
+                            for (i = 0; i < x.length; i++){
+                                x[i].style.backgroundColor = "white";
+                                x[i].style.color="black";
+                            }
                             toastr.success('删除成功');
                         } else {
                             toastr.error(response.data.msg);
@@ -345,7 +356,10 @@
                         if (value){
                             resolve()
                         }else {
-                            reject('你需要输入一些东西')
+                            swal({
+                                type: 'warning',
+                                html: "你需要输入一些东西"
+                            })
                         }
                     })
                 }
@@ -369,8 +383,7 @@
                                     html: response.data.msg
                                 })
                             }
-                        }), function () {
-                        console.log('e');
+                        }),function (error) {
                     }
                 }else {
                     swal({
@@ -808,6 +821,9 @@
                                                     for (i = 0; i < scope.notebooks.length; i++) {
                                                         if (scope.notebooks[i].id == scope.prod.notebookid) {
                                                             scope.notebooks.splice(i, 1);
+                                                            scope.options.idArray.splice(i,1);
+                                                            scope.options.labelArray.splice(i,1);
+                                                            break;
                                                         }
                                                     }
                                                     scope.prod.notebookid = '';
@@ -872,9 +888,7 @@
                                 }
                             }
                         }
-
                         return nodes;
-
                     }
 
                     choseNode.on('keyup', '.j-key', function () {
