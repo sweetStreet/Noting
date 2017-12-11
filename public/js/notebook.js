@@ -286,6 +286,8 @@
             if($scope.prod.article.tag!=null){
                 $scope.tags = $scope.prod.article.tag.split(',');
                 $scope.$broadcast('tagsinput:add', $scope.tags, $scope.tagsinputId);
+            }else{
+                $scope.tags = [];
             }
         }
 

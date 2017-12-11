@@ -15,6 +15,7 @@ use App\TagMap;
 use DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Pagination\Paginator;
+use Carbon\Carbon;
 
 class ArticleController
 {
@@ -52,7 +53,8 @@ class ArticleController
         $user_id = Request::get('user_id');
         $notebook_id = Request::get('notebook_id');
         $content = Request::get('content');
-        $id=DB::table('articles')->insertGetId(['user_id'=>$user_id,'notebook_id'=>$notebook_id,'content'=>$content,'content_text'=>$this->html2text($content)]);
+        $id=DB::table('articles')->insertGetId(['user_id'=>$user_id,'notebook_id'=>$notebook_id,'content'=>$content,'content_text'=>$this->html2text($content)
+        ,'created_at'=>Carbon::now()]);
         $article = DB::table('articles')->where('id',$id)->first();
         if($article){
             return ['status'=>1, 'data'=>$article, 'msg'=>'创建成功'];
@@ -166,6 +168,9 @@ class ArticleController
             if($article) {
                 $article->delete();
             }
+            //同时删除标签
+            TagMap::where('a_id', $id)->delete();
+
             if($article->trashed()){
                 return ['status'=>1];
             }else{
@@ -187,6 +192,7 @@ class ArticleController
            $article->notebook_id = $notebook_id;
            $article->content = $content;
            $article->content_text = $this->html2text($content);
+           $article->created_at = Carbon::now();
            $result = $article->save();
            if($result){
                return ['status'=>1,'msg'=>'保存成功'];

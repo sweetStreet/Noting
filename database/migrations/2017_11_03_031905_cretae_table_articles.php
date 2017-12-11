@@ -21,8 +21,8 @@ class CretaeTableArticles extends Migration
             $table->string('tag',128)->nullable();
             $table->text('content');
             $table->text('content_text')->nullable();
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+//            $table->timestamp('created_at')->useCurrent();
+//            $table->timestamp('updated_at')->useCurrent();
             $table->softDeletes();
         });
     }
