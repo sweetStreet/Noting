@@ -28,6 +28,23 @@
 
 ![](https://github.com/sweetStreet/Noting/blob/master/images/屏幕快照%202017-12-12%20上午9.49.01.png)
 
+左侧垂直的导航栏是一些额外的操作
+根据标签进行查找
+
+![](https://github.com/sweetStreet/Noting/blob/master/images/屏幕快照%202017-12-12%20上午10.16.59.png)
+
+查看所有文件
+
+![](https://github.com/sweetStreet/Noting/blob/master/images/屏幕快照%202017-12-12%20上午10.17.09.png)
+
+另外通过点击具体的文件可以查看文件详情
+
+![](https://github.com/sweetStreet/Noting/blob/master/images/屏幕快照%202017-12-12%20上午10.18.02.png)
+
+个人中心
+
+![](https://github.com/sweetStreet/Noting/blob/master/images/屏幕快照%202017-12-12%20上午10.17.17.png)
+
 
 
 
