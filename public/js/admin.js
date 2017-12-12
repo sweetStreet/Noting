@@ -17,7 +17,7 @@
                 })
                 .state('log', {
                     url: "/log",
-                    templateUrl: "/api/logs"
+                    templateUrl: "/log-viewer"
                 })
         }
     ]);
