@@ -27,8 +27,8 @@ editor.customConfig.uploadImgParams = {
     userid: getCookie("userid") // 属性值会自动进行 encode ，此处无需 encode
 }
 editor.customConfig.uploadImgParamsWithUrl = true;
-// 将图片大小限制为 5M
-editor.customConfig.uploadImgMaxSize = 5 * 1024 * 1024;
+// 将图片大小限制为 10M
+editor.customConfig.uploadImgMaxSize = 10 * 1024 * 1024;
 // 限制一次最多上传 15 张图片
 editor.customConfig.uploadImgMaxLength = 15;
 editor.customConfig.uploadImgHooks = {
