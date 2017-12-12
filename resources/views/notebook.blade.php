@@ -209,7 +209,7 @@
 
 <!--  根据标签搜索-->
             <script type="text/ng-template" id="tags.tpl">
-                <div class="input-group" style="margin-top: 10%">
+                <div class="input-group" style="margin-top: 13%">
                     <input type="text" class="form-control">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button"><i class="fa fa-search" aria-hidden="true" style="color:black"></i></button>

@@ -13,6 +13,10 @@ editor.customConfig.onchange = function (html) {
 }
 // 自定义 onchange 触发的延迟时间，默认为 200 ms
 editor.customConfig.onchangeTimeout = 1000 // 单位 ms
+// 将图片大小限制为 10M
+editor.customConfig.uploadImgMaxSize = 10 * 1024 * 1024;
+// 限制一次最多上传 15 张图片
+editor.customConfig.uploadImgMaxLength = 15;
 
 editor.customConfig.linkCheck = function (text, link) {
     console.log(text) // 插入的文字ds
@@ -27,10 +31,6 @@ editor.customConfig.uploadImgParams = {
     userid: getCookie("userid") // 属性值会自动进行 encode ，此处无需 encode
 }
 editor.customConfig.uploadImgParamsWithUrl = true;
-// 将图片大小限制为 10M
-editor.customConfig.uploadImgMaxSize = 10 * 1024 * 1024;
-// 限制一次最多上传 15 张图片
-editor.customConfig.uploadImgMaxLength = 15;
 editor.customConfig.uploadImgHooks = {
 
     before: function (xhr, editor, files) {
@@ -50,6 +50,7 @@ editor.customConfig.uploadImgHooks = {
     fail: function (xhr, editor, result) {
         // 图片上传并返回结果，但图片插入错误时触发
         // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+        console.log(result);
     },
     error: function (xhr, editor) {
         // 图片上传出错时触发
